@@ -1,0 +1,124 @@
+﻿GPSwpt,Site,IndivID,refuge_category,Moving,Length,Width,HeightWW,PathToOcean,SurfAngle,DistToOpenH2O,DistToShelter,DistToUnderrock,ShelterType,DistToLittpint,DistToCrustose,CompassSurf,CompassOcean,Pics,ColorRibs,Erosion,ColorInter,RockMove,Substrate,Notes,LimuOnShell,SpotOnTransect,Hypot,Alt,Angle,ShoreType
+48,KahuluiBreakwaterBasaltInside,1,refuge,y,1.72,1.43,0.43,y,53,0,0,NA,underrock,1.52,-0.9,170,107,2-Jan,100black,0,tanbrown,n,basalt,,n,boulder,NA,NA,NA,bb
+48,KahuluiBreakwaterBasaltInside,2,exposed,n,1.06,0.85,0.29,y,83.5,-0.45,-0.95,NA,crevice,1,-0.95,354,107,4-Mar,100black,0,tanbrown,n,basalt,,n,boulder,NA,NA,NA,bb
+50,KahuluiBreakwaterBasaltInside,3,exposed,n,1.48,1.19,0.44,y,75.7,-2.87,-1.1,NA,crevice,2.78,-2.87,85,123,6-May,100black,0,brown,n,basalt,,n,boulder,NA,NA,NA,bb
+49,KahuluiBreakwaterBasaltInside,4,exposed,n,1.47,1.23,0.39,y,56.3,-1.49,-0.8,NA,underrock,4.45,-1.49,64,97,8-Jul,100black,0,tan ,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+49,KahuluiBreakwaterBasaltInside,5,refuge,n,1.35,1.11,0.37,y,81.4,-0.94,0,NA,crevice,3.45,-0.94,181,97,10-Sep,100black,0,black,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+50,KahuluiBreakwaterBasaltInside,6,refuge,n,1.49,1.24,0.44,n,22,-6.4,0,NA,underrock,1.9,-0.5,312,98,12-Nov,100black,0,tanbrown,y,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+51,KahuluiBreakwaterBasaltInside,7,exposed,n,1.32,1.06,0.38,y,36.3,-1.6,-1.6,NA,crevice,8,-1.6,128,106,13-14,100black,0,tan,n,concrete,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+52,KahuluiBreakwaterBasaltInside,8,exposed,n,1.33,1.06,0.34,y,52.9,-0.78,-0.28,NA,crevice,5.5,-0.78,96,110,15-16,100black,0,tan,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+51,KahuluiBreakwaterBasaltInside,9,refuge,n,1.15,0.89,0.31,y,81.1,-0.85,0,NA,underrock,2.8,-0.85,282,106,17-19,100black,0,tan,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+52,KahuluiBreakwaterBasaltInside,10,refuge,n,1.38,1.12,0.37,y,71.8,-0.34,0,NA,crevice,2.56,-0.34,88,110,20-21,100black,0,tan,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+54,KahuluiBreakwaterBasaltInside,11,exposed,n,1.72,1.33,0.51,y,94.3,-2.04,-2.04,NA,underrock,1.67,-2.04,96,100,22-23,100black,0,tan,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+54,KahuluiBreakwaterBasaltInside,12,refuge,n,1.76,1.42,0.6,y,110.7,-0.33,0,NA,crevice,3.36,-0.33,296,100,24-25,100black,0,brown,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+55,KahuluiBreakwaterBasaltInside,13,exposed,n,NA,1.35,0.58,y,98.2,-1.22,-0.65,NA,underrock,5,-1.22,64,93,26-27,100black,0,tanbrown,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+55,KahuluiBreakwaterBasaltInside,14,refuge,n,1.38,1.12,0.49,y,142.9,-1.36,0,NA,underrock,4.6,-1.36,90,93,28-29,100black,0,tan,n,basalt,all dist 0.15ft longer than should be,n,boulder,NA,NA,NA,bb
+56,KahuluiBreakwaterBasaltInside,15,exposed,y,1.3,1.05,0.37,y,26.9,-1.95,-0.83,NA,underrock,7.8,-1.95,144,110,phone 1-2,100black,0,black,y,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+56,KahuluiBreakwaterBasaltInside,16,refuge,n,1.47,1.22,0.46,y,79.7,-1.26,-0.47,NA,crevice,8,-1.26,95,110,phone 3-4,100black,0,brown,n,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+57,KahuluiBreakwaterBasaltInside,17,exposed,y,1.41,1.07,0.41,y,48.2,-1.01,-1,NA,crevice,5,-1.01,172,120,phone 5-6,100black,0,brown,n,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+57,KahuluiBreakwaterBasaltInside,18,refuge,n,1.31,1.03,0.37,y,141,-0.41,0,NA,underrock,4.4,-0.41,120,120,phone 7-8,100black,0,tan,n,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+60,KahuluiBreakwaterBasaltInside,19,exposed,y,1.71,1.42,0.54,y,45.5,-0.9,0.44,NA,underrock,0.31,-0.9,189,121,phone 9-10,100black,0,tan,y,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+60,KahuluiBreakwaterBasaltInside,20,refuge,n,1.39,1.12,0.35,y,127.3,-0.79,0,NA,underrock,3.45,-0.79,71,121,phone 11-12,100black,0,tan,n,basalt,"next day, low tide",n,boulder,NA,NA,NA,bb
+62,HonoluaAdjacentInnerSide,21,refuge,n,1.33,1.12,0.51,y,178.4,-5.6,0,NA,underrock,12,-5.6,163,175,phone 13-14,100black,10,tanwhite,n,basalt 'a'a,dist in inches,some crustose,slope,NA,NA,NA,ba1 tp
+63,HonoluaAdjacentInnerSide,22,exposed/refuge,n,1.29,1.06,0.535,y,94.5,-2.3,-1,NA,crustose,3,-1,131,92,NA,100black,10,grey,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+64,HonoluaAdjacentInnerSide,23,exposed,n,1.2,0.975,0.39,y,30.4,-0.7,-0.7,NA,crustose,2.7,-0.7,232,67,phone 15-16,100black,10,tan,n,basalt,,some crustose,bench,NA,NA,NA,ba1 tp
+64,HonoluaAdjacentInnerSide,24,refuge,n,1.16,0.99,0.44,y,72.8,-2,-1.1,NA,crustose,2.6,-1.1,219,67,phone 17-18,100black,25,grey,n,basalt,,n,bench,NA,NA,NA,ba1 tp
+65,HonoluaAdjacentInnerSide,25,exposed,n,1.22,0.98,0.47,y,103.4,-1.55,-0.64,NA,underrock,3.6,-1.55,76,57,phone 19-20,100black,50,greywhite,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+65,HonoluaAdjacentInnerSide,26,exposed/refuge,n,1.28,1.01,0.47,y,105,-3,-0.75,NA,underrock,3,-3,66,57,phone 21-22,100black,75,tanwhite,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+68,HonoluaAdjacentInnerSide,27,exposed/refuge,n,1.32,1.07,0.56,y,12.1,-0.75,-0.75,NA,crustose,11.6,-0.75,247,67,phone 23-24,100black,50,grey,n,basalt,,some crustose,bench2,NA,NA,NA,ba1 tp
+68,HonoluaAdjacentInnerSide,28,refuge,n,1.35,1.09,0.53,y,133.7,-1.45,0,NA,underrock,11,-1.45,62,67,phone 25-26,100black,25,tan,n,basalt,,some crustose,cliff,NA,NA,NA,ba1 tp
+69,HonoluaAdjacentInnerSide,29,exposed/refuge,n,1.7,1.4,0.575,y,40.6,-0.4,-0.2,NA,underrock,6,-0.4,40,25,27-28,100black,50,tan,n,basalt,canon cam here and below,some crustose,cliff,NA,NA,NA,ba1 tp
+69,HonoluaAdjacentInnerSide,30,exposed/refuge,n,1.25,0.925,0.44,y,32.7,-1.4,-0.2,NA,underrock,6,-1.4,215,25,29-30,100black,50,tan,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+70,HonoluaAdjacentInnerSide,31,exposed,n,1.24,1.02,0.39,y,59.4,-3.5,-1.2,NA,crevice,1.6,-3.5,150,41,31-32,100black,90,grey,n,basalt,,n,slope,NA,NA,NA,ba1 tp
+70,HonoluaAdjacentInnerSide,32,exposed,n,1.335,1.09,0.52,y,64.6,-2.4,-1.5,NA,crevice,2.4,-2.4,55,51,33-34,100black,50,tangrey,n,basalt,,some crustose,slope,NA,NA,NA,ba1 tp
+71,HonoluaAdjacentInnerSide,33,exposed,n,1.15,0.96,0.39,y,38,-0.8,-0.8,NA,crustose,6.4,-0.8,31,33,35-36,100black,25,tan,n,basalt,,some crustose,slope,NA,NA,NA,ba1 tp
+72,HonoluaAdjacentInnerSide,34,exposed,n,1.68,1.39,0.6,y,41.2,-0.9,-0.9,NA,crustose,6.4,-0.9,354,37,37-38,100black,75,tan,n,basalt,,n,cliff (slope on cliff),NA,NA,NA,ba1 tp
+73,HonoluaAdjacentInnerSide,35,exposed,y,1.455,1.15,0.515,y,45.9,-0.6,-0.6,NA,crustose,3.65,-0.6,29,36,39-40,100black,75,tan,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+73,HonoluaAdjacentInnerSide,36,refuge,y,1.455,1.16,0.55,y,44.4,-1.55,-1.55,NA,crustose,3.4,-1.55,30,36,41-42,100black,75,tan,n,basalt,,n,cliff,NA,NA,NA,ba1 tp
+74,HonoluaAdjacentInnerSide,37,exposed/refuge,n,1.26,1.06,0.46,y,63,-1.5,-1,NA,underrock,1.6,-1.5,69,162,43-44,100black,75,tangrey,n,basalt,,n,cliff (in crevice),NA,NA,NA,ba1 tp
+74,HonoluaAdjacentInnerSide,38,exposed/refuge,n,1.42,1.13,0.48,y,52.1,-0.8,-0.8,NA,crustose,2.4,-0.8,248,162,45-46,100black,10,tangrey,n,basalt,,n,cliff (in crevice),NA,NA,NA,ba1 tp
+75,HonoluaAdjacentInnerSide,39,exposed/refuge,n,1.63,1.32,0.58,y,99.4,-0.34,-0.34,NA,crustose,9,-0.34,121,225,47-48,75black25brown,25,tangrey,n,basalt,,some crustose,bench (in crevice),NA,NA,NA,ba1 tp
+75,HonoluaAdjacentInnerSide,40,exposed,n,1.87,1.5,0.785,y,44.9,-0.6,-0.6,NA,crustose,15,-0.6,221,225,49-50,100black,10,tan,n,basalt,,some crustose,bench (open),NA,NA,NA,ba1 tp
+75,KahuluiBreakwaterConcreteInside,41,exposed,y,1.31,1.03,0.4,y,79.3,-1.39,NA,toofar,NA,2.35,-1.39,156,106,51-52,100black,0,tan,n,concrete,shelter type and dist to shelter consolidated to dist to under rock here and below,n,boulder,NA,NA,NA,bc
+75,KahuluiBreakwaterConcreteInside,42,exposed,n,1.63,1.29,0.57,y,83.4,-0.83,NA,-2.04,NA,1.47,-0.83,141,106,53-54,100black,0,tanbrown,n,concrete,,some crustose,boulder,NA,NA,NA,bc
+76,KahuluiBreakwaterConcreteInside,43,exposed,n,1.415,1.18,0.44,y,71.1,-1.29,NA,toofar,NA,6.75,-1.29,349,118,55-56,100black,0,tanbrown,n,concrete,,n,boulder,NA,NA,NA,bc
+76,KahuluiBreakwaterConcreteInside,44,exposed,n,1.31,1.05,0.35,y,64.4,-1.5,NA,toofar,NA,7.75,-1.5,350,118,57-58,100black,0,brown,n,concrete,,n,boulder,NA,NA,NA,bc
+77,KahuluiBreakwaterConcreteInside,45,exposed,n,1.45,1.16,0.4,y,NA,-1.72,NA,toofar,NA,4.26,-1.72,156,117,59-60,100black,25,brown,n,concrete,digital angle finder ran out of battery here and below,n,boulder,NA,NA,NA,bc
+77,KahuluiBreakwaterConcreteInside,46,exposed,n,1.56,1.23,0.54,y,NA,-1.74,NA,toofar,NA,6.1,-1.74,90,117,61-62,100black,25,brown,n,concrete,,n,boulder,NA,NA,NA,bc
+78,KahuluiBreakwaterConcreteInside,47,refuge,n,1.44,1.18,0.44,y,NA,-1.19,NA,0,NA,0.9,-1.19,357,134,63-64,100black,0,blackbrown,n,concrete,,n,boulder,NA,NA,NA,bc
+79,KahuluiBreakwaterConcreteInside,48,refuge,n,1.44,1.15,0.46,y,NA,-2.5,NA,0,NA,0.5,-2.5,108,127,65-66,100black,0,brown,n,concrete,,n,boulder,NA,NA,NA,bc
+79,KahuluiBreakwaterConcreteInside,49,refuge,n,1.45,1.18,0.45,y,NA,-2.04,NA,0,NA,2.63,-2.04,43,140,67-68,100black,0,tanbrown,n,concrete,,n,boulder,NA,NA,NA,bc
+80,KahuluiBreakwaterConcreteInside,50,exposed,n,1.29,1.07,0.4,y,NA,-1.43,NA,-1.5,NA,1.31,-1.43,30,140,69-70,100black,0,brown,n,concrete,,n,boulder,NA,NA,NA,bc
+362,HanaPalemoHanaBay,51,exposed,n,3.3,2.71,1.32,y,81.8,-0.75,NA,-1.7,NA,1.38,-0.75,201,5,1,100black,50,tan,n,basalt,,n,boulder,NA,NA,NA,
+363,HanaPalemoHanaBay,52,exposed,n,4.17,3.48,1.78,y,77.7,-1.6,NA,-0.65,NA,0.83,-1.5,314,16,3-Feb,100black,10,tan,n,basalt,,n,boulder,NA,NA,NA,
+364,HanaPalemoHanaBay,53,exposed,n,4.15,3.36,1.55,y,61.7,0.3,NA,-0.8,NA,12.5,0.3,37,0,5-Apr,100black,0,tan,y,basalt,,n,boulder,NA,NA,NA,
+364,HanaPalemoHanaBay,54,refuge,n,4.56,3.78,1.45,y,80.1,1.17,NA,-0.4,NA,3.6,1.17,135,0,7-Jun,100black,5,tan,n,basalt,,some crustose,boulder,NA,NA,NA,
+365,HanaPalemoHanaBay,55,exposed,n,3.58,2.8,1.11,y,82.6,-1.7,NA,NA,NA,3.53,-1.7,290,290,9-Aug,100black,10,grey,n,basalt,,n,boulder,NA,NA,NA,
+366,HanaPalemoHanaBay,56,exposed,n,3.14,2.57,1.04,y,29.2,-2.4,NA,-2.7,NA,11.4,-2.4,239,350,10,100black,10,grey,n,basalt,,n,boulder,NA,NA,NA,
+366,HanaPalemoHanaBay,57,refuge,n,3.68,2.99,1.29,y,147.2,-3.6,NA,0,NA,3.5,-3.6,83,350,12-Nov,100black,10,grey,n,basalt,,n,boulder,NA,NA,NA,
+367,HanaPalemoHanaBay,58,exposed,n,4.33,3.55,1.78,y,64.5,-1.9,NA,-2.7,NA,9,-1.9,35,16,13-14,100black,50,tan,n,basalt,,some crustose,boulder,NA,NA,NA,
+367,HanaPalemoHanaBay,59,refuge,n,3.56,2.89,1.34,y,104.7,-0.1,NA,-1.65,NA,7.4,-0.1,108,16,15-16,100black,5,greywhite,n,basalt,,some crustose,boulder,NA,NA,NA,
+368,HanaPalemoHanaBay,60,refuge,y,3.34,2.79,1.23,y,19,-1.5,NA,-0.6,NA,6.2,-1.5,153,129,17-18,100black,50,grey,n,basalt,,n,boulder,NA,NA,NA,
+368,HanaPalemoHanaBay,61,exposed,n,3.34,2.28,1.24,y,58.6,-2.85,NA,-1.7,NA,5,-2.85,169,129,19-20,100black,75,grey,y,basalt,,n,boulder,NA,NA,NA,
+368,HanaPalemoHanaBay,62,refuge,n,3.01,2.56,1.34,y,82.2,-2.75,NA,-0.9,NA,5,-2.75,318,105,21-22,100black,25,grey,y,basalt,,n,boulder,NA,NA,NA,
+368,HanaPalemoHanaBay,63,exposed,n,3.45,2.78,1.24,y,52.7,-1.9,NA,-1.4,NA,6,-1.9,169,105,23-24,100black,75,tan,y,basalt,,n,boulder,NA,NA,NA,
+369,HanaPalemoHanaBay,64,exposed,n,3.79,3.01,1.23,y,31,-1.43,NA,-1.62,NA,12.9,-1.43,313,79,25-26,100black,10,tan,n,basalt,,n,boulder,NA,NA,NA,
+369,HanaPalemoHanaBay,65,refuge,n,2.79,2.23,0.9,y,54,-3,NA,-4,NA,16.6,-3,123,79,27-28,100black,95,tan,n,basalt,,some crustose,boulder,NA,NA,NA,
+369,HanaPalemoHanaBay,66,refuge,n,3.56,NA,1.12,y,70.7,-1,NA,-1.4,NA,7.5,-1,138,130,29-30,100black,0,tan,n,basalt,,n,boulder,NA,NA,NA,
+369,HanaPalemoHanaBay,67,exposed,n,3.57,2.89,1.12,y,83.5,-3.5,NA,-1.7,NA,9.7,-3.5,18,130,31-32,100black,50,tan,n,basalt,,n,boulder,NA,NA,NA,
+648,EastMaui1-RA,68,NA,n,3,2.44,1.11,y,76.7,-11,NA,-0.2,NA,10.2,-6,71,213,43-44,100black,25,green,y,basalt,psi after ndio?,<5,NA,NA,NA,NA,sbb
+648,EastMaui1-RA,69,NA,n,3.22,2.55,1.22,y,69.5,-13.5,NA,-0.2,NA,12.2,-7.6,190,207,45-46,100black,25,tan,n,basalt,,n,NA,NA,NA,NA,sbb
+648,EastMaui1-RA,70,NA,n,3.02,2.43,1.22,y,27.7,-11.3,NA,-0.9,NA,12.1,-4.8,68,26,47-48,100black,5,tan ,n,basalt,,n,NA,NA,NA,NA,sbb
+649,EastMaui1-RA,71,NA,n,3.78,3.11,1.78,y,43,-9.5,NA,-1.1,NA,12.5,0,170,205,49-50,100black,5,tan,n,basalt,magnetic reading?,80,NA,NA,NA,NA,sbb
+649,EastMaui1-RA,72,NA,n,3.11,2.55,1.11,y,75.4,-14.5,NA,-0.5,NA,12.2,-7.2,302,206,51-52,100black,50,tan,n,basalt,,n,NA,NA,NA,NA,sbb
+650,EastMaui1-RA,73,NA,n,3.44,2.67,1.33,y,22,-9.8,NA,-1.5,NA,18.3,2.5,64,188,53-54,100black,10,tan,n,basalt,,10,NA,NA,NA,NA,sbb
+651,EastMaui1-RA,74,NA,n,3,2.33,0.78,y,25.1,-10.2,NA,0.6,NA,15.3,-1,266,202,55-56,100black,75,brown,n,basalt,,40,NA,NA,NA,NA,sbb
+537,EastMaui2-RAB,75,NA,n,3.54,2.77,1.33,y,28.8,-15.8,NA,-2,NA,7.5,-1,35,60,57-58,100black,10,tan,n,basalt,crust in tidepool river,n,NA,NA,NA,NA,ba3
+537,EastMaui2-RAB,76,NA,n,4.11,3.44,1.66,y,41.3,-14.5,NA,-3,NA,8.4,-1.5,153,4,59-60,100black,50,grey,n,basalt,crust in tidepool river,15,NA,NA,NA,NA,ba3
+537,EastMaui2-RAB,77,NA,n,3.88,3.33,2.11,y,56.6,-13,NA,-1.4,NA,8.3,-3.2,41,31,61-62,100black,20,lightgrey,n,basalt,normal crust,<5,NA,NA,NA,NA,ba3
+537,EastMaui2-RAB,78,NA,n,3.99,3.22,1.88,y,113.3,-15,NA,-0.1,NA,7.6,-4.7,30,20,63-64,100black,20,tan,n,basalt,,<5,NA,NA,NA,NA,ba3
+537,EastMaui2-RAB,79,NA,n,3.44,2.88,1.44,y,80.1,-12.8,NA,-1.2,NA,8.5,-2.3,3,36,65-66,100black,25,tan,n,basalt,,5,NA,NA,NA,NA,ba3
+538,EastMaui2-RAB,80,NA,n,4,3.55,2.11,y,85.5,-13.8,NA,-1,NA,9.8,-14,61,35,67-68,100black,35,lightgrey,n,basalt,crust in tidepool river,5,NA,NA,NA,NA,ba3
+538,EastMaui2-RAB,81,NA,n,4,3.22,1.99,y,25.4,-10.3,NA,-0.7,NA,9.4,-3.5,28,26,69-70,100black,60,tan,n,basalt,,<5,NA,NA,NA,NA,ba3
+538,EastMaui2-RAB,82,NA,n,3.87,3.22,1.55,y,1.6,-10.6,NA,-2.2,NA,10.2,-4.2,157,49,71-72,100black,20,tan,n,basalt,,n,NA,NA,NA,NA,ba3
+695,Honomanu,83,NA,n,4.25,3.52,1.3,n,84.8,-10,NA,-0.6,NA,8.8,-5,346,48,73-75,50black,0,brown,n,basalt,3 pics (shadow),n,NA,9,0.8,24.3,sbb
+695,Honomanu,84,NA,y,3.3,2.51,1.02,n,97.9,-6.6,NA,-0.2,NA,12.2,-4.6,329,29,76-77,100black,<5,tanred,n,basalt,pred snail near,n,NA,6.4,1.6,25.2,sbb
+696,Honomanu,85,NA,n,3.86,3.11,1.47,y,84.5,-3.8,NA,-0.3,NA,11.2,-2.7,317,28,78-79,100black,0,tan,n,basalt,,n,NA,3.8,1.1,30.2,sbb
+696,Honomanu,86,NA,n,3.56,2.9,1.13,y,107.9,-3,NA,-0.6,NA,7.8,-4,350,27,80-81,100black,0,brown,n,basalt,,<5,NA,6.7,1,27.4,sbb
+697,Honomanu,87,NA,n,3.4,2.57,1.2,y,89.5,-1.3,NA,-0.1,NA,12.3,-0.9,43,55,82-83,100black,10,brown,n,basalt,,<5,NA,4.6,1,27.5,sbb
+697,Honomanu,88,NA,n,3.41,2.65,1.17,n,54.4,-2.6,NA,-0.3,NA,8.3,-0.5,18,66,84-85,100black,<5,red,y,basalt,,90,NA,4.6,1,23.9,sbb
+697,Honomanu,89,NA,n,4.11,3.49,1.6,n,25.4,-3,NA,-0.5,NA,7.4,-2.7,312,61,86-87,100black,<5,brownred,n,basalt,,n,NA,4.8,0.4,22.3,sbb
+697,Honomanu,90,NA,n,3.4,2.8,1.03,y,78.5,-1.4,NA,-2.4,NA,13.7,-1.4,88,55,88-89,100black,10,tan,n,basalt,,25,NA,1.4,0,78.5,sbb
+697,Honomanu,91,NA,n,3.83,3.09,1.45,y,92.3,-2,NA,-0.3,NA,6.9,-1.4,302,56,90-91,100black,<1,brown,n,basalt,,0,NA,1.9,0,90,sbb
+698,Honomanu,92,NA,n,3.26,2.71,1.06,y,78.7,-0.4,NA,-0.4,NA,13.1,0,334,51,92-93,100black,0,brown,n,basalt,,100,NA,0.4,0,90,sbb
+698,Honomanu,93,NA,n,3.28,2.64,0.94,y,79.3,-2.2,NA,-0.2,NA,8.7,0,303,49,94-95,100black,<1,brown,n,basalt,,95,NA,2.4,0,31.5,sbb
+698,Honomanu,94,NA,n,3.2,2.34,1.01,y,79.6,-0.9,NA,-0.4,NA,10.7,-0.8,71,41,96,100black,5,brown,y,basalt,,50,NA,0.9,NA,90,sbb
+698,Honomanu,95,NA,n,3.63,3.01,1.11,y,81.1,-1.3,NA,-0.6,NA,8.5,0,302,57,97-98,75black,0,tan ,n,basalt,,10,NA,1.3,0,90,sbb
+698,Honomanu,96,NA,n,3.17,2.48,1.04,y,124.8,-2.2,NA,0,NA,11.1,0,257,63,99-100,100black,0,brown,n,basalt,,95,NA,1.3,0,90,sbb
+698,Honomanu,97,NA,n,3.34,2.66,1.07,y,130.6,-3.7,NA,0,NA,8.3,-0.2,293,60,101-102,100black,0,tan,n,basalt,,5,NA,4.9,0.7,30.9,sbb
+771,MaaleaLighthouse,98,NA,n,3.08,2.64,1.04,y,26.4,-8.3,NA,-1,NA,4.4,-4.3,8,190,103-104,100black,20,tan,n,basalt,,n,cliff,6.7,0,90,ba4
+771,MaaleaLighthouse,99,NA,n,3.11,2.54,1.1,y,29.7,-8.2,NA,-1,NA,5.7,-3.3,58,192,105-106,100black,10,tan,n,basalt,,10,cliff,6.7,0,90,ba4
+772,MaaleaLighthouse,100,NA,n,3.09,2.44,1.02,y,76.4,-8.8,NA,-4.4,NA,3.8,-4.9,190,192,107-108,100black,20,tan,n,basalt,,15,cliff,6.9,0,90,ba4
+772,MaaleaLighthouse,101,NA,n,3.06,2.49,1.14,y,71.2,-5.7,NA,-1.2,NA,7.2,-2,191,192,109-110,100black,25,tan,n,basalt,,50,cliff,4.8,0,90,ba4
+772,MaaleaLighthouse,102,NA,n,3,2.48,0.96,y,89.7,-7.3,NA,-2,NA,6.2,-4,175,170,111-112,100black,95,tan,n,basalt,,0,cliff,5.6,0,90,ba4
+773,MaaleaLighthouse,103,NA,n,3.29,2.66,1.1,y,52.6,-9.5,NA,-3.6,NA,5.4,-5.6,306,231,113-114,100black,85,grey,n,basalt,,5,cliff,7.2,0,90,ba4
+773,MaaleaLighthouse,104,NA,n,3.71,3.13,1.23,y,5.2,-5.2,NA,2.1,NA,6.1,-0.8,262,201,115-116,100black,5,tan,n,basalt,,20,cliff,3.6,0,90,ba4
+774,MaaleaLighthouse,105,NA,n,3.18,2.48,0.98,y,79.8,-5.6,NA,0.8,NA,6.2,-2,215,199,117-118,100black,5,tan,n,basalt,,0,cliff,4.2,0,90,ba4
+774,MaaleaLighthouse,106,NA,n,3,2.42,1.95,y,70.3,-5,NA,3.8,NA,8.1,-0.8,320,196,119-120,100black,5,tan,n,basalt,,95,cliff,3.8,0,90,ba4
+774,MaaleaLighthouse,107,NA,n,3.51,2.99,1.28,y,62.6,-5.5,NA,-0.9,NA,7,-0.8,206,208,121-122,100black,5,tan,n,basalt,,<5,cliff,3.5,0,90,ba4
+774,MaaleaLighthouse,108,NA,n,3.68,3.99,1.45,y,29.3,-6,NA,0.2,NA,6.9,-0.7,212,215,123-124,100black,25,tan,n,basalt,,5,cliff,3.8,0,90,ba4
+793,LaPersouseBayBench,109,NA,n,3.38,2.7,1.25,y,59.3,-1.7,NA,-1.3,NA,10.6,-1.2,194,206,125(1),95black,10,tan,n,basalt papa,,5,NA,1.2,0,90,
+793,LaPersouseBayBench,110,NA,y,3.28,2.72,1.12,y,59.6,-1,NA,-0.4,NA,11,-0.6,124,209,126(2),100black,0,tan,n,basalt papa,,0,NA,1,0,90,
+793,LaPersouseBayBench,111,NA,n,3.17,2.82,1.56,n,99,-2.2,NA,-0.4,NA,10,-1.5,43,210,127(3),87.5black,10,tan,n,basalt papa,barnacle on shell,0,NA,1.1,0,90,
+793,LaPersouseBayBench,112,NA,n,3.47,2.8,1.05,y,62.7,-0.7,NA,-0.5,NA,9.7,-0.4,132,204,128-129,100black,5,tan,n,basalt papa,,0,NA,0.7,0,90,
+794,LaPersouseBayBench,113,NA,n,3,2.48,0.95,y,60.2,-0.5,NA,-0.1,NA,13.1,-0.1,113,213,130-131,100black,5,tan,n,basalt papa,,0,NA,0.5,0,90,
+794,LaPersouseBayBench,114,NA,n,3.48,2.85,1.05,y,48.7,-0.6,NA,-0.4,NA,13.3,-0.4,139,211,132-133,100black,10,tan,n,basalt papa,50% light 50% dark,0,NA,0.6,0,90,
+794,LaPersouseBayBench,115,NA,n,3.51,2.94,1.54,y,19,-0.7,NA,-0.7,NA,13.9,-0.5,319,210,134-135,100black,5,tan,n,basalt papa,,0,NA,0.7,0,90,
+794,LaPersouseBayBench,116,NA,n,3.04,2.55,1.31,y,49.1,-1.2,NA,-0.4,NA,12.8,-0.4,270,212,136-137,87.5black,5,tan,n,basalt papa,,0,NA,1,0,90,
+794,LaPersouseBayBench,117,NA,n,3.89,3.2,1.7,y,15.4,-1.3,NA,0,NA,15.8,-0.3,337,144,138-139,100black,5,tan,n,basalt papa,,0,NA,1,0,90,
+794,LaPersouseBayCliff,118,NA,n,3.2,2.72,1.27,y,67.2,-1.4,NA,-0.9,NA,18.8,-0.2,124,212,140-141,100black,5,tan,n,basalt cliff,,0,NA,1.1,0,90,
+795,LaPersouseBayCliff,119,NA,n,4.85,3.2,1.22,y,104.5,-0.9,NA,-0.5,NA,1.7,-0.5,296,254,142-143,100black,10,tan,n,basalt cliff,,0,NA,0.9,0,90,
+795,LaPersouseBayCliff,120,NA,n,3.72,3.03,1.37,y,95.6,-2.5,NA,-2.2,NA,0.3,-1.2,233,254,144-145,100black,25,tan,n,basalt cliff,,0,NA,2,0,90,
+795,LaPersouseBayCliff,121,NA,n,4.2,3.51,1.6,y,114.1,-1.1,NA,-1,NA,1.4,0,314,260,146-147,100black,20,tan,n,basalt cliff,,0,NA,1.1,0,90,
+795,LaPersouseBayCliff,122,NA,n,3.84,2.98,1.3,y,61.6,-1.5,NA,-1.3,NA,0.8,-0.2,310,244,148-149,100black,50,tan,n,basalt cliff,,0,NA,1.3,0,90,
+796,LaPersouseBayCliff,123,NA,n,4.3,3.57,1.3,y,93.9,-1.7,NA,-1.5,NA,2,-0.5,213,240,150-151,100black,15,tan,n,basalt cliff,,0,NA,0.7,0,90,

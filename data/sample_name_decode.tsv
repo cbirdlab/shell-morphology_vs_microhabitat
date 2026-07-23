@@ -1,0 +1,45 @@
+sample_id_detailed	location	sublocation	location_name	life_stage	sample_id_bscan	site_id_ch4	sample_id_luzxl	site_id_optimal	substratum	shore_type		wave_exposure	managed_by	mgmt	enforcement	date_collection	shore_aspect
+opihiSK2017-Lanai-Kalae-KonaKamao-A	Lanai	Kalae	KonaKamao	A	23	1	1	13	basalt	bench_boulder		exposed	government	no take	yes	2017-05	S
+opihiSK2017-Lanai-Kalae-KonaKamao-J	Lanai	Kalae	KonaKamao	J	24	1	2	13	basalt	bench_boulder		exposed	government	no take	yes	2017-05	S
+opihiSK2017-Maalaea-LightHouse-KealaloloaKumaalaea-A	Maalaea	LightHouse	KealaloloaKumaalaea	A	27	2	3	12	basalt			exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-Maalaea-LightHouse-KealaloloaKumaalaea-J	Maalaea	LightHouse	KealaloloaKumaalaea	J	28	2	4	12	basalt			exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-HonokahuaBay-KanapaliHonokahua-A	HonokahuaBay	Kapalua	KaanapaliHonokahua	A	11	3	5	1	basalt	slope_bench		exposed	government	no take	yes	2017-05	N
+opihiSK2017-HonokahuaBay-KanapaliHonokahua-J	HonokahuaBay	Kapalua	KaanapaliHonokahua	J	12	3	6	1	basalt	slope_bench		exposed	government	no take	yes	2017-05	N
+opihiSK2017-Kahului-BreakWaterBasalt-WailukuWaikapu-A	Kahului	BreakWaterBasalt	WailukuWaikapu	A	19	4	7	2	basalt	riprap		exposed	no mgmt	open	no	2017-02	N
+opihiSK2017-Kahului-BreakWaterBasalt-WailukuWaikapu-J	Kahului	BreakWaterBasalt	WailukuWaikapu	J	20	4	8	2	basalt	riprap		exposed	no mgmt	open	no	2017-02	N
+opihiSK2017-Kahului-BreakWaterConcrete-WailukuWaikapu-A	Kahului	BreakWaterConcrete	WailukuWaikapu	A	21	5	9	2	concrete	riprap		exposed	no mgmt	open	no	2017-02	N
+opihiSK2017-Kahului-BreakWaterConcrete-WailukuWaikapu-J	Kahului	BreakWaterConcrete	WailukuWaikapu	J	22	5	10	2	concrete	riprap		exposed	no mgmt	open	no	2017-02	N
+opihiSK2017-Hookipa-PillboxTurtleBay-HamakuapokoPaihiihi-A	Hookipa	PillboxTurtleBay	HamakuapokoPaihiihi	A	15	6	11	3	basalt	cliff_slope_boulder		exposed	no mgmt	open	no	2017-05	N
+opihiSK2017-Hookipa-PillboxTurtleBay-HamakuapokoPaihiihi-J	Hookipa	PillboxTurtleBay	HamakuapokoPaihiihi	J	16	6	12	3	basalt	cliff_slope_boulder		exposed	no mgmt	open	no	2017-05	N
+opihiSK2017-Honomanu-GPS807-KoolauHonomanu-A	Honomanu	GPS807	KoolauHonomanu	A	13	7	13	4	basalt	boulder		semi-protected	no mgmt	open	no	2017-02	N
+opihiSK2017-Honomanu-GPS807-KoolauHonomanu-J	Honomanu	GPS807	KoolauHonomanu	J	14	7	14	4	basalt	boulder		semi-protected	no mgmt	open	no	2017-02	N
+opihiSK2017-EastMaui1-10000N-HanaPalemo-A	PuUku	10000N	HanaPalemo	A	1	8	15	5	basalt	slope_boulder		semi-protected	no mgmt	open	no	2017-02	N
+opihiSK2017-EastMaui1-10000N-HanaPalemo-J	PuUku	10000N	HanaPalemo	J	2	8	16	5	basalt	slope_boulder		semi-protected	no mgmt	open	no	2017-02	N
+	EastMaui1	1000N	EastMaui1	A					basalt	slope_bench		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	1000N	EastMaui1	J					basalt	slope_bench		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	100N	EastMaui1	A					basalt	bench_cliff		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	100N	EastMaui1	J					basalt	bench_cliff		exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-EastMaui1-RestArea-A	EastMaui1	RestArea	EastMaui1	A	3	9	20	6	basalt	boulder		exposed	community	no take	voluntary	2017-02	S
+opihiSK2017-EastMaui1-RestArea-J	EastMaui1	RestArea	EastMaui1	J	4	9	21	6	basalt	boulder		exposed	community	no take	voluntary	2017-02	S
+	EastMaui1	100S	EastMaui1	A					basalt	slope_cliff		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	100S	EastMaui1	J					basalt	slope_cliff		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	1000S	EastMaui1	A					basalt	slope_cliff_bench		exposed	no mgmt	open	no	2017-02	S
+	EastMaui1	1000S	EastMaui1	J					basalt	slope_cliff_bench		exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	1000N	EastMaui2	A					basalt	boulder		exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	1000N	EastMaui2	J					basalt	boulder		exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	100N	EastMaui2	A					basalt	boulder_slope		exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	100N	EastMaui2	J					basalt	boulder_slope		exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-EastMaui2-RestAreaB-A	EastMaui2	RestAreaB	EastMaui2	A	7	10	30	7	basalt	cliff_slope_bench		exposed	community	no take	voluntary	2017-02	S
+opihiSK2017-EastMaui2-RestAreaB-J	EastMaui2	RestAreaB	EastMaui2	J	8	10	31	7	basalt	cliff_slope_bench		exposed	community	no take	voluntary	2017-02	S
+opihiSK2017-EastMaui2-RestAreaH-A	EastMaui2	RestAreaH	EastMaui2	A	9	11	32	8	basalt	bench_cliff		exposed	community	no take	voluntary	2017-02	S
+opihiSK2017-EastMaui2-RestAreaH-J	EastMaui2	RestAreaH	EastMaui2	J	10	11	33	8	basalt	bench_cliff		exposed	community	no take	voluntary	2017-02	S
+	EastMaui2	100S	EastMaui2	A					basalt	boulder		semi-exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	100S	EastMaui2	J					basalt	boulder		semi-exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	1000S	EastMaui2	A					basalt	cliff_slope_boulder		exposed	no mgmt	open	no	2017-02	S
+	EastMaui2	1000S	EastMaui2	J					basalt	cliff_slope_boulder		exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-EastMaui2-10000S-KaupuKaupo-A	EastMaui2	10000S	EastMaui2	A	5	12	38	9	basalt	cliff_bench_boulder		exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-EastMaui2-10000S-KaupuKaupo-J	EastMaui2	10000S	EastMaui2	J	6	12	39	9	basalt	cliff_bench_boulder		exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-Kahikinui-LEpicAdventure-KahikinuiNaKaaha-A	Kahikinui	LEpicAdventure	KahikinuiNaKaaha	A	17	13	40	10	basalt			exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-Kahikinui-LEpicAdventure-KahikinuiNaKaaha-J	Kahikinui	LEpicAdventure	KahikinuiNaKaaha	J	18	13	41	10	basalt			exposed	no mgmt	open	no	2017-02	S
+opihiSK2017-LePerouseBay-LastParkingLot-HohualulaKahili-A	LePerouseBay	LastParkingLot	HohualulaKahili	A	25	14	42	11	basalt	boulder_bench		semi-protected	government	no take	yes	2017-05	S
+opihiSK2017-LePerouseBay-LastParkingLot-HohualulaKahili-J	LePerouseBay	LastParkingLot	HohualulaKahili	J	26	14	43	11	basalt	boulder_bench		semi-protected	government	no take	yes	2017-05	S
