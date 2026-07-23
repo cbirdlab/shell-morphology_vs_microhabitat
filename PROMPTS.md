@@ -1,5 +1,9 @@
 # Prompts
 
+## Prompt 6: Make `README.md`
+
+Make `README.md`.  Provide a summary of this repo, the purpose of the research and provide the reader with the ability to navigate throught the repo with links to each of the dirs
+
 ## Prompt 5: Make `output/README.md`
 
 Make `output/README.md`.  Provide a summary of the results.  Render each `*.png` in the readme, and include a figure label and description for each.  e.g.  Figure 1.  ...
