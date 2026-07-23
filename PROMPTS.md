@@ -16,8 +16,8 @@ Make `pictures/README.md` . In this file, render each image in the dir, and labe
 
 Make the file `pictures/photolog.tsv`.  I want you to use the information stored in the photos to associate them with particular individuals in `data/OpihiMorpholoygMicrohabitat.csv`
 
----
-
+	-0.78	96	110	15-16	100black	0	tan	n	basalt	all dist 0.15ft longer than should be	n	boulder	NA	NA	NA	bb---
+	-0.78	96	110	15-16	100black	0	tan	n	basalt	all dist 0.15ft longer than should be	n	boulder	NA	NA	NA	bb
 ## Prompt 2: Make scripts/README.md`
 
 Make the file `scripts/README.md`.   We need to follow best practices in data science, transparency, and reproducability. I want you to describe each script, what it does, the inputs and outputs, and give an example of how to run it.
