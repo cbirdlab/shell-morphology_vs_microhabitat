@@ -1,0 +1,19 @@
+column name	data description	confidence
+sample_id_detailed	Detailed sample identifier used for genetic/population sample naming.	High
+location	Broad island or location name.	High
+sublocation	More specific place name within the broad location.	High
+location_name	Named site or locality used in sample naming.	High
+life_stage	Life stage code, for example adult or juvenile.	Medium
+sample_id_bscan	Sample identifier in the bscan naming system.	Medium
+site_id_ch4	Site identifier used in the ch4 naming or analysis system.	Medium
+sample_id_luzxl	Sample identifier in the luzxl naming system.	Medium
+site_id_optimal	Site identifier in the optimal naming or analysis system.	Medium
+substratum	Substrate category for the sample site.	High
+shore_type	Shore type category for the sample site.	High
+Unnamed: 11	Empty unnamed column retained from the source table.	High
+wave_exposure	Wave exposure classification.	High
+managed_by	Entity or governance category responsible for the area.	Medium
+mgmt	Management status or protection category.	Medium
+enforcement	Whether management enforcement was recorded as present.	Medium
+date_collection	Collection date or year-month for the sample.	High
+shore_aspect	Cardinal shore aspect.	High

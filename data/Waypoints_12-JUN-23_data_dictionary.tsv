@@ -1,0 +1,7 @@
+column name	data description	confidence
+lat	Waypoint latitude in decimal degrees from the GPX wpt attribute.	High
+lon	Waypoint longitude in decimal degrees from the GPX wpt attribute.	High
+ele	Elevation recorded by the GPS unit.	High
+time	GPS timestamp in UTC ISO 8601 format.	High
+name	Waypoint name; links to numeric waypoint fields after removing leading zeros.	High
+sym	GPX symbol assigned to the waypoint.	High

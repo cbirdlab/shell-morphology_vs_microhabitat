@@ -1,0 +1,24 @@
+column name	data description	confidence
+GarminGPS_ID	Garmin unit or waypoint set identifier.	Medium
+GarminGPS_Waypoint	Numeric Garmin waypoint identifier for the transect or mapping point.	High
+Transect	Transect identifier, when available.	High
+Date	Field survey date.	High
+Island	Island where the survey occurred.	High
+Region	Regional survey area.	High
+Site	Site name.	High
+SubSite	Subsite name within the site.	High
+Shore_Type	Shore type classification recorded for the transect.	High
+Cex_A	Count or score for Cex category A; exact taxon/size definition is not documented here.	Low
+Cex_B	Count or score for Cex category B; exact taxon/size definition is not documented here.	Low
+Cex_C	Count or score for Cex category C; exact taxon/size definition is not documented here.	Low
+Cex_D	Count or score for Cex category D; exact taxon/size definition is not documented here.	Low
+Cex_E	Count or score for Cex category E; exact taxon/size definition is not documented here.	Low
+Cex_F	Count or score for Cex category F; exact taxon/size definition is not documented here.	Low
+Csa_A	Count or score for Csa category A; exact taxon/size definition is not documented here.	Low
+Csa_BC	Count or score for combined Csa category B/C; exact taxon/size definition is not documented here.	Low
+Csa_D	Count or score for Csa category D; exact taxon/size definition is not documented here.	Low
+Data_Recorder	Initials of the person recording data.	High
+Surveyor	Initials of the person surveying or marking observations.	High
+Notes	Free-text field notes.	High
+QC_Notes	Quality-control notes.	High
+Transect_Width_ft	Transect width in feet.	High

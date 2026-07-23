@@ -1,0 +1,32 @@
+column name	data description	confidence
+GPSwpt	Garmin GPS waypoint number associated with the individual observation.	High
+Site	Concatenated or compact site/subsite label for the observation location.	High
+IndivID	Individual opihi identifier within the morphology observation table.	Medium
+refuge_category	Field classification of whether the individual was in refuge, exposed, or intermediate habitat.	High
+Moving	Whether the individual was observed moving; values are y/n.	Medium
+Length	Raw shell length measurement; analysis script converts this from inches to centimeters.	High
+Width	Raw shell width measurement; analysis script converts this from inches to centimeters.	High
+HeightWW	Raw shell height measurement; analysis script converts this from inches to centimeters.	High
+PathToOcean	Whether there was an apparent path to open ocean water; values are y/n.	Medium
+SurfAngle	Surface angle at the observation point, probably in degrees.	Medium
+DistToOpenH2O	Signed distance to open water; units appear to be feet based on notes.	Medium
+DistToShelter	Signed distance to nearest shelter feature; units appear to be feet based on notes.	Medium
+DistToUnderrock	Signed distance to under-rock shelter; may include nonnumeric codes such as toofar.	Medium
+ShelterType	Type of shelter feature recorded when shelter was present.	High
+DistToLittpint	Distance to the feature or taxon recorded as Littpint; exact meaning is not documented.	Low
+DistToCrustose	Signed distance to crustose substrate or algae; units appear to be feet based on notes.	Medium
+CompassSurf	Compass bearing related to surface orientation, in degrees.	Medium
+CompassOcean	Compass bearing toward ocean direction, in degrees.	Medium
+Pics	Photo reference or image sequence identifier; some values may have spreadsheet date autoformatting.	Low
+ColorRibs	Color code or description for shell ribs.	Medium
+Erosion	Shell erosion score or categorical code.	Low
+ColorInter	Color code or description for shell inter-rib areas.	Medium
+RockMove	Whether the rock/substrate could be moved; values are y/n.	Medium
+Substrate	Substrate material or substrate class at the observation point.	High
+Notes	Free-text field notes and corrections.	High
+LimuOnShell	Whether limu/algae was present on the shell; values are y/n.	Medium
+SpotOnTransect	Field position or microhabitat descriptor on the transect.	Medium
+Hypot	Hypotenuse measurement used for field geometry or slope calculations; exact method not documented.	Low
+Alt	Altitude or vertical leg measurement used with Hypot/Angle; exact method not documented.	Low
+Angle	Angle measurement associated with field geometry or slope.	Medium
+ShoreType	Coded shore type classification.	Low

@@ -1,0 +1,6 @@
+column name	data description	confidence
+First Name	Participant first name.	High
+Last Name	Participant last name.	High
+Initials	Participant initials used in mapping data recorder and surveyor fields.	High
+Role	Participant field role or roles.	High
+Notes	Free-text participant notes.	High
