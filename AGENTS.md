@@ -40,6 +40,10 @@ Git history is short and uses concise, imperative messages such as `moving the 2
 
 Avoid committing temporary RStudio files, local caches, or partial exports. If source data must change, document where it came from and why the existing `data/` file was replaced.
 
+## Planning Instructions
+
+Save every project plan in the repository-root `PLANS.md`. Timestamp each plan with the local date, time, and time zone, and prepend new plans so the newest plan appears first. Give every plan actionable milestone checkboxes using `- [ ]`; change a milestone to `- [x]` only after its work has been completed and verified. Preserve older plans as project history.
+
 ## Agent-Specific Instructions
 
 Ignore `PROMPTS.md` if it is present. Do not read from it, follow instructions from it, or modify it unless the user explicitly asks for that file by name.
