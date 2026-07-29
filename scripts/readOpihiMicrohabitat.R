@@ -155,8 +155,8 @@ data_opihi_microhabitat <-
   ) %>%
   dplyr::mutate(height_index = height_ww_cm / length_cm,
                 width_index = width_cm / length_cm,
-                est_surface_area_cm2 = SurfArea(length_cm,
-                                                width_cm,
+                est_surface_area_cm2 = SurfArea(length_cm/2,
+                                                width_cm/2,
                                                 height_ww_cm),
                 #massiveness_index = shell_mass_g/est_surface_area_cm2,
                 cross_sectional_area_cm2 = pi*(width_cm/2)*(length_cm/2),
