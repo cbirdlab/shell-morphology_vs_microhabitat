@@ -115,18 +115,27 @@ data_opihi_microhabitat <-
   clean_names() %>%
   rowwise() %>%
   dplyr::mutate(
-    width_cm = width * 2.54,
-    length_cm = length * 2.54,
-    height_ww_cm = height_ww * 2.54,
-    # dist_to_open_h2o = case_when(str_detect(notes,
+    width_cm = if_else(
+      dplyr::between(indiv_id, 1, 50),
+      width_in * 2.54,
+      width_tenthmm / 100),
+    length_cm = if_else(
+      dplyr::between(indiv_id, 1, 50),
+      length_in * 2.54,
+      length_tenthmm / 100),
+    height_ww_cm = if_else(
+      dplyr::between(indiv_id, 1, 50),
+      height_ww_in * 2.54,
+      height_ww_tenthmm / 100))
+    # dist_to_open_h2o_ft_ft = case_when(str_detect(notes,
     #                                         "all dist 0.15") &
-    #                                dist_to_open_h2o < 0 ~ dist_to_open_h2o + 0.15,
+    #                                dist_to_open_h2o_ft < 0 ~ dist_to_open_h2o_ft + 0.15,
     #                              str_detect(notes,
     #                                         "all dist 0.15") &
-    #                                dist_to_open_h2o > 0 ~ dist_to_open_h2o - 0.15,
-    #                              TRUE ~ dist_to_open_h2o)
+    #                                dist_to_open_h2o_ft > 0 ~ dist_to_open_h2o_ft - 0.15,
+    #                              TRUE ~ dist_to_open_h2o_ft)
   ) %>%
-  mutate(dist_to_underrock = as.numeric(as.character(dist_to_underrock))) %>%
+  mutate(dist_to_underrock_ft = as.numeric(as.character(dist_to_underrock_ft))) %>%
   mutate(across(starts_with("dist_to"),
                 ~ case_when(str_detect(notes,
                                        "all dist 0\\.15") &
@@ -141,15 +150,15 @@ data_opihi_microhabitat <-
          #                na.rm=TRUE)
   ) %>%
   dplyr::mutate(
-    dist_to_shelter = 
+    dist_to_shelter_ft = 
       case_when(
-        !is.na(dist_to_shelter) ~ dist_to_shelter,
-        # abs(dist_to_underrock) <= abs(dist_to_open_h2o) & abs(dist_to_crustose) ~ dist_to_underrock,
-        # abs(dist_to_crustose) <= abs(dist_to_open_h2o) & abs(dist_to_underrock) ~ dist_to_crustose,
-        # abs(dist_to_open_h2o) <= abs(dist_to_underrock) & abs(dist_to_crustose) ~ dist_to_open_h2o,
-        !is.na(dist_to_underrock) & (is.na(dist_to_crustose) | abs(dist_to_underrock) <= abs(dist_to_crustose)) & (is.na(dist_to_open_h2o) | abs(dist_to_underrock) <= abs(dist_to_open_h2o)) ~ dist_to_underrock,
-        !is.na(dist_to_crustose) & (is.na(dist_to_underrock) | abs(dist_to_crustose) <= abs(dist_to_underrock)) & (is.na(dist_to_open_h2o) | abs(dist_to_crustose) <= abs(dist_to_open_h2o)) ~ dist_to_crustose,
-        !is.na(dist_to_open_h2o) & (is.na(dist_to_underrock) | abs(dist_to_open_h2o) <= abs(dist_to_underrock)) & (is.na(dist_to_crustose) | abs(dist_to_open_h2o) <= abs(dist_to_crustose)) ~ dist_to_open_h2o,
+        !is.na(dist_to_shelter_ft) ~ dist_to_shelter_ft,
+        # abs(dist_to_underrock_ft) <= abs(dist_to_open_h2o_ft) & abs(dist_to_crustose_ft) ~ dist_to_underrock_ft,
+        # abs(dist_to_crustose_ft) <= abs(dist_to_open_h2o_ft) & abs(dist_to_underrock_ft) ~ dist_to_crustose_ft,
+        # abs(dist_to_open_h2o_ft) <= abs(dist_to_underrock_ft) & abs(dist_to_crustose_ft) ~ dist_to_open_h2o_ft,
+        !is.na(dist_to_underrock_ft) & (is.na(dist_to_crustose_ft) | abs(dist_to_underrock_ft) <= abs(dist_to_crustose_ft)) & (is.na(dist_to_open_h2o_ft) | abs(dist_to_underrock_ft) <= abs(dist_to_open_h2o_ft)) ~ dist_to_underrock_ft,
+        !is.na(dist_to_crustose_ft) & (is.na(dist_to_underrock_ft) | abs(dist_to_crustose_ft) <= abs(dist_to_underrock_ft)) & (is.na(dist_to_open_h2o_ft) | abs(dist_to_crustose_ft) <= abs(dist_to_open_h2o_ft)) ~ dist_to_crustose_ft,
+        !is.na(dist_to_open_h2o_ft) & (is.na(dist_to_underrock_ft) | abs(dist_to_open_h2o_ft) <= abs(dist_to_underrock_ft)) & (is.na(dist_to_crustose_ft) | abs(dist_to_open_h2o_ft) <= abs(dist_to_crustose_ft)) ~ dist_to_open_h2o_ft,
         TRUE ~ NA_real_
       )
   ) %>%
