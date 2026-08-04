@@ -4,7 +4,7 @@ This directory contains figures generated from the opihi morphology and microhab
 
 ## Results Summary
 
-The figures summarize 123 individual observations across 10 site labels. Shell height increases with shell length, confirming strong size-related structure in the raw morphology data. After allometric normalization, sites still differ in height, surface area, and thermal dissipation indices, suggesting that shape variation remains after accounting for shell length. PCA plots show that raw shell-character PC1 is strongly dominated by overall shell size, while normalized shell-character PCA emphasizes shape and index differences. Microhabitat PCA shows broader overlap among sites and weaker separation than the shell-character PCA. Thermal dissipation plots suggest site-specific variation and noisy relationships with shelter distance, so these figures should be interpreted as exploratory unless paired with the model outputs and assumptions from the analysis script.
+These committed figures were generated from an earlier 123-observation, 10-site snapshot. The current primary CSV contains 144 observations across 11 site labels, including a new `KahuluiBreakwaterBasaltOutside` group and additional `MaaleaLighthouse` records. Regenerate the figures before using them as summaries of current data. Patterns described from the older snapshot must be reassessed after regeneration; PCA and thermal-dissipation figures remain exploratory.
 
 The directory also contains `thermal_index_2017-2023_comparison.pdf`, which is not rendered below because this README catalogs PNG figures only.
 

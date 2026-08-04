@@ -6,7 +6,7 @@ This directory contains source data used by the opihi morphology and microhabita
 
 | File | Format | Records | Description | Key fields and links | Dictionary |
 | --- | --- | ---: | --- | --- | --- |
-| `DataOpihiMorphologyMicrohabitat.csv` | CSV | 123 rows | Individual-level morphology and microhabitat observations used by `scripts/readOpihiMicrohabitat.R`. | `GPSwpt` links to waypoint and rapid-mapping records when available; `Site` is a site/subsite label; `IndivID` identifies individuals within the observation table. | `DataOpihiMorphologyMicrohabitat_data_dictionary.tsv` |
+| `DataOpihiMorphologyMicrohabitat.csv` | CSV | 144 rows | Individual-level morphology and microhabitat observations from 2023 and 2024 used by `scripts/readOpihiMicrohabitat.R`. | `GPSwpt` links when available; use `Site + GPSwpt` as a sampling-block key; `IndivID` uniquely identifies current rows. | `DataOpihiMorphologyMicrohabitat_data_dictionary.tsv` |
 | `sample_name_decode.tsv` | TSV | 44 rows | Lookup table for genetic/sample naming, location metadata, management status, shore context, and collection date. | `sample_id_detailed` is the most specific sample identifier. No direct join is currently implemented in the analysis scripts. | `sample_name_decode_data_dictionary.tsv` |
 | `Opihi_Mapping_Data_Kahului_Jun2023_ceb.xlsx` | XLSX | 10 rows | Rapid mapping/transect observations for Kahului Breakwater. | `GarminGPS_Waypoint` links to GPX waypoint names and `GPSwpt` values; `Data_Recorder` and `Surveyor` link to participant initials. | `Opihi_Mapping_Data_Kahului_Jun2023_ceb_data_dictionary.tsv` |
 | `Opihi_Mapping_Data_Honolua_Jun2023_ceb.xlsx` | XLSX | 39 rows | Rapid mapping/transect observations for Honolua Adjacent. | Same as Kahului mapping file; includes `Transect_Width_ft`. | `Opihi_Mapping_Data_Honolua_Jun2023_ceb_data_dictionary.tsv` |
@@ -26,9 +26,13 @@ erDiagram
         int GPSwpt FK
         string Site
         int IndivID
-        float Length
-        float Width
-        float HeightWW
+        date date
+        float Length_in
+        float Length_tenthmm
+        float Width_in
+        float Width_tenthmm
+        float HeightWW_in
+        float HeightWW_tenthmm
     }
     RAPID_MAPPING_TRANSECTS {
         string source_file
@@ -70,6 +74,8 @@ erDiagram
 
 - GPX waypoint names are zero-padded strings such as `048`; morphology and mapping files store corresponding waypoint IDs as numbers such as `48`.
 - The current GPX files cover waypoints 48-80. `DataOpihiMorphologyMicrohabitat.csv` contains additional waypoint IDs, so not every morphology record has a GPX record in this directory.
-- The mapping spreadsheets and morphology table can contain multiple rows per waypoint. Treat waypoint joins as one-to-many or many-to-many depending on the analysis.
-- The analysis script converts shell dimensions from inches to centimeters, so raw `Length`, `Width`, and `HeightWW` values should be treated as inches unless corrected upstream.
+- Waypoint numbers are reused across sampling contexts. Use `Site + GPSwpt`, not `GPSwpt` alone, as the morphology sampling-block identifier. Joins may still be one-to-many or many-to-many.
+- Shell units change by record range. Individuals 1-50 use the `*_in` fields; individuals 51-144 use the corresponding `*_tenthmm` fields. The read script converts both systems to centimeters (`inches * 2.54`; tenths of a millimeter `/ 100`).
+- The table contains 11 site labels. The earlier `LaPersouseBayBench` and `LaPersouseBayCliff` spellings are corrected to `LaPerouseBayBench` and `LaPerouseBayCliff`.
+- `LimuOnShell` contains percentages, left-censored values such as `<5`, zeroes, and text descriptions; preserve it as a raw mixed-format field until a cleaning rule is defined.
 - Preserve raw files. Put cleaning, normalization, and derived variables in scripts so manuscript analyses remain reproducible.

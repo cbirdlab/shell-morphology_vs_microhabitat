@@ -20,9 +20,10 @@ Loads the primary morphology and microhabitat data, cleans column names, standar
 - Installs and loads `tidyverse`, `janitor`, `cubature`, `rlang`, and `readxl` if needed.
 - Defines `SurfArea()` to estimate lateral surface area of an elliptical cone.
 - Defines `normalizeCharacter()` to allometrically normalize shell traits by length.
-- Converts raw `Length`, `Width`, and `HeightWW` values to centimeters.
+- Converts dual raw measurement systems to centimeters: inch fields for individuals 1-50 and tenths-of-a-millimeter fields for individuals 51 and later.
 - Cleans distance fields and applies a note-based `0.15` correction where indicated.
-- Derives `dist_to_shelter`, shell shape indices, estimated surface area, cross-sectional area, thermal dissipation index, and normalized versions of those metrics.
+- Coerces `dist_to_underrock_ft` flags such as `toofar` to missing numeric values and derives `dist_to_shelter_ft` from the nearest available signed distance when no explicit shelter distance is present.
+- Derives shell shape indices, elliptical-cone lateral surface area using length and width semi-axes, basal cross-sectional area, thermal dissipation index, and normalized versions of those metrics.
 
 ### Outputs
 
@@ -48,6 +49,8 @@ names(data_opihi_microhabitat)
 summary(data_opihi_microhabitat$thermal_dissipation_index_normalized)
 ```
 
+
+The current input contains 144 rows, so `nrow(data_opihi_microhabitat)` should be 144. The normalized surface-area calculation still passes mean shell length as the first `SurfArea()` semi-axis; treat that metric as provisional until the geometry milestone in `PLANS.md` is fully implemented and tested.
 ## `visualizeOpihiMicrohabitat.R`
 
 ### Purpose

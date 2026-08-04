@@ -5,6 +5,40 @@ chronological order. Timestamp each plan with local date, time, and time zone.
 Milestones begin unchecked and should be changed to `[x]` only after the stated
 work has been completed and verified.
 
+
+## 2026-08-04 13:15 CDT - Reconcile Documentation With Current Data and Scripts
+
+### Objective
+
+Bring the data dictionaries and repository documentation into agreement with
+the expanded primary dataset and the current unit-aware import and geometry
+code, and audit the existing analysis plan without claiming partially completed
+milestones as complete.
+
+### Milestones
+
+- [x] **Audit current and recent changes.** Compared the working-tree data
+  additions and corrections, recent committed data and script changes, current
+  CSV schema, record counts, site labels, and documented workflow.
+- [x] **Update the primary data dictionary.** Replaced obsolete unsuffixed
+  morphology and distance fields, added `date` and `CameraType`, and clarified
+  units, mixed-format fields, identifiers, and current site naming.
+- [x] **Update repository documentation.** Revised the root, data, scripts, and
+  output READMEs for 144 observations, 11 site labels, dual measurement units,
+  current transformations, and the need to regenerate stale figures.
+- [x] **Audit the 2026-07-23 analysis plan.** Confirmed that several pieces have
+  advanced (dates, La Perouse naming, semi-axis inputs for the raw lateral-area
+  calculation, and a note flagging a suspect height), but no full milestone and
+  its verification requirements have yet been met; its checkboxes therefore
+  remain unchanged.
+- [x] **Validate documentation consistency.** Verified that the primary
+  dictionary field order matches all 36 CSV columns and that documented record
+  and site counts match the current CSV.
+
+### Completion Criteria
+
+Complete when the primary dictionary matches the CSV schema, affected READMEs
+describe the current inputs and known output staleness, and the older analysis
 ## 2026-07-23 12:19 CDT - Improve Thermal Refuge and Shell Morphology Analysis
 
 ### Objective

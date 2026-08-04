@@ -1,32 +1,37 @@
 column name	data description	confidence
-GPSwpt	Garmin GPS waypoint number associated with the individual observation.	High
-Site	Concatenated or compact site/subsite label for the observation location.	High
-IndivID	Individual opihi identifier within the morphology observation table.	Medium
-refuge_category	Field classification of whether the individual was in refuge, exposed, or intermediate habitat.	High
+GPSwpt	Garmin GPS waypoint number associated with the individual observation; waypoint numbers are not globally unique across sampling events.	High
+Site	Concatenated site/subsite label for the observation location; current labels include separate LaPerouseBayBench and LaPerouseBayCliff groups.	High
+IndivID	Individual opihi identifier; values 1-144 are unique in the current table.	High
+date	Observation or sampling date in ISO YYYY-MM-DD format.	High
+refuge_category	Field classification of habitat exposure; observed values are refuge, exposed, exposed/refuge, and missing.	High
 Moving	Whether the individual was observed moving; values are y/n.	Medium
-Length	Raw shell length measurement; analysis script converts this from inches to centimeters.	High
-Width	Raw shell width measurement; analysis script converts this from inches to centimeters.	High
-HeightWW	Raw shell height measurement; analysis script converts this from inches to centimeters.	High
+Length_in	Raw shell length in inches, populated for individuals 1-50.	High
+Length_tenthmm	Raw shell length in tenths of a millimeter, populated for individuals 51 and later.	High
+Width_in	Raw shell width in inches, populated for individuals 1-50.	High
+Width_tenthmm	Raw shell width in tenths of a millimeter, populated for individuals 51 and later.	High
+HeightWW_in	Raw shell height measured at the widest point, in inches, populated for individuals 1-50.	High
+HeightWW_tenthmm	Raw shell height measured at the widest point, in tenths of a millimeter, populated for individuals 51 and later.	High
 PathToOcean	Whether there was an apparent path to open ocean water; values are y/n.	Medium
-SurfAngle	Surface angle at the observation point, probably in degrees.	Medium
-DistToOpenH2O	Signed distance to open water; units appear to be feet based on notes.	Medium
-DistToShelter	Signed distance to nearest shelter feature; units appear to be feet based on notes.	Medium
-DistToUnderrock	Signed distance to under-rock shelter; may include nonnumeric codes such as toofar.	Medium
+SurfAngle	Surface angle at the observation point, in degrees.	Medium
+DistToOpenH2O_ft	Signed distance to open water, in feet; negative values point downward and positive values point upward.	Medium
+DistToShelter_ft	Signed distance to the recorded nearest shelter, in feet; often missing in later records.	Medium
+DistToUnderrock_ft	Signed distance to under-rock shelter, in feet; may contain the nonnumeric flag toofar.	Medium
 ShelterType	Type of shelter feature recorded when shelter was present.	High
-DistToLittpint	Distance to the feature or taxon recorded as Littpint; exact meaning is not documented.	Low
-DistToCrustose	Signed distance to crustose substrate or algae; units appear to be feet based on notes.	Medium
-CompassSurf	Compass bearing related to surface orientation, in degrees.	Medium
+DistToLittpint_ft	Distance in feet to Littoraria pintado, a high-shore gastropod used as a field reference.	Medium
+DistToCrustose_ft	Signed distance to living crustose coralline algae, in feet.	Medium
+CompassSurf	Compass bearing of the occupied surface, in degrees.	Medium
 CompassOcean	Compass bearing toward ocean direction, in degrees.	Medium
-Pics	Photo reference or image sequence identifier; some values may have spreadsheet date autoformatting.	Low
-ColorRibs	Color code or description for shell ribs.	Medium
-Erosion	Shell erosion score or categorical code.	Low
-ColorInter	Color code or description for shell inter-rib areas.	Medium
-RockMove	Whether the rock/substrate could be moved; values are y/n.	Medium
-Substrate	Substrate material or substrate class at the observation point.	High
-Notes	Free-text field notes and corrections.	High
-LimuOnShell	Whether limu/algae was present on the shell; values are y/n.	Medium
+Pics	Photo reference or image sequence identifier.	Medium
+CameraType	Camera category used for the referenced photographs; observed values include phone and digital.	High
+ColorRibs	Observed color or percent-dark description for shell ribs.	Medium
+Erosion	Estimated percent shell erosion; some small values are left-censored strings such as <1 or <5.	Medium
+ColorInter	Observed color description for shell inter-rib areas.	Medium
+RockMove	Whether the rock or substrate could be moved; values are y/n.	Medium
+Substrate	Substrate material or class at the observation point.	High
+Notes	Free-text field notes, caveats, and measurement corrections.	High
+LimuOnShell	Observed limu or crustose cover on the shell; entries mix numeric percentages, left-censored percentages, zero, and text descriptions.	Medium
 SpotOnTransect	Field position or microhabitat descriptor on the transect.	Medium
-Hypot	Hypotenuse measurement used for field geometry or slope calculations; exact method not documented.	Low
-Alt	Altitude or vertical leg measurement used with Hypot/Angle; exact method not documented.	Low
-Angle	Angle measurement associated with field geometry or slope.	Medium
+Hypot	Hypotenuse measurement used for field slope geometry; units and method are not fully documented.	Low
+Alt	Vertical leg measurement used with Hypot and Angle; units and method are not fully documented.	Low
+Angle	Angle associated with the field slope geometry, in degrees.	Medium
 ShoreType	Coded shore type classification.	Low

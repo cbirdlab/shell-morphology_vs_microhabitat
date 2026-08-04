@@ -1,5 +1,9 @@
 # Prompts
 
+## Prompt 8: Data dictionary and readme update
+
+Changes were made to some of the data files and some of the scripts. Update the data dictionaries and readme files as appropriate. Be sure to update the PLANS.md file as well to check and see if any of those plans were met.
+
 ## Prompt 7: Plan
 
 Given the data, the present analyses, and results, make a plan to improve the analysis of this data.  We are primarily interested in testing for a relationship between shell surface area and other morphological indicies of ability to dissipate thermal energy in relationship with the microhabitat characteristics where each limpet was found.  We hypothesize the more access to thermal refuges will result in shells with less surface area and less ability to dissipate thermal energy.  Document your plan in PLANS.md.  Update the AGENTS.md to note that all plans should be saved to PLANS.md.  They should be time and date stamped, in reverse chronological order so that the newest plan is at the top.  Each plan should have milestones with checkboxes that are updated to be checked when the mileston is achieved. 
