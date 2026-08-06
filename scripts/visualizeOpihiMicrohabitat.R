@@ -17,13 +17,31 @@ packages_to_install <-
   packages_used[!packages_used %in% installed.packages()[,1]]
 
 if (length(packages_to_install) > 0) {
-  install.packages(packages_to_install, 
-                   Ncpus = Sys.getenv("NUMBER_OF_PROCESSORS") - 1)
+  n_cores <- parallel::detectCores(logical = TRUE)
+  n_cores <- max(1L, n_cores - 1L)
+  
+  install.packages(
+    packages_to_install,
+    Ncpus = n_cores
+  )
 }
 
-lapply(packages_used, 
-       require, 
-       character.only = TRUE)
+invisible(
+  lapply(
+    packages_used,
+    library,
+    character.only = TRUE
+  )
+)
+
+#if (length(packages_to_install) > 0) {
+#  install.packages(packages_to_install, 
+#                   Ncpus = Sys.getenv("NUMBER_OF_PROCESSORS") - 1)
+#}
+
+#lapply(packages_used, 
+#       require, 
+#       character.only = TRUE)
 
 #### Functions ####
 
@@ -112,17 +130,17 @@ DensPlot <-
 #### Plots Using IndivID or GPS for x ####
 
 data_opihi_microhabitat %>%
-  mutate(dist_to_shelter = 
-           case_when(!is.na(dist_to_shelter) ~ dist_to_shelter,
-                     dist_to_crustose < dist_to_underrock ~ dist_to_crustose,
-                     dist_to_underrock < dist_to_crustose ~ dist_to_underrock)) %>%
+  mutate(dist_to_shelter_ft = 
+           case_when(!is.na(dist_to_shelter_ft) ~ dist_to_shelter_ft,
+                     dist_to_crustose_ft < dist_to_underrock_ft ~ dist_to_crustose_ft,
+                     dist_to_underrock_ft < dist_to_crustose_ft ~ dist_to_underrock_ft)) %>%
   ggplot() +
   aes(
     # x = surf_angle,
-    # x = dist_to_littpint,
-    # x = dist_to_crustose,
-    # x = dist_to_shelter,
-    # x = dist_to_open_h2o,
+    # x = dist_to_littpint_ft,
+    # x = dist_to_crustose_ft,
+    # x = dist_to_shelter_ft,
+    # x = dist_to_open_h2o_ft,
     x = indiv_id,
     y = thermal_dissipation_index_normalized
     # y = height_index_normalized
@@ -134,7 +152,7 @@ data_opihi_microhabitat %>%
   theme_classic() +
   facet_grid(.~site,
              scales = "free_x")
-model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter * 
+model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft * 
               site,
             data = data_opihi_microhabitat %>%
               mutate(site = factor(site,
@@ -351,13 +369,13 @@ non_morphological_pca <-
   data_opihi_microhabitat %>%
   dplyr::select(
     site,
-    surf_angle:dist_to_underrock,
-    dist_to_littpint:compass_ocean,
+    surf_angle:dist_to_underrock_ft,
+    dist_to_littpint_ft:compass_ocean,
     -notes
   ) %>%
   na.omit() %>%
-  dplyr::select(surf_angle:dist_to_underrock,
-                dist_to_littpint:compass_ocean) %>%
+  dplyr::select(surf_angle:dist_to_underrock_ft,
+                dist_to_littpint_ft:compass_ocean) %>%
   dplyr::select(where(~ all(!is.na(.)))) %>%
   dplyr::select(where(~ var(.) != 0)) %>%
   prcomp(center = TRUE,
@@ -370,8 +388,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock,
-             dist_to_littpint:compass_ocean,
+             surf_angle:dist_to_underrock_ft,
+             dist_to_littpint_ft:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(
@@ -395,8 +413,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock,
-             dist_to_littpint:compass_ocean,
+             surf_angle:dist_to_underrock_ft,
+             dist_to_littpint_ft:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(
@@ -420,8 +438,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock,
-             dist_to_littpint:compass_ocean,
+             surf_angle:dist_to_underrock_ft,
+             dist_to_littpint_ft:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(
@@ -445,29 +463,46 @@ ggsave("../output/pca_2-3_non_morphological.png")
 # Compute deviation from the mean **within each site**
 
 data_opihi_deviation <- data_opihi_microhabitat %>%
-  mutate(refuge_availability = case_when(
-    site %in% c("KahuluiBreakwaterBasaltInside",
-                "KahuluiBreakwaterConcreteInside",
-                "Honomanu",
-                "HanaPalemoHanaBay", 
-                "EastMaui1-RA") ~ "More refuge",
-    TRUE ~ "Less refuge"
-  )) %>%
+  mutate(
+    refuge_availability = case_when(
+      site %in% c(
+        "KahuluiBreakwaterBasaltInside",
+        "KahuluiBreakwaterConcreteInside",
+        "Honomanu",
+        "HanaPalemoHanaBay", 
+        "EastMaui1-RA"
+        ) ~ "More refuge",
+        TRUE ~ "Less refuge"
+    ),
+    
+    site = factor(
+      site,
+      levels = c(
+        "KahuluiBreakwaterBasaltInside",
+        "KahuluiBreakwaterConcreteInside",
+        "Honomanu",
+        "HanaPalemoHanaBay",
+        "EastMaui1-RA",
+        "EastMaui2-RAB",
+        "LaPerouseBayBench",
+        "LaPerouseBayCliff",
+        "MaaleaLighthouse",
+        "HonoluaAdjacentInnerSide"
+      ),
+      labels = c(
+        "M1", "M2", "M3", "M4", "M5",
+        "L1", "L2", "L3", "L4", "L5"
+      )
+    )
+  ) %>%
   group_by(site) %>%
-  mutate(site = factor(site, levels = c("KahuluiBreakwaterBasaltInside",
-                                        "KahuluiBreakwaterConcreteInside",
-                                        "Honomanu",
-                                        "HanaPalemoHanaBay",
-                                        "EastMaui1-RA", 
-                                        "EastMaui2-RAB",
-                                        "LaPersouseBayBench",
-                                        "LaPersouseBayCliff",
-                                        "MaaleaLighthouse",
-                                        "HonoluaAdjacentInnerSide"))) %>%
-  mutate(site = factor(site, labels = c("M1", "M2", "M3", "M4", "M5", "L1", "L2", "L3", "L4", "L5"))) %>%
-  mutate(deviation = est_surface_area_cm2_normalized - mean(est_surface_area_cm2_normalized, na.rm = TRUE)) %>%
+  mutate(
+    deviation =
+      est_surface_area_cm2_normalized -
+      mean(est_surface_area_cm2_normalized, na.rm = TRUE)
+  ) %>%
   ungroup()
-
+    
 shapiro.test(data_opihi_deviation$deviation[data_opihi_deviation$refuge_availability == "More refuge"])
 shapiro.test(data_opihi_deviation$deviation[data_opihi_deviation$refuge_availability == "Less refuge"])
 

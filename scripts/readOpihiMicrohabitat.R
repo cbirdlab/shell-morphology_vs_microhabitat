@@ -17,13 +17,31 @@ packages_to_install <-
   packages_used[!packages_used %in% installed.packages()[,1]]
 
 if (length(packages_to_install) > 0) {
-  install.packages(packages_to_install, 
-                   Ncpus = Sys.getenv("NUMBER_OF_PROCESSORS") - 1)
+  n_cores <- parallel::detectCores(logical = TRUE)
+  n_cores <- max(1L, n_cores - 1L)
+  
+  install.packages(
+    packages_to_install,
+    Ncpus = n_cores
+  )
 }
 
-lapply(packages_used, 
-       require, 
-       character.only = TRUE)
+invisible(
+  lapply(
+    packages_used,
+    library,
+    character.only = TRUE
+  )
+)
+
+#if (length(packages_to_install) > 0) {
+#  install.packages(packages_to_install, 
+#                   Ncpus = Sys.getenv("NUMBER_OF_PROCESSORS") - 1)
+#}
+
+#lapply(packages_used, 
+#       require, 
+#       character.only = TRUE)
 
 #### Functions ####
 SurfArea <- function(A,B,H) {
@@ -114,19 +132,23 @@ data_opihi_microhabitat <-
   read_csv(data_path_opihi) %>% #read_excel wouldn't work so I converted excel sheet to a csv and used the read_csv command instead
   clean_names() %>%
   rowwise() %>%
+  
   dplyr::mutate(
     width_cm = if_else(
       dplyr::between(indiv_id, 1, 50),
       width_in * 2.54,
       width_tenthmm / 100),
+    
     length_cm = if_else(
       dplyr::between(indiv_id, 1, 50),
       length_in * 2.54,
       length_tenthmm / 100),
+    
     height_ww_cm = if_else(
       dplyr::between(indiv_id, 1, 50),
       height_ww_in * 2.54,
-      height_ww_tenthmm / 100))
+      height_ww_tenthmm / 100)
+    )%>%
     # dist_to_open_h2o_ft_ft = case_when(str_detect(notes,
     #                                         "all dist 0.15") &
     #                                dist_to_open_h2o_ft < 0 ~ dist_to_open_h2o_ft + 0.15,
@@ -134,7 +156,6 @@ data_opihi_microhabitat <-
     #                                         "all dist 0.15") &
     #                                dist_to_open_h2o_ft > 0 ~ dist_to_open_h2o_ft - 0.15,
     #                              TRUE ~ dist_to_open_h2o_ft)
-  ) %>%
   mutate(dist_to_underrock_ft = as.numeric(as.character(dist_to_underrock_ft))) %>%
   mutate(across(starts_with("dist_to"),
                 ~ case_when(str_detect(notes,
@@ -187,7 +208,7 @@ data_opihi_microhabitat <-
                 height_index_normalized = height_ww_cm_normalized / mean(length_cm,
                                                                          na.rm=TRUE),
                 width_index_normalized = width_cm_normalized / mean(length_cm,
-                                                                    na.rm=TRUE),
+                                                                    na.rm=TRUE)
                 # massiveness_index_normalized = shell_mass_g_normalized/est_surface_area_cm2_normalized,
                 # shore = case_when(str_detect(site,
                 #                              "^EastMaui") ~ "South",
