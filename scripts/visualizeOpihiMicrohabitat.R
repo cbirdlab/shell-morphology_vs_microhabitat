@@ -306,6 +306,10 @@ normalized_character_pca <-
 
 summary(normalized_character_pca)
 
+###PC1 X PC2
+
+##paneled
+
 #make the same data used to define groups in the PCA plot
 pca_groups <- data_opihi_microhabitat %>%
   dplyr::select(
@@ -335,10 +339,6 @@ site_panels <- tibble::tribble(
   "MaaleaLighthouse",                     "West Maui",
   "HonoluaAdjacentInnerSide",             "West Maui"
 )
-# site_panels <- tibble(
-#   site = unique(pca_groups),
-#   panel = ceiling(seq_along(unique(pca_groups)) / 3)
-# )
 
 site_panels
 
@@ -366,24 +366,59 @@ p +
     color = "Site"
   )
 
-# ggbiplot(normalized_character_pca,
-#          # labels = data_opihi_shells %>%
-#          #   pull(shell_id),
-#          ellipse = TRUE,
-#          groups = data_opihi_microhabitat %>%
-#            dplyr::select(site,
-#                          width_cm_normalized:thermal_dissipation_index,
-#                          -notes) %>%
-#            na.omit() %>%
-#            pull(site),
-#          choices = c(1,
-#                      2)) +
-#   coord_fixed(ratio = .5) + # use this to adjust x vs y axis
-#   theme_classic() +
-#   labs(title = "PC1 x PC2",
-#        subtitle = "Grouped by Site, With Ellipses")
-
 ggsave("../output/pca_1-2_normalized_shell_characters.png")
+
+##centroids
+
+#make pca chart
+p <- ggbiplot(
+  normalized_character_pca,
+  ellipse = FALSE,
+  groups = pca_groups,
+  choices = c(1, 2)
+)
+
+#centroid calculation
+site_centroids <- p$data %>%
+  dplyr::group_by(groups) %>%
+  dplyr::summarise(
+    xvar = mean(xvar),
+    yvar = mean(yvar),
+    .groups = "drop"
+  )
+
+site_centroids
+
+#plot
+p_centroids <- ggbiplot(
+  normalized_character_pca,
+  groups = pca_groups,
+  choices = c(1, 2),
+  ellipse = FALSE,
+  alpha = 0
+) +
+  geom_point(
+    data = site_centroids,
+    aes(
+      x = xvar,
+      y = yvar,
+      color = groups
+    ),
+    size = 4
+  ) +
+  coord_fixed(ratio = 0.5) +
+  theme_classic() +
+  labs(
+    title = "PC1 x PC2",
+    subtitle = "Centroids Grouped by Site",
+    color = "Site"
+  )
+
+p_centroids
+
+ggsave("../output/pca_1-2_normalized_shell_characters_centroids.png")
+
+###PC1 X PC3
 
 ggbiplot(normalized_character_pca,
          # labels = data_opihi_shells %>%
