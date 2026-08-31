@@ -141,7 +141,7 @@ data_opihi_microhabitat %>%
     # x = dist_to_crustose_ft,
     # x = dist_to_shelter_ft,
     # x = dist_to_open_h2o_ft,
-    x = indiv_id,
+    x = individual_id,
     y = thermal_dissipation_index_normalized
     # y = height_index_normalized
     # y = est_surface_area_cm2_normalized

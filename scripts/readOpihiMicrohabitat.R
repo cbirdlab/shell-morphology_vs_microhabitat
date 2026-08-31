@@ -149,14 +149,90 @@ data_opihi_microhabitat <-
       height_ww_in * 2.54,
       height_ww_tenth_mm / 100),
     
-  #impute missing length, width, or height
-  data_opihi_imputed <- data_opihi_microhabitat %>%
-    mutate(
-      length_imputed = is.na(length_cm),
-      width_imputed = is.na(width_cm),
-      height_imputed = is.na(height_ww_cm)
+  #record which values are imputed
+    length_imputed = is.na(length_cm),
+    width_imputed = is.na(width_cm),
+    height_imputed = is.na(height_ww_cm)
+  )
+
+#imputation models, log-log used due to allometry
+length_model <- lm(
+  log(length_cm) ~ log(width_cm) + log(height_ww_cm),
+  data = data_opihi_microhabitat
+)
+
+width_model <- lm(
+  log(width_cm) ~ log(length_cm) + log(height_ww_cm),
+  data = data_opihi_microhabitat
+)
+
+height_model <- lm(
+  log(height_ww_cm) ~ log(length_cm) + log(width_cm),
+  data = data_opihi_microhabitat
+)
+
+#check imputation models
+summary(length_model)
+summary(width_model)
+summary(height_model)
+
+#make imputations without overwriting
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  ungroup() %>%
+  mutate(
+    length_predicted_cm = if_else(
+      length_imputed &
+        !width_imputed &
+        !height_imputed,
+      exp(predict(
+        length_model,
+        newdata = data_opihi_microhabitat
+      )),
+      NA_real_
+    ),
+    
+    width_predicted_cm = if_else(
+      width_imputed &
+        !length_imputed &
+        !height_imputed,
+      exp(predict(
+        width_model,
+        newdata = data_opihi_microhabitat
+      )),
+      NA_real_
+    ),
+    
+    height_predicted_cm = if_else(
+      height_imputed &
+        !length_imputed &
+        !width_imputed,
+      exp(predict(
+        height_model,
+        newdata = data_opihi_microhabitat
+      )),
+      NA_real_
     )
-    )%>%
+  )
+
+#overwrite missing values with imputed ones
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    length_cm = coalesce(
+      length_cm,
+      length_predicted_cm
+    ),
+    
+    width_cm = coalesce(
+      width_cm,
+      width_predicted_cm
+    ),
+    
+    height_ww_cm = coalesce(
+      height_ww_cm,
+      height_predicted_cm
+    )
+  )
+
     # dist_to_open_h2o_ft_ft = case_when(str_detect(notes,
     #                                         "all dist 0.15") &
     #                                dist_to_open_h2o_ft < 0 ~ dist_to_open_h2o_ft + 0.15,
@@ -164,6 +240,9 @@ data_opihi_microhabitat <-
     #                                         "all dist 0.15") &
     #                                dist_to_open_h2o_ft > 0 ~ dist_to_open_h2o_ft - 0.15,
     #                              TRUE ~ dist_to_open_h2o_ft)
+  
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%  
   mutate(dist_to_underrock_ft = as.numeric(as.character(dist_to_underrock_ft))) %>%
   mutate(across(starts_with("dist_to"),
                 ~ case_when(str_detect(notes,
