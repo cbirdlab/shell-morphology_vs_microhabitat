@@ -1,37 +1,39 @@
-column name	data description	confidence
-GPSwpt	Garmin GPS waypoint number associated with the individual observation; waypoint numbers are not globally unique across sampling events.	High
-Site	Concatenated site/subsite label for the observation location; current labels include separate LaPerouseBayBench and LaPerouseBayCliff groups.	High
-IndivID	Individual opihi identifier; values 1-144 are unique in the current table.	High
-date	Observation or sampling date in ISO YYYY-MM-DD format.	High
-limpet_location_solar_refuge_category	"Field classification of limpet exposure to solar radiation when observed; observed values are refuge, exposed, exposed/refuge, and missing."	High
-Moving	Whether the individual was observed moving; values are y/n.	Medium
-Length_in	"Raw shell length in inches, populated for individuals 1-50."	High
-Length_tenthmm	"Raw shell length in tenths of a millimeter, populated for individuals 51 and later."	High
-Width_in	"Raw shell width in inches, populated for individuals 1-50."	High
-Width_tenthmm	"Raw shell width in tenths of a millimeter, populated for individuals 51 and later."	High
-HeightWW_in	"Raw shell height measured at the widest point, in inches, populated for individuals 1-50."	High
-HeightWW_tenthmm	"Raw shell height measured at the widest point, in tenths of a millimeter, populated for individuals 51 and later."	High
-PathToOcean	Whether there was an apparent path to open ocean water; values are y/n.	Medium
-SurfAngle	"Surface angle at the observation point, in degrees."	Medium
-DistToOpenH2O_ft	"Signed distance to open water, in feet; negative values point downward and positive values point upward."	Medium
-DistToShelter_ft	"Signed distance to the recorded nearest shelter, in feet; often missing in later records."	Medium
-DistToUnderrock_ft	"Signed distance to under-rock shelter, in feet; may contain the nonnumeric flag toofar."	Medium
-ShelterType	Type of shelter feature recorded when shelter was present.	High
-DistToLittpint_ft	"Distance in feet to Littoraria pintado, a high-shore gastropod used as a field reference."	Medium
-DistToCrustose_ft	"Signed distance to living crustose coralline algae, in feet."	Medium
-CompassSurf	"Compass bearing of the occupied surface, in degrees."	Medium
-CompassOcean	"Compass bearing toward ocean direction, in degrees."	Medium
-Pics	Photo reference or image sequence identifier.	Medium
-CameraType	Camera category used for the referenced photographs; observed values include phone and digital.	High
-ColorRibs	Observed color or percent-dark description for shell ribs.	Medium
-Erosion	Estimated percent shell erosion; some small values are left-censored strings such as <1 or <5.	Medium
-ColorInter	Observed color description for shell inter-rib areas.	Medium
-RockMove	Whether the rock or substrate could be moved; values are y/n.	Medium
-Substrate	Substrate material or class at the observation point.	High
-Notes	"Free-text field notes, caveats, and measurement corrections."	High
-LimuOnShell	"Observed limu or crustose cover on the shell; entries mix numeric percentages, left-censored percentages, zero, and text descriptions."	Medium
-SpotOnTransect	Field position or microhabitat descriptor on the transect.	Medium
-altitude_est_hypotenuse_ft	Hypotenuse measurement used for field slope geometry; distance along slope from limpet to water; units are in feet	Low
-altitude_est_adjacent_ft	horizontal distance from limpet to water; units are in feet	Low
-altitude_est_angle_deg	"Angle associated with the field slope geometry, in degrees."	Medium
-ShoreType	Coded shore type classification.	Low
+column name	data description
+GPS_waypoint	GPS waypoint number associated with the individual observation, multiple shells can share the same waypoint number
+GPS_id	ID number associated with the particular GPS unit used
+site	Site label for the observation location
+individual_id	Number associated with each individual ‘opihi
+date	Observation date in MM/DD/YYYY format
+limpet_location_solar_refuge_category	Field classification of limpet exposure to solar radiation when observed, only performed for the first 67 shells
+moving	Whether the individual was observed moving
+length_in	Raw shell length in inches, done for individuals 1-50
+length_tenth_mm	Raw shell length in tenths of a millimeter, done for individuals 51 onward
+width_in	Raw shell width in inches, done for individuals 1-50
+width_tenth_mm	Raw shell width in tenths of a millimeter, done for individuals 51 onward
+height_ww_in	Raw shell height measured at the widest point, in inches, done for individuals 1-50
+height_ww_tenth_mm	Raw shell height measured at the widest point, in tenths of a millimeter, done for individuals 51 onward
+path_to_ocean	Whether there was a path to open ocean water, values are y/n
+surface_angle	Surface angle at the observation point, in degrees
+dist_to_open_h2o_ft	Distance to open water in feet, negative values point downward and positive values point upward
+dist_to_shelter_ft	Distance to the nearest thermal shelter in feet, calculated with R in later values
+dist_to_underrock_ft	Distance to under-rock shelter in feet, “toofar” used for excessive distances
+shelter_type	Type of shelter referred to by dist_to_shelter_ft
+dist_to_littpint_ft	Distance in feet to Littoraria pintado, extremophile snail used as a reference for thermal stress
+dist_to_crustose_ft	Distance to living crustose coralline algae in feet
+compass_surface	Compass bearing of the occupied surface in degrees
+compass_ocean	Compass bearing toward ocean direction in degrees
+pics	ID number of photograph(s) associated with an individual
+camera_type	Camera type used for photographs
+color_ribs	Observed color and percentage of shell ribs that are that color
+erosion	Estimated percent shell erosion; values listed as <1 or <5 are changed to 0.5 and 2.5 respectively in data processing
+color_interrib	Observed color of shell inter-rib areas
+rock_move	Whether the rock or substrate could be moved, values are y/n
+substrate	Substrate material description at the observation point
+notes	Free-text field notes, caveats, and measurement corrections
+limu_on_shell	Observed percentage of limu or crustose cover on the shell, values listed as <5 and some crustose are changed to 2.5 in data processing
+spot_on_transect	Microhabitat descriptor of the individual’s location on the transect
+spot_notes	Notes about the spot on the transect
+altitude_est_hypotenuse_ft	Hypotenuse measurement used for field slope geometry; distance along slope from limpet to water; units are in feet
+altitude_est_adjacent_ft	horizontal distance from limpet to water; units are in feet
+altitude_est_angle_deg	Angle associated with the field slope geometry, in degrees.
+shore_type	Shore type classification according to atlas

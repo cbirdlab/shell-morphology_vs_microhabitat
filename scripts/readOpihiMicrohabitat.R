@@ -135,19 +135,27 @@ data_opihi_microhabitat <-
   
   dplyr::mutate(
     width_cm = if_else(
-      dplyr::between(indiv_id, 1, 50),
+      dplyr::between(individual_id, 1, 50),
       width_in * 2.54,
-      width_tenthmm / 100),
+      width_tenth_mm / 100),
     
     length_cm = if_else(
-      dplyr::between(indiv_id, 1, 50),
+      dplyr::between(individual_id, 1, 50),
       length_in * 2.54,
-      length_tenthmm / 100),
+      length_tenth_mm / 100),
     
     height_ww_cm = if_else(
-      dplyr::between(indiv_id, 1, 50),
+      dplyr::between(individual_id, 1, 50),
       height_ww_in * 2.54,
-      height_ww_tenthmm / 100)
+      height_ww_tenth_mm / 100),
+    
+  #impute missing length, width, or height
+  data_opihi_imputed <- data_opihi_microhabitat %>%
+    mutate(
+      length_imputed = is.na(length_cm),
+      width_imputed = is.na(width_cm),
+      height_imputed = is.na(height_ww_cm)
+    )
     )%>%
     # dist_to_open_h2o_ft_ft = case_when(str_detect(notes,
     #                                         "all dist 0.15") &
@@ -209,6 +217,7 @@ data_opihi_microhabitat <-
                                                                          na.rm=TRUE),
                 width_index_normalized = width_cm_normalized / mean(length_cm,
                                                                     na.rm=TRUE)
+                
                 # massiveness_index_normalized = shell_mass_g_normalized/est_surface_area_cm2_normalized,
                 # shore = case_when(str_detect(site,
                 #                              "^EastMaui") ~ "South",
@@ -222,7 +231,7 @@ data_opihi_microhabitat <-
 #                                    levels = c("bench",
 #                                               "mix",
 #                                               "boulder"))) %>%
-# # dplyr::select(indiv_id:location,
+# # dplyr::select(individual_id:location,
 #               # location_name,
 #               life_stage,
 #               substratum:shore_aspect,
