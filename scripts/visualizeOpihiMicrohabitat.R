@@ -139,11 +139,11 @@ data_opihi_microhabitat %>%
     # x = surf_angle,
     # x = dist_to_littpint_ft,
     # x = dist_to_crustose_ft,
-    # x = dist_to_shelter_ft,
+    x = dist_to_shelter_ft,
     # x = dist_to_open_h2o_ft,
-    x = individual_id,
-    y = thermal_dissipation_index_normalized
-    # y = height_index_normalized
+    # x = individual_id,
+    # y = thermal_dissipation_index_normalized
+    y = height_index_normalized
     # y = est_surface_area_cm2_normalized
   ) +
   geom_point() +
@@ -152,6 +152,7 @@ data_opihi_microhabitat %>%
   theme_classic() +
   facet_grid(.~site,
              scales = "free_x")
+
 model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft * 
               site,
             data = data_opihi_microhabitat %>%
@@ -160,6 +161,7 @@ model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft *
                                      "HonoluaAdjacentInnerSide",
                                      "KahuluiBreakwaterBasaltInside",
                                      "KahuluiBreakwaterConcreteInside",
+                                     "KahuluiBreakwaterBasaltOutside",
                                      "Honomanu",
                                      "HanaPalemoHanaBay",
                                      "EastMaui1-RA",
@@ -170,13 +172,107 @@ model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft *
                                    ))))
 summary(model)
 
-ScatterPlot(x_var = indiv_id,
+model <- lm(height_index_normalized ~ dist_to_shelter_ft * 
+              site,
+            data = data_opihi_microhabitat %>%
+              mutate(site = factor(site,
+                                   levels = c(
+                                     "HonoluaAdjacentInnerSide",
+                                     "KahuluiBreakwaterBasaltInside",
+                                     "KahuluiBreakwaterConcreteInside",
+                                     "KahuluiBreakwaterBasaltOutside",
+                                     "Honomanu",
+                                     "HanaPalemoHanaBay",
+                                     "EastMaui1-RA",
+                                     "EastMaui2-RAB",
+                                     "LaPerouseBayBench",
+                                     "LaPerouseBayCliff",
+                                     "MaaleaLighthouse"
+                                   ))))
+summary(model)
+
+ScatterPlot(x_var = individual_id,
             y_var = thermal_dissipation_index_normalized)
-ggsave("../output/indiv_id-vs-thermal_dissipation_index_normalized-scatter.png")
-ScatterPlot(x_var = gp_swpt,
+ggsave("../output/individual_id-vs-thermal_dissipation_index_normalized-scatter.png")
+
+ScatterPlot(x_var = gps_waypoint,
             y_var = thermal_dissipation_index_normalized) 
-BoxPlot(y_var = thermal_dissipation_index_normalized,
-        fill_var = refuge_category) 
+
+#### Normalized vs Refuge Category Plots ####
+##vs thermal_dissipation
+data_opihi_microhabitat %>%
+  dplyr::filter(!is.na(limpet_location_solar_refuge_category)) %>%
+  BoxPlot(
+    y_var = thermal_dissipation_index_normalized,
+    fill_var = limpet_location_solar_refuge_category
+  )
+ggsave("../output/solar_refuge_category-vs-thermal_dissipation_index_normalized-box.png")
+
+#testing significance
+solar_refuge_data <- data_opihi_microhabitat %>%
+  dplyr::filter(
+    !is.na(limpet_location_solar_refuge_category),
+    !is.na(thermal_dissipation_index_normalized)
+  )
+
+kruskal.test(
+  thermal_dissipation_index_normalized ~ limpet_location_solar_refuge_category,
+  data = solar_refuge_data
+)
+
+pairwise.wilcox.test(
+  x = solar_refuge_data$thermal_dissipation_index_normalized,
+  g = solar_refuge_data$limpet_location_solar_refuge_category,
+  p.adjust.method = "holm"
+)
+
+#stuff is coming out just BARELY non-significant
+solar_refuge_data %>%
+  dplyr::group_by(limpet_location_solar_refuge_category) %>%
+  dplyr::summarise(
+    n = dplyr::n(),
+    median = median(thermal_dissipation_index_normalized),
+    Q1 = quantile(thermal_dissipation_index_normalized, 0.25),
+    Q3 = quantile(thermal_dissipation_index_normalized, 0.75),
+    IQR = IQR(thermal_dissipation_index_normalized)
+  )
+
+##vs height_index
+data_opihi_microhabitat %>%
+  dplyr::filter(!is.na(limpet_location_solar_refuge_category)) %>%
+  BoxPlot(
+    y_var = height_index_normalized,
+    fill_var = limpet_location_solar_refuge_category
+  )
+ggsave("../output/solar_refuge_category-vs-height_index_normalized-box.png")
+
+#testing significance
+solar_refuge_data <- data_opihi_microhabitat %>%
+  dplyr::filter(
+    !is.na(limpet_location_solar_refuge_category),
+    !is.na(height_index_normalized)
+  )
+
+kruskal.test(
+  height_index_normalized ~ limpet_location_solar_refuge_category,
+  data = solar_refuge_data
+)
+
+pairwise.wilcox.test(
+  x = solar_refuge_data$height_index_normalized,
+  g = solar_refuge_data$limpet_location_solar_refuge_category,
+  p.adjust.method = "holm"
+)
+
+solar_refuge_data %>%
+  dplyr::group_by(limpet_location_solar_refuge_category) %>%
+  dplyr::summarise(
+    n = dplyr::n(),
+    median = median(height_index_normalized),
+    Q1 = quantile(height_index_normalized, 0.25),
+    Q3 = quantile(height_index_normalized, 0.75),
+    IQR = IQR(height_index_normalized)
+  )
 
 #### Morphological Characters vs Length ####
 

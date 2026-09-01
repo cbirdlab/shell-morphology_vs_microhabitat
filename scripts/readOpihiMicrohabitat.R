@@ -133,6 +133,9 @@ data_opihi_microhabitat <-
   clean_names() %>%
   rowwise() %>%
   
+  #omitting these dickheads until i can impute them properly
+  filter(!individual_id %in% c(54, 108)) %>%
+  
   dplyr::mutate(
     width_cm = if_else(
       dplyr::between(individual_id, 1, 50),
@@ -155,20 +158,45 @@ data_opihi_microhabitat <-
     height_imputed = is.na(height_ww_cm)
   )
 
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    length_invalid = !is.na(length_cm) &
+      !is.na(width_cm) &
+      length_cm < width_cm
+  )
+
 #imputation models, log-log used due to allometry
 length_model <- lm(
   log(length_cm) ~ log(width_cm) + log(height_ww_cm),
-  data = data_opihi_microhabitat
+  data = data_opihi_microhabitat %>%
+    filter(
+      !length_invalid,
+      !is.na(length_cm),
+      !is.na(width_cm),
+      !is.na(height_ww_cm)
+    )
 )
 
 width_model <- lm(
   log(width_cm) ~ log(length_cm) + log(height_ww_cm),
-  data = data_opihi_microhabitat
+  data = data_opihi_microhabitat %>%
+    filter(
+      !length_invalid,
+      !is.na(length_cm),
+      !is.na(width_cm),
+      !is.na(height_ww_cm)
+    )
 )
 
 height_model <- lm(
   log(height_ww_cm) ~ log(length_cm) + log(width_cm),
-  data = data_opihi_microhabitat
+  data = data_opihi_microhabitat %>%
+    filter(
+      !length_invalid,
+      !is.na(length_cm),
+      !is.na(width_cm),
+      !is.na(height_ww_cm)
+    )
 )
 
 #check imputation models
@@ -178,58 +206,104 @@ summary(height_model)
 
 #make imputations without overwriting
 data_opihi_microhabitat <- data_opihi_microhabitat %>%
-  ungroup() %>%
   mutate(
+    # Flag measurements that need imputation
+    length_imputed = is.na(length_cm) | length_invalid,
+    width_imputed  = is.na(width_cm),
+    height_imputed = is.na(height_ww_cm),
+    
+    # Predict length only when length is bad/missing
+    # and width + height are measured
     length_predicted_cm = if_else(
       length_imputed &
         !width_imputed &
         !height_imputed,
-      exp(predict(
-        length_model,
-        newdata = data_opihi_microhabitat
-      )),
+      
+      exp(
+        predict(
+          length_model,
+          newdata = data_opihi_microhabitat
+        )
+      ),
+      
       NA_real_
     ),
     
+    # Predict width only when width is missing
+    # and valid length + height are measured
     width_predicted_cm = if_else(
       width_imputed &
         !length_imputed &
         !height_imputed,
-      exp(predict(
-        width_model,
-        newdata = data_opihi_microhabitat
-      )),
+      
+      exp(
+        predict(
+          width_model,
+          newdata = data_opihi_microhabitat
+        )
+      ),
+      
       NA_real_
     ),
     
+    # Predict height only when height is missing
+    # and valid length + width are measured
     height_predicted_cm = if_else(
       height_imputed &
         !length_imputed &
         !width_imputed,
-      exp(predict(
-        height_model,
-        newdata = data_opihi_microhabitat
-      )),
+      
+      exp(
+        predict(
+          height_model,
+          newdata = data_opihi_microhabitat
+        )
+      ),
+      
       NA_real_
     )
+  )
+
+#show only the shells needing imputation
+data_opihi_microhabitat %>%
+  filter(
+    length_imputed |
+      width_imputed |
+      height_imputed
+  ) %>%
+  select(
+    individual_id,
+    length_cm,
+    width_cm,
+    height_ww_cm,
+    length_invalid,
+    length_imputed,
+    width_imputed,
+    height_imputed,
+    length_predicted_cm,
+    width_predicted_cm,
+    height_predicted_cm
   )
 
 #overwrite missing values with imputed ones
 data_opihi_microhabitat <- data_opihi_microhabitat %>%
   mutate(
-    length_cm = coalesce(
-      length_cm,
-      length_predicted_cm
+    length_cm = if_else(
+      length_imputed & !is.na(length_predicted_cm),
+      length_predicted_cm,
+      length_cm
     ),
     
-    width_cm = coalesce(
-      width_cm,
-      width_predicted_cm
+    width_cm = if_else(
+      width_imputed & !is.na(width_predicted_cm),
+      width_predicted_cm,
+      width_cm
     ),
     
-    height_ww_cm = coalesce(
-      height_ww_cm,
-      height_predicted_cm
+    height_ww_cm = if_else(
+      height_imputed & !is.na(height_predicted_cm),
+      height_predicted_cm,
+      height_ww_cm
     )
   )
 
