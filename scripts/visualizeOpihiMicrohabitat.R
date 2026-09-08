@@ -198,6 +198,71 @@ ggsave("../output/individual_id-vs-thermal_dissipation_index_normalized-scatter.
 ScatterPlot(x_var = gps_waypoint,
             y_var = thermal_dissipation_index_normalized) 
 
+#length vs width to catch outliers
+ScatterPlot(x_var = length_tenth_mm,
+            y_var = width_tenth_mm)
+ggsave("../output/length_tenth_mm-vs-width_tenth_mm-scatter.png")
+
+#### Normalized vs Dist_to Measures Plots ####
+##shelter v thermal dissipation grouped by site
+ScatterPlot(x_var = dist_to_shelter_ft,
+            y_var = thermal_dissipation_index_normalized)
+ggsave("../output/dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-site.png")
+
+##shelter v thermal dissipation overall
+ScatterPlot(x_var = dist_to_shelter_ft,
+            y_var = thermal_dissipation_index_normalized,
+            color_var = NULL)
+ggsave("../output/dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-overall.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- lm(
+  thermal_dissipation_index_normalized ~ dist_to_shelter_ft + site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- lm(
+  thermal_dissipation_index_normalized ~ dist_to_shelter_ft * site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+#both models have overall sig p-vals, BUT the dist_to_shelter aspect has non-sig p-val.
+#implying that shelter dist doesnt affect thermal dissipation index.
+
+##shelter v height index by site
+ScatterPlot(x_var = dist_to_shelter_ft,
+            y_var = height_index_normalized)
+ggsave("../output/dist_to_shelter_ft-vs-height_index_normalized-scatter-site.png")
+
+##shelter v height index overall
+ScatterPlot(x_var = dist_to_shelter_ft,
+            y_var = height_index_normalized,
+            color_var = NULL)
+ggsave("../output/dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- lm(
+  height_index_normalized ~ dist_to_shelter_ft + site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- lm(
+  height_index_normalized ~ dist_to_shelter_ft * site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+#same case as v thermal dissipation, height index aint significantly affected by dist.
+
 #### Normalized vs Refuge Category Plots ####
 ##vs thermal_dissipation
 data_opihi_microhabitat %>%
