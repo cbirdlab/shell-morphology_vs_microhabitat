@@ -262,6 +262,60 @@ anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't v
 summary(model_no_interaction)
 summary(model_interaction)
 #same case as v thermal dissipation, height index aint significantly affected by dist.
+#implying that shelter dist doesnt affect height index.
+
+##limu v height index by site
+ScatterPlot(x_var = limu_on_shell,
+            y_var = height_index_normalized)
+ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-site.png")
+
+##limu v height index overall
+ScatterPlot(x_var = limu_on_shell,
+            y_var = height_index_normalized,
+            color_var = NULL)
+ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-overall.png")
+
+##limu v height index overall but boss wanted a 2nd order poly smooth added
+ScatterPlot(x_var = limu_on_shell,
+            y_var = height_index_normalized,
+            color_var = NULL) +
+  geom_smooth(
+    method = "lm",
+    formula = y ~ poly(x, 2),
+    se = TRUE,
+    linetype = "dashed"
+  )
+ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-overall-withpoly.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- lm(
+  height_index_normalized ~ limu_on_shell + site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- lm(
+  height_index_normalized ~ limu_on_shell * site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #sig p-val = relationship does vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+#limu not sig when interaction's included, test further
+
+library(emmeans)
+
+limu_slopes <- emtrends(
+  model_interaction,
+  specs = ~ site,
+  var = "limu_on_shell"
+)
+
+limu_slopes
+test(limu_slopes) #tests is slope @ site different than 0
+pairs(limu_slopes, adjust = "tukey") #tests which sites're different from each other
 
 #### Normalized vs Refuge Category Plots ####
 ##vs thermal_dissipation

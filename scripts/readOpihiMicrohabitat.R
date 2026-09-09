@@ -133,8 +133,8 @@ data_opihi_microhabitat <-
   clean_names() %>%
   rowwise() %>%
   
-  #omitting these dickheads until i can impute them properly
-  filter(!individual_id %in% c(54, 108)) %>%
+  #omitting these until i can impute them properly, they're fixed now
+  #filter(!individual_id %in% c(54, 108)) %>%
   
   dplyr::mutate(
     width_cm = if_else(
@@ -206,6 +206,7 @@ summary(height_model)
 
 #make imputations without overwriting
 data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  ungroup() %>%
   mutate(
     # Flag measurements that need imputation
     length_imputed = is.na(length_cm) | length_invalid,
@@ -304,6 +305,21 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
       height_imputed & !is.na(height_predicted_cm),
       height_predicted_cm,
       height_ww_cm
+    )
+  )
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    limu_on_shell = case_when(
+      limu_on_shell == "some crustose" ~ 2.5,
+      limu_on_shell == "<5"            ~ 2.5,
+      TRUE ~ as.numeric(limu_on_shell)
+    ),
+    
+    erosion = case_when(
+      erosion == "<5" ~ 2.5,
+      erosion == "<1" ~ 0.5,
+      TRUE ~ as.numeric(erosion)
     )
   )
 
