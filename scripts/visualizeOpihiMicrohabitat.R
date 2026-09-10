@@ -63,7 +63,7 @@ ScatterPlot <-
             y=!!y_var, 
             color=!!color_var) +
         geom_point() +
-        geom_smooth(method=lm)+
+        geom_smooth(method=lm, se=FALSE) +
         # geom_smooth(method= "nls",
         #             formula = y ~a * x^b,
         #             method.args = list(start=c(a=1,
@@ -198,12 +198,53 @@ ggsave("../output/individual_id-vs-thermal_dissipation_index_normalized-scatter.
 ScatterPlot(x_var = gps_waypoint,
             y_var = thermal_dissipation_index_normalized) 
 
+#big model the boss wanted. still missing robust habitat data, add year to this too
+#bench2 is 100% a typo
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  dplyr::mutate(
+    spot_on_transect = dplyr::recode(
+      spot_on_transect,
+      "bench2" = "bench"
+    )
+  )
+
+#start small since doing all interaction stuff at once breaks it
+model_additive <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~
+    dist_to_shelter_ft +
+    limu_on_shell +
+    spot_on_transect,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat,
+  na.action = na.omit
+)
+
+summary(model_additive)
+
+model_limu_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~
+    dist_to_shelter_ft * limu_on_shell +
+    spot_on_transect,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat,
+  na.action = na.omit
+)
+
+summary(model_limu_interaction)
+
+#raw length vs normalized surface area
+ScatterPlot(x_var = length_cm,
+            y_var = est_surface_area_cm2_normalized,
+            color_var = NULL)
+ggsave("../output/length_cm-vs-est_surface_area_cm2_normalized.png")
+
 #length vs width to catch outliers
 ScatterPlot(x_var = length_tenth_mm,
             y_var = width_tenth_mm)
 ggsave("../output/length_tenth_mm-vs-width_tenth_mm-scatter.png")
 
-#### Normalized vs Dist_to Measures Plots ####
+#### Normalized vs Dist_to Plots ####
+
 ##shelter v thermal dissipation grouped by site
 ScatterPlot(x_var = dist_to_shelter_ft,
             y_var = thermal_dissipation_index_normalized)
@@ -217,14 +258,16 @@ ggsave("../output/dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-sca
 
 #testing significance
 #same slope among sites
-model_no_interaction <- lm(
-  thermal_dissipation_index_normalized ~ dist_to_shelter_ft + site,
+model_no_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_ft,
+  random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
-model_interaction <- lm(
-  thermal_dissipation_index_normalized ~ dist_to_shelter_ft * site,
+model_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_ft,
+  random = ~ dist_to_shelter_ft | site,
   data = data_opihi_microhabitat
 )
 
@@ -247,14 +290,16 @@ ggsave("../output/dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.
 
 #testing significance
 #same slope among sites
-model_no_interaction <- lm(
-  height_index_normalized ~ dist_to_shelter_ft + site,
+model_no_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ dist_to_shelter_ft,
+  random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
-model_interaction <- lm(
-  height_index_normalized ~ dist_to_shelter_ft * site,
+model_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ dist_to_shelter_ft,
+  random = ~ dist_to_shelter_ft | site,
   data = data_opihi_microhabitat
 )
 
@@ -263,6 +308,138 @@ summary(model_no_interaction)
 summary(model_interaction)
 #same case as v thermal dissipation, height index aint significantly affected by dist.
 #implying that shelter dist doesnt affect height index.
+
+##litt pint v thermal dissipation index overall
+ScatterPlot(x_var = dist_to_littpint_ft,
+            y_var = thermal_dissipation_index_normalized,
+            color_var = NULL)
+ggsave("../output/dist_to_littpint_ft-vs-thermal_dissipation_index_normalized-overall.png")
+
+##litt pint v thermal dissipation index by site
+ScatterPlot(x_var = dist_to_littpint_ft,
+            y_var = thermal_dissipation_index_normalized)
+ggsave("../output/dist_to_littpint_ft-vs-thermal_dissipation_index_normalized-site.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_ft,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_ft,
+  random = ~ dist_to_littpint_ft | site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+
+##litt pint v height index overall
+ScatterPlot(x_var = dist_to_littpint_ft,
+            y_var = height_index_normalized,
+            color_var = NULL)
+ggsave("../output/dist_to_littpint_ft-vs-height_index_normalized-overall.png")
+
+##litt pint v height index by site
+ScatterPlot(x_var = dist_to_littpint_ft,
+            y_var = height_index_normalized)
+ggsave("../output/dist_to_littpint_ft-vs-height_index_normalized-site.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ dist_to_littpint_ft,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ dist_to_littpint_ft,
+  random = ~ dist_to_littpint_ft | site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+
+##open h2o v thermal dissipation index overall
+ScatterPlot(x_var = dist_to_open_h2o_ft,
+            y_var = thermal_dissipation_index_normalized,
+            color_var = NULL)
+ggsave("../output/dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-overall.png")
+
+##open h2o v thermal dissipation index by site
+ScatterPlot(x_var = dist_to_open_h2o_ft,
+            y_var = thermal_dissipation_index_normalized)
+ggsave("../output/dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-site.png")
+
+#testing significance
+#same slope among sites
+model_no_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_ft,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat
+)
+
+#different slopes among sites
+model_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_ft,
+  random = ~ dist_to_open_h2o_ft | site,
+  data = data_opihi_microhabitat
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+
+##surface angle v thermal dissipation index overall
+ScatterPlot(x_var = surface_angle,
+            y_var = thermal_dissipation_index_normalized,
+            color_var = NULL)
+ggsave("../output/surface_angle-vs-thermal_dissipation_index_normalized-overall.png")
+
+##open h2o v thermal dissipation index by site
+ScatterPlot(x_var = surface_angle,
+            y_var = thermal_dissipation_index_normalized)
+ggsave("../output/surface_angle-vs-thermal_dissipation_index_normalized-site.png")
+
+#testing significance
+#lme hates NA and surf angle has NAs
+data_surface_angle <- data_opihi_microhabitat %>%
+  dplyr::select(
+    thermal_dissipation_index_normalized,
+    surface_angle,
+    site
+  ) %>%
+  tidyr::drop_na()
+
+#same slope among sites
+model_no_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ surface_angle,
+  random = ~ 1 | site,
+  data = data_surface_angle
+)
+
+#different slopes among sites
+#limit reached w/o convergence
+model_interaction <- nlme::lme(
+  fixed = thermal_dissipation_index_normalized ~ surface_angle,
+  random = ~ surface_angle | site,
+  data = data_surface_angle 
+)
+
+anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
+summary(model_no_interaction)
+summary(model_interaction)
+
+#### Shell Exterior Properties vs Normalized Shell Measures ####
 
 ##limu v height index by site
 ScatterPlot(x_var = limu_on_shell,
@@ -282,29 +459,31 @@ ScatterPlot(x_var = limu_on_shell,
   geom_smooth(
     method = "lm",
     formula = y ~ poly(x, 2),
-    se = TRUE,
+    se = FALSE,
     linetype = "dashed"
   )
 ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-overall-withpoly.png")
 
 #testing significance
 #same slope among sites
-model_no_interaction <- lm(
-  height_index_normalized ~ limu_on_shell + site,
+model_no_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ limu_on_shell,
+  random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
-model_interaction <- lm(
-  height_index_normalized ~ limu_on_shell * site,
+model_interaction <- nlme::lme(
+  fixed = height_index_normalized ~ limu_on_shell,
+  random = ~ limu_on_shell | site,
   data = data_opihi_microhabitat
 )
 
 anova(model_no_interaction, model_interaction) #sig p-val = relationship does vary w/ site
 summary(model_no_interaction)
 summary(model_interaction)
-#limu not sig when interaction's included, test further
 
+#this shit is broken since i made site a random effect v
 library(emmeans)
 
 limu_slopes <- emtrends(
@@ -317,7 +496,24 @@ limu_slopes
 test(limu_slopes) #tests is slope @ site different than 0
 pairs(limu_slopes, adjust = "tukey") #tests which sites're different from each other
 
+#### Shell Exterior Properties vs Dist_to ####
+
+ScatterPlot(x_var = dist_to_shelter_ft,
+            y_var = erosion,
+            color_var = NULL)
+ggsave("../output/dist_to_shelter_ft-vs-erosion-overall.png")
+
+#model testing
+model_no_interaction <- nlme::lme(
+  fixed = dist_to_shelter_ft ~ erosion,
+  random = ~ 1 | site,
+  data = data_opihi_microhabitat
+)
+
+summary(model_no_interaction)
+
 #### Normalized vs Refuge Category Plots ####
+
 ##vs thermal_dissipation
 data_opihi_microhabitat %>%
   dplyr::filter(!is.na(limpet_location_solar_refuge_category)) %>%
