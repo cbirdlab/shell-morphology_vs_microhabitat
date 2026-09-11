@@ -373,6 +373,19 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
   normalizeCharacter("height_ww_cm") %>%
   #normalizeCharacter("shell_mass_g",
   # normalize_by = "est_surface_area_cm2"
+  dplyr::mutate(compass_surface_relative_ocean =
+                  abs((compass_surface - compass_ocean + 180) %% 360 - 180)
+                )%>%
+  
+  dplyr::mutate(altitude_est_opposite_ft =
+                  altitude_est_hypotenuse_ft * sin(altitude_est_angle_deg * pi / 180)
+  )%>%
+  
+  dplyr::mutate(
+    substrate_subtype = stringr::word(substrate, 2),
+    substrate = stringr::word(substrate, 1),
+    .after = substrate
+  )%>%
   
   dplyr::mutate(est_surface_area_cm2_normalized = 
                   SurfArea(mean(length_cm,
