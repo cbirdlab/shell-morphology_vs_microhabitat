@@ -127,6 +127,14 @@ DensPlot <-
     
   }
 
+#### Lines to Run the Output README.md Generator Script ####
+rmarkdown::render(
+  "../output/README.Rmd",
+  output_format = rmarkdown::github_document(
+    html_preview = TRUE
+  )
+)
+
 #### Plots Using IndivID or GPS for x ####
 
 data_opihi_microhabitat %>%
