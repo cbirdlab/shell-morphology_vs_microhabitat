@@ -50,34 +50,51 @@ ScatterPlot <-
            x_var = length,
            y_var = width,
            color_var = site,
-           smooth = TRUE){
+           smooth = TRUE,
+           panel = FALSE,
+           overall_line = FALSE){
     
     x_var = enquo(x_var)
     y_var = enquo(y_var)
-    color_var = enquo(color_var)   
+    color_var = enquo(color_var)
+    
+    if(panel == TRUE){
+      data <- data %>%
+        left_join(site_panels, by = "site")
+    }
+    
+    p <- data %>%
+      ggplot() +
+      aes(x = !!x_var,
+          y = !!y_var,
+          color = !!color_var) +
+      geom_point() +
+      theme_classic()
     
     if(smooth == TRUE){
-      data %>%
-        ggplot() +
-        aes(x=!!x_var,
-            y=!!y_var, 
-            color=!!color_var) +
-        geom_point() +
-        geom_smooth(method=lm, se=FALSE) +
-        # geom_smooth(method= "nls",
-        #             formula = y ~a * x^b,
-        #             method.args = list(start=c(a=1,
-        #                                        b=1))) +
-        theme_classic()
-    } else {
-      data %>%
-        ggplot() +
-        aes(x=!!x_var,
-            y=!!y_var, 
-            color=!!color_var) +
-        geom_point() +
-        theme_classic()
+      p <- p +
+        geom_smooth(method = lm, se = FALSE)
     }
+    
+    if(overall_line == TRUE){
+      p <- p +
+        geom_smooth(
+          aes(x = !!x_var, y = !!y_var, group = 1),
+          inherit.aes = FALSE,
+          data = data,
+          method = lm,
+          se = FALSE,
+          color = "black",
+          linewidth = 1
+        )
+    }
+    
+    if(panel == TRUE){
+      p <- p +
+        facet_wrap(~panel)
+    }
+    
+    return(p)
   }
 
 BoxPlot <-
@@ -127,28 +144,41 @@ DensPlot <-
     
   }
 
-#### Lines to Run the Output README.md Generator Script ####
-rmarkdown::render(
-  "../output/README.Rmd",
-  output_format = rmarkdown::github_document(
-    html_preview = TRUE
-  )
+#determine which panel each site belongs to
+site_panels <- tibble::tribble(
+  ~site,                                  ~panel,
+  "KahuluiBreakwaterBasaltInside",        "Kahului",
+  "KahuluiBreakwaterConcreteInside",      "Kahului",
+  "KahuluiBreakwaterBasaltOutside",       "Kahului",
+  
+  "EastMaui1-RA",                         "East Maui",
+  "EastMaui2-RAB",                        "East Maui",
+  "Honomanu",                             "East Maui",
+  "HanaPalemoHanaBay",                    "East Maui",
+  
+  "LaPerouseBayBench",                    "LaPerouse",
+  "LaPerouseBayCliff",                    "LaPerouse",
+  
+  "MaaleaLighthouse",                     "West Maui",
+  "HonoluaAdjacentInnerSide",             "West Maui"
 )
+
+site_panels
 
 #### Plots Using IndivID or GPS for x ####
 
 data_opihi_microhabitat %>%
-  mutate(dist_to_shelter_ft = 
-           case_when(!is.na(dist_to_shelter_ft) ~ dist_to_shelter_ft,
-                     dist_to_crustose_ft < dist_to_underrock_ft ~ dist_to_crustose_ft,
-                     dist_to_underrock_ft < dist_to_crustose_ft ~ dist_to_underrock_ft)) %>%
+  mutate(dist_to_shelter_cm = 
+           case_when(!is.na(dist_to_shelter_cm) ~ dist_to_shelter_cm,
+                     dist_to_crustose_cm < dist_to_underrock_cm ~ dist_to_crustose_cm,
+                     dist_to_underrock_cm < dist_to_crustose_cm ~ dist_to_underrock_cm)) %>%
   ggplot() +
   aes(
     # x = surf_angle,
-    # x = dist_to_littpint_ft,
-    # x = dist_to_crustose_ft,
-    x = dist_to_shelter_ft,
-    # x = dist_to_open_h2o_ft,
+    # x = dist_to_littpint_cm,
+    # x = dist_to_crustose_cm,
+    x = dist_to_shelter_cm,
+    # x = dist_to_open_h2o_cm,
     # x = individual_id,
     # y = thermal_dissipation_index_normalized
     y = height_index_normalized
@@ -161,7 +191,7 @@ data_opihi_microhabitat %>%
   facet_grid(.~site,
              scales = "free_x")
 
-model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft * 
+model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_cm * 
               site,
             data = data_opihi_microhabitat %>%
               mutate(site = factor(site,
@@ -180,7 +210,7 @@ model <- lm(thermal_dissipation_index_normalized ~ dist_to_shelter_ft *
                                    ))))
 summary(model)
 
-model <- lm(height_index_normalized ~ dist_to_shelter_ft * 
+model <- lm(height_index_normalized ~ dist_to_shelter_cm * 
               site,
             data = data_opihi_microhabitat %>%
               mutate(site = factor(site,
@@ -198,13 +228,6 @@ model <- lm(height_index_normalized ~ dist_to_shelter_ft *
                                      "MaaleaLighthouse"
                                    ))))
 summary(model)
-
-ScatterPlot(x_var = individual_id,
-            y_var = thermal_dissipation_index_normalized)
-ggsave("../output/individual_id-vs-thermal_dissipation_index_normalized-scatter.png")
-
-ScatterPlot(x_var = gps_waypoint,
-            y_var = thermal_dissipation_index_normalized) 
 
 #big model the boss wanted. still missing robust habitat data, add year to this too
 #bench2 is 100% a typo
@@ -219,7 +242,7 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
 #start small since doing all interaction stuff at once breaks it
 model_additive <- nlme::lme(
   fixed = thermal_dissipation_index_normalized ~
-    dist_to_shelter_ft +
+    dist_to_shelter_cm +
     limu_on_shell +
     spot_on_transect,
   random = ~ 1 | site,
@@ -231,7 +254,7 @@ summary(model_additive)
 
 model_limu_interaction <- nlme::lme(
   fixed = thermal_dissipation_index_normalized ~
-    dist_to_shelter_ft * limu_on_shell +
+    dist_to_shelter_cm * limu_on_shell +
     spot_on_transect,
   random = ~ 1 | site,
   data = data_opihi_microhabitat,
@@ -248,34 +271,39 @@ ggsave("../output/length_cm-vs-est_surface_area_cm2_normalized.png")
 
 #length vs width to catch outliers
 ScatterPlot(x_var = length_tenth_mm,
-            y_var = width_tenth_mm)
-ggsave("../output/length_tenth_mm-vs-width_tenth_mm-scatter.png")
+            y_var = width_tenth_mm,
+            panel = TRUE)
+ggsave("../output/length_tenth_mm-vs-width_tenth_mm-scatter.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #### Normalized vs Dist_to Plots ####
 
 ##shelter v thermal dissipation grouped by site
-ScatterPlot(x_var = dist_to_shelter_ft,
-            y_var = thermal_dissipation_index_normalized)
-ggsave("../output/dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-site.png")
-
-##shelter v thermal dissipation overall
-ScatterPlot(x_var = dist_to_shelter_ft,
+ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = thermal_dissipation_index_normalized,
-            color_var = NULL)
-ggsave("../output/dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-overall.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_shelter_cm-vs-thermal_dissipation_index_normalized-scatter-site.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #same slope among sites
 model_no_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_ft,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_cm,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
 model_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_ft,
-  random = ~ dist_to_shelter_ft | site,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_cm,
+  random = ~ dist_to_shelter_cm | site,
   data = data_opihi_microhabitat
 )
 
@@ -286,28 +314,28 @@ summary(model_interaction)
 #implying that shelter dist doesnt affect thermal dissipation index.
 
 ##shelter v height index by site
-ScatterPlot(x_var = dist_to_shelter_ft,
+ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = height_index_normalized)
-ggsave("../output/dist_to_shelter_ft-vs-height_index_normalized-scatter-site.png")
+ggsave("../output/dist_to_shelter_cm-vs-height_index_normalized-scatter-site.png")
 
 ##shelter v height index overall
-ScatterPlot(x_var = dist_to_shelter_ft,
+ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = height_index_normalized,
             color_var = NULL)
-ggsave("../output/dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.png")
+ggsave("../output/dist_to_shelter_cm-vs-height_index_normalized-scatter-overall.png")
 
 #testing significance
 #same slope among sites
 model_no_interaction <- nlme::lme(
-  fixed = height_index_normalized ~ dist_to_shelter_ft,
+  fixed = height_index_normalized ~ dist_to_shelter_cm,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
 model_interaction <- nlme::lme(
-  fixed = height_index_normalized ~ dist_to_shelter_ft,
-  random = ~ dist_to_shelter_ft | site,
+  fixed = height_index_normalized ~ dist_to_shelter_cm,
+  random = ~ dist_to_shelter_cm | site,
   data = data_opihi_microhabitat
 )
 
@@ -318,28 +346,28 @@ summary(model_interaction)
 #implying that shelter dist doesnt affect height index.
 
 ##litt pint v thermal dissipation index overall
-ScatterPlot(x_var = dist_to_littpint_ft,
+ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = thermal_dissipation_index_normalized,
             color_var = NULL)
-ggsave("../output/dist_to_littpint_ft-vs-thermal_dissipation_index_normalized-overall.png")
+ggsave("../output/dist_to_littpint_cm-vs-thermal_dissipation_index_normalized-overall.png")
 
 ##litt pint v thermal dissipation index by site
-ScatterPlot(x_var = dist_to_littpint_ft,
+ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = thermal_dissipation_index_normalized)
-ggsave("../output/dist_to_littpint_ft-vs-thermal_dissipation_index_normalized-site.png")
+ggsave("../output/dist_to_littpint_cm-vs-thermal_dissipation_index_normalized-site.png")
 
 #testing significance
 #same slope among sites
 model_no_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_ft,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_cm,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
 model_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_ft,
-  random = ~ dist_to_littpint_ft | site,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_littpint_cm,
+  random = ~ dist_to_littpint_cm | site,
   data = data_opihi_microhabitat
 )
 
@@ -348,28 +376,28 @@ summary(model_no_interaction)
 summary(model_interaction)
 
 ##litt pint v height index overall
-ScatterPlot(x_var = dist_to_littpint_ft,
+ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = height_index_normalized,
             color_var = NULL)
-ggsave("../output/dist_to_littpint_ft-vs-height_index_normalized-overall.png")
+ggsave("../output/dist_to_littpint_cm-vs-height_index_normalized-overall.png")
 
 ##litt pint v height index by site
-ScatterPlot(x_var = dist_to_littpint_ft,
+ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = height_index_normalized)
-ggsave("../output/dist_to_littpint_ft-vs-height_index_normalized-site.png")
+ggsave("../output/dist_to_littpint_cm-vs-height_index_normalized-site.png")
 
 #testing significance
 #same slope among sites
 model_no_interaction <- nlme::lme(
-  fixed = height_index_normalized ~ dist_to_littpint_ft,
+  fixed = height_index_normalized ~ dist_to_littpint_cm,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
 model_interaction <- nlme::lme(
-  fixed = height_index_normalized ~ dist_to_littpint_ft,
-  random = ~ dist_to_littpint_ft | site,
+  fixed = height_index_normalized ~ dist_to_littpint_cm,
+  random = ~ dist_to_littpint_cm | site,
   data = data_opihi_microhabitat
 )
 
@@ -378,28 +406,28 @@ summary(model_no_interaction)
 summary(model_interaction)
 
 ##open h2o v thermal dissipation index overall
-ScatterPlot(x_var = dist_to_open_h2o_ft,
+ScatterPlot(x_var = dist_to_open_h2o_cm,
             y_var = thermal_dissipation_index_normalized,
             color_var = NULL)
-ggsave("../output/dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-overall.png")
+ggsave("../output/dist_to_open_h2o_cm-vs-thermal_dissipation_index_normalized-overall.png")
 
 ##open h2o v thermal dissipation index by site
-ScatterPlot(x_var = dist_to_open_h2o_ft,
+ScatterPlot(x_var = dist_to_open_h2o_cm,
             y_var = thermal_dissipation_index_normalized)
-ggsave("../output/dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-site.png")
+ggsave("../output/dist_to_open_h2o_cm-vs-thermal_dissipation_index_normalized-site.png")
 
 #testing significance
 #same slope among sites
 model_no_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_ft,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_cm,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
 
 #different slopes among sites
 model_interaction <- nlme::lme(
-  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_ft,
-  random = ~ dist_to_open_h2o_ft | site,
+  fixed = thermal_dissipation_index_normalized ~ dist_to_open_h2o_cm,
+  random = ~ dist_to_open_h2o_cm | site,
   data = data_opihi_microhabitat
 )
 
@@ -506,14 +534,14 @@ pairs(limu_slopes, adjust = "tukey") #tests which sites're different from each o
 
 #### Shell Exterior Properties vs Dist_to ####
 
-ScatterPlot(x_var = dist_to_shelter_ft,
+ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = erosion,
             color_var = NULL)
-ggsave("../output/dist_to_shelter_ft-vs-erosion-overall.png")
+ggsave("../output/dist_to_shelter_cm-vs-erosion-overall.png")
 
 #model testing
 model_no_interaction <- nlme::lme(
-  fixed = dist_to_shelter_ft ~ erosion,
+  fixed = dist_to_shelter_cm ~ erosion,
   random = ~ 1 | site,
   data = data_opihi_microhabitat
 )
@@ -739,28 +767,6 @@ pca_groups <- data_opihi_microhabitat %>%
   na.omit() %>%
   dplyr::pull(site)
 
-
-#determine which panel each site belongs to
-site_panels <- tibble::tribble(
-  ~site,                                  ~panel,
-  "KahuluiBreakwaterBasaltInside",        "Kahului",
-  "KahuluiBreakwaterConcreteInside",      "Kahului",
-  "KahuluiBreakwaterBasaltOutside",       "Kahului",
-  
-  "EastMaui1-RA",                         "East Maui",
-  "EastMaui2-RAB",                        "East Maui",
-  "Honomanu",                             "East Maui",
-  "HanaPalemoHanaBay",                    "East Maui",
-  
-  "LaPerouseBayBench",                    "LaPerouse",
-  "LaPerouseBayCliff",                    "LaPerouse",
-  
-  "MaaleaLighthouse",                     "West Maui",
-  "HonoluaAdjacentInnerSide",             "West Maui"
-)
-
-site_panels
-
 #make pca chart
 p <- ggbiplot(
   normalized_character_pca,
@@ -882,13 +888,13 @@ non_morphological_pca <-
   data_opihi_microhabitat %>%
   dplyr::select(
     site,
-    surf_angle:dist_to_underrock_ft,
-    dist_to_littpint_ft:compass_ocean,
+    surf_angle:dist_to_underrock_cm,
+    dist_to_littpint_cm:compass_ocean,
     -notes
   ) %>%
   na.omit() %>%
-  dplyr::select(surf_angle:dist_to_underrock_ft,
-                dist_to_littpint_ft:compass_ocean) %>%
+  dplyr::select(surf_angle:dist_to_underrock_cm,
+                dist_to_littpint_cm:compass_ocean) %>%
   dplyr::select(where(~ all(!is.na(.)))) %>%
   dplyr::select(where(~ var(.) != 0)) %>%
   prcomp(center = TRUE,
@@ -901,8 +907,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock_ft,
-             dist_to_littpint_ft:compass_ocean,
+             surf_angle:dist_to_underrock_cm,
+             dist_to_littpint_cm:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(
@@ -926,8 +932,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock_ft,
-             dist_to_littpint_ft:compass_ocean,
+             surf_angle:dist_to_underrock_cm,
+             dist_to_littpint_cm:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(
@@ -951,8 +957,8 @@ ggbiplot(non_morphological_pca,
          groups = data_opihi_microhabitat %>%
            dplyr::select(
              site,
-             surf_angle:dist_to_underrock_ft,
-             dist_to_littpint_ft:compass_ocean,
+             surf_angle:dist_to_underrock_cm,
+             dist_to_littpint_cm:compass_ocean,
              -notes) %>%
            na.omit() %>%
            pull(

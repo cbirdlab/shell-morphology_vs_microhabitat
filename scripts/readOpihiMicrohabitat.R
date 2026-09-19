@@ -308,11 +308,14 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
     )
   )
 
+#### clean up limu and erosion ####
+
 data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  ungroup() %>%
   mutate(
     limu_on_shell = case_when(
       limu_on_shell == "some crustose" ~ 2.5,
-      limu_on_shell == "<5"            ~ 2.5,
+      limu_on_shell == "<5" ~ 2.5,
       TRUE ~ as.numeric(limu_on_shell)
     ),
     
@@ -320,108 +323,209 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
       erosion == "<5" ~ 2.5,
       erosion == "<1" ~ 0.5,
       TRUE ~ as.numeric(erosion)
+    ),
+    
+    dist_to_underrock_ft = as.numeric(
+      as.character(dist_to_underrock_ft)
     )
   )
 
-    # dist_to_open_h2o_ft_ft = case_when(str_detect(notes,
-    #                                         "all dist 0.15") &
-    #                                dist_to_open_h2o_ft < 0 ~ dist_to_open_h2o_ft + 0.15,
-    #                              str_detect(notes,
-    #                                         "all dist 0.15") &
-    #                                dist_to_open_h2o_ft > 0 ~ dist_to_open_h2o_ft - 0.15,
-    #                              TRUE ~ dist_to_open_h2o_ft)
-  
+#### correct dist to measures ####
 
-data_opihi_microhabitat <- data_opihi_microhabitat %>%  
-  mutate(dist_to_underrock_ft = as.numeric(as.character(dist_to_underrock_ft))) %>%
-  mutate(across(starts_with("dist_to"),
-                ~ case_when(str_detect(notes,
-                                       "all dist 0\\.15") &
-                              . < 0 ~ . + 0.15,
-                            str_detect(notes,
-                                       "all dist 0\\.15") &
-                              . > 0 ~ . - 0.15,
-                            TRUE ~ .))
-         #height_lw_cm = height_lw / 100,
-         #height_cm = mean(c(height_lw_cm,
-         #                   height_ww_cm),
-         #                na.rm=TRUE)
-  ) %>%
-  dplyr::mutate(
-    dist_to_shelter_ft = 
-      case_when(
-        !is.na(dist_to_shelter_ft) ~ dist_to_shelter_ft,
-        # abs(dist_to_underrock_ft) <= abs(dist_to_open_h2o_ft) & abs(dist_to_crustose_ft) ~ dist_to_underrock_ft,
-        # abs(dist_to_crustose_ft) <= abs(dist_to_open_h2o_ft) & abs(dist_to_underrock_ft) ~ dist_to_crustose_ft,
-        # abs(dist_to_open_h2o_ft) <= abs(dist_to_underrock_ft) & abs(dist_to_crustose_ft) ~ dist_to_open_h2o_ft,
-        !is.na(dist_to_underrock_ft) & (is.na(dist_to_crustose_ft) | abs(dist_to_underrock_ft) <= abs(dist_to_crustose_ft)) & (is.na(dist_to_open_h2o_ft) | abs(dist_to_underrock_ft) <= abs(dist_to_open_h2o_ft)) ~ dist_to_underrock_ft,
-        !is.na(dist_to_crustose_ft) & (is.na(dist_to_underrock_ft) | abs(dist_to_crustose_ft) <= abs(dist_to_underrock_ft)) & (is.na(dist_to_open_h2o_ft) | abs(dist_to_crustose_ft) <= abs(dist_to_open_h2o_ft)) ~ dist_to_crustose_ft,
-        !is.na(dist_to_open_h2o_ft) & (is.na(dist_to_underrock_ft) | abs(dist_to_open_h2o_ft) <= abs(dist_to_underrock_ft)) & (is.na(dist_to_crustose_ft) | abs(dist_to_open_h2o_ft) <= abs(dist_to_crustose_ft)) ~ dist_to_open_h2o_ft,
-        TRUE ~ NA_real_
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    across(
+      starts_with("dist_to") & ends_with("_ft"),
+      ~ case_when(
+        str_detect(notes, "all dist 0\\.15") &
+          .x < 0 ~ .x + 0.15,
+        
+        str_detect(notes, "all dist 0\\.15") &
+          .x > 0 ~ .x - 0.15,
+        
+        TRUE ~ .x
       )
+    )
+  )
+
+#### calculate dist to shelter ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    dist_to_shelter_ft = case_when(
+      
+      # Keep existing shelter distances.
+      !is.na(dist_to_shelter_ft) ~
+        dist_to_shelter_ft,
+      
+      # Use underrock if it is the closest available shelter.
+      !is.na(dist_to_underrock_ft) &
+        (is.na(dist_to_crustose_ft) |
+           abs(dist_to_underrock_ft) <= abs(dist_to_crustose_ft)) &
+        (is.na(dist_to_open_h2o_ft) |
+           abs(dist_to_underrock_ft) <= abs(dist_to_open_h2o_ft)) ~
+        dist_to_underrock_ft,
+      
+      # Otherwise, use crustose if it is closest.
+      !is.na(dist_to_crustose_ft) &
+        (is.na(dist_to_underrock_ft) |
+           abs(dist_to_crustose_ft) <= abs(dist_to_underrock_ft)) &
+        (is.na(dist_to_open_h2o_ft) |
+           abs(dist_to_crustose_ft) <= abs(dist_to_open_h2o_ft)) ~
+        dist_to_crustose_ft,
+      
+      # Otherwise, use open water if it is closest.
+      !is.na(dist_to_open_h2o_ft) &
+        (is.na(dist_to_underrock_ft) |
+           abs(dist_to_open_h2o_ft) <= abs(dist_to_underrock_ft)) &
+        (is.na(dist_to_crustose_ft) |
+           abs(dist_to_open_h2o_ft) <= abs(dist_to_crustose_ft)) ~
+        dist_to_open_h2o_ft,
+      
+      TRUE ~ NA_real_
+    )
+  )
+
+#### calc shell morphology variables ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  rowwise() %>%
+  mutate(
+    height_index = height_ww_cm / length_cm,
+    
+    width_index = width_cm / length_cm,
+    
+    est_surface_area_cm2 = SurfArea(
+      length_cm / 2,
+      width_cm / 2,
+      height_ww_cm
+    ),
+    
+    cross_sectional_area_cm2 =
+      pi * (width_cm / 2) * (length_cm / 2),
+    
+    thermal_dissipation_index =
+      est_surface_area_cm2 / cross_sectional_area_cm2
+    
+    # massiveness_index =
+    #   shell_mass_g / est_surface_area_cm2
   ) %>%
-  dplyr::mutate(height_index = height_ww_cm / length_cm,
-                width_index = width_cm / length_cm,
-                est_surface_area_cm2 = SurfArea(length_cm/2,
-                                                width_cm/2,
-                                                height_ww_cm),
-                #massiveness_index = shell_mass_g/est_surface_area_cm2,
-                cross_sectional_area_cm2 = pi*(width_cm/2)*(length_cm/2),
-                thermal_dissipation_index = est_surface_area_cm2/cross_sectional_area_cm2) %>%
-  dplyr::ungroup() %>%
-  normalizeCharacter("width_cm") %>% 
-  normalizeCharacter("height_ww_cm") %>%
-  #normalizeCharacter("shell_mass_g",
-  # normalize_by = "est_surface_area_cm2"
-  dplyr::mutate(compass_surface_relative_ocean =
-                  abs((compass_surface - compass_ocean + 180) %% 360 - 180)
-                )%>%
-  
-  dplyr::mutate(altitude_est_opposite_ft =
-                  altitude_est_hypotenuse_ft * sin(altitude_est_angle_deg * pi / 180)
-  )%>%
-  
-  dplyr::mutate(
+  ungroup()
+
+#### normalize morphology ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  normalizeCharacter("width_cm") %>%
+  normalizeCharacter("height_ww_cm")
+
+#### compass and trig stuff ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    compass_surface_relative_ocean =
+      abs((compass_surface - compass_ocean + 180) %% 360 - 180),
+    
+    altitude_est_opposite_ft =
+      altitude_est_hypotenuse_ft *
+      sin(altitude_est_angle_deg * pi / 180)
+  )
+
+#### assigns north and south shore ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    shore = case_when(
+      
+      site %in% c(
+        "KahuluiBreakwaterBasaltInside",
+        "KahuluiBreakwaterConcreteInside",
+        "HonoluaAdjacentInnerSide",
+        "HanaPalemoHanaBay",
+        "Honomanu",
+        "KahuluiBreakwaterBasaltOutside"
+      ) ~ "north",
+      
+      site %in% c(
+        "EastMaui1-RA",
+        "EastMaui2-RAB",
+        "MaaleaLighthouse",
+        "LaPerouseBayBench",
+        "LaPerouseBayCliff"
+      ) ~ "south",
+      
+      TRUE ~ NA_character_
+    )
+  )
+
+#### makes substrate and substrate subtype ####
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
     substrate_subtype = stringr::word(substrate, 2),
     substrate = stringr::word(substrate, 1),
     .after = substrate
-  )%>%
+  )
+
+#### normalized morphology indecies ####
+
+#calculate mean shell length across all individuals.
+mean_length_cm <- mean(
+  data_opihi_microhabitat$length_cm,
+  na.rm = TRUE
+)
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  rowwise() %>%
+  mutate(
+    est_surface_area_cm2_normalized = SurfArea(
+      mean_length_cm / 2,
+      width_cm_normalized / 2,
+      height_ww_cm_normalized
+    ),
+    
+    cross_sectional_area_cm2_normalized =
+      pi * (width_cm_normalized / 2) * (mean_length_cm / 2),
+    
+    thermal_dissipation_index_normalized =
+      est_surface_area_cm2_normalized /
+      cross_sectional_area_cm2_normalized,
+    
+    height_index_normalized =
+      height_ww_cm_normalized / mean_length_cm,
+    
+    width_index_normalized =
+      width_cm_normalized / mean_length_cm
+    
+    # massiveness_index_normalized =
+    #   shell_mass_g_normalized /
+    #   est_surface_area_cm2_normalized
+  ) %>%
+  ungroup()
+
+#### convert ft to cm ####
+
+# Find all columns ending in _ft
+ft_cols <- grep(
+  "_ft$",
+  names(data_opihi_microhabitat),
+  value = TRUE
+)
+
+# Convert each column to centimeters
+for (ft_col in ft_cols) {
   
-  dplyr::mutate(est_surface_area_cm2_normalized = 
-                  SurfArea(mean(length_cm,
-                                na.rm=TRUE),
-                           width_cm_normalized,
-                           height_ww_cm_normalized),
-                cross_sectional_area_cm2_normalized = pi*(width_cm_normalized/2)*mean(length_cm,
-                                                                                      na.rm=TRUE),
-                thermal_dissipation_index_normalized = est_surface_area_cm2_normalized / cross_sectional_area_cm2_normalized,
-                height_index_normalized = height_ww_cm_normalized / mean(length_cm,
-                                                                         na.rm=TRUE),
-                width_index_normalized = width_cm_normalized / mean(length_cm,
-                                                                    na.rm=TRUE)
-                
-                # massiveness_index_normalized = shell_mass_g_normalized/est_surface_area_cm2_normalized,
-                # shore = case_when(str_detect(site,
-                #                              "^EastMaui") ~ "South",
-                #                   TRUE ~ "North")
-  ) #%>%
-# dplyr::mutate(shore_class = case_when(str_detect(shore_type,
-#                                                  "bench") ~ "bench",
-#                                       shore_type == "boulder" ~ "boulder",
-#                                       TRUE ~ "mix"),
-#               shore_class = factor(shore_class,
-#                                    levels = c("bench",
-#                                               "mix",
-#                                               "boulder"))) %>%
-# # dplyr::select(individual_id:location,
-#               # location_name,
-#               life_stage,
-#               substratum:shore_aspect,
-#               shore_class,
-#               #measurer,
-#               length_cm,
-#               everything(),
-#               -length:-height_ww,
-#               -sample_id_bscan:-site_id_optimal,
-#               -genetic_pop_sample_id,
-#               -starts_with("x")) 
+  # Create the corresponding centimeter column name
+  cm_col <- sub("_ft$", "_cm", ft_col)
+  
+  # Convert feet to centimeters
+  data_opihi_microhabitat[[cm_col]] <-
+    data_opihi_microhabitat[[ft_col]] * 30.48
+  
+}
+
+#### output modified data ####
+
+write_csv(
+  data_opihi_microhabitat,
+  "../data/data_opihi_microhabitat.csv"
+)

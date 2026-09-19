@@ -1,163 +1,182 @@
-
 # Output Directory Documentation
 
-This directory contains figures generated from the opihi morphology and
-microhabitat analysis scripts.
+This directory contains figures generated from the opihi morphology and microhabitat analysis scripts. The PNG files are derived outputs and should be reproducible from `../scripts/visualizeOpihiMicrohabitat.R` after sourcing `../scripts/readOpihiMicrohabitat.R`.
+
+## Results Summary
+
+These committed figures were generated from an earlier 123-observation, 10-site snapshot. The current primary CSV contains 144 observations across 11 site labels, including a new `KahuluiBreakwaterBasaltOutside` group and additional `MaaleaLighthouse` records. Regenerate the figures before using them as summaries of current data. Patterns described from the older snapshot must be reassessed after regeneration; PCA and thermal-dissipation figures remain exploratory.
+
+The directory also contains `thermal_index_2017-2023_comparison.pdf`, which is not rendered below because this README catalogs PNG figures only.
 
 ## Figure Catalog
 
-### Figure 1. Dist to Littpint Ft vs Height Index Normalized Overall
+### Figure 1. Shell Height Scales With Shell Length
 
-<img src="dist_to_littpint_ft-vs-height_index_normalized-overall.png" alt="Dist to Littpint Ft vs Height Index Normalized Overall" width="650">
+<img src="height_ww-vs-length_scatter.png" alt="Figure 1. Shell height versus shell length scatterplot" width="650">
 
-### Figure 2. Dist to Littpint Ft vs Height Index Normalized Site
+Scatterplot of shell height measured widest-way against shell length, colored by site, with linear smooths. The figure shows a positive relationship between length and height and highlights size differences among sampled sites.
 
-<img src="dist_to_littpint_ft-vs-height_index_normalized-site.png" alt="Dist to Littpint Ft vs Height Index Normalized Site" width="650">
+### Figure 2. Raw Length Versus Raw Width
 
-### Figure 3. Dist to Littpint Ft vs Thermal Dissipation Index Normalized Overall
+<img src="length_tenth_mm-vs-width_tenth_mm-scatter.png" alt="Figure 2. Raw length versus raw width scatterplot" width="650">
 
-<img src="dist_to_littpint_ft-vs-thermal_dissipation_index_normalized-overall.png" alt="Dist to Littpint Ft vs Thermal Dissipation Index Normalized Overall" width="650">
+Scatterplot of shell length (in tenth of a mm) against shell width (in tenth of a mm), colored by site, with linear smooths. This figure is mainly used to spot outliers, which could be signs of erroneous measurements.
 
-### Figure 4. Dist to Open H2o Ft vs Thermal Dissipation Index Normalized Overall
+### Figure 3. Width Index Versus Height Index
 
-<img src="dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-overall.png" alt="Dist to Open H2o Ft vs Thermal Dissipation Index Normalized Overall" width="650">
+<img src="hindex_windex.png" alt="Figure 3. Width index versus height index" width="650">
 
-### Figure 5. Dist to Open H2o Ft vs Thermal Dissipation Index Normalized Site
+Scatterplot comparing normalized width index and normalized height index for individual shells. This figure summarizes shell shape variation after normalization.
 
-<img src="dist_to_open_h2o_ft-vs-thermal_dissipation_index_normalized-site.png" alt="Dist to Open H2o Ft vs Thermal Dissipation Index Normalized Site" width="650">
+### Figure 4. Normalized Shell Height by Site
 
-### Figure 6. Dist to Shelter Ft vs Height Index Normalized Scatter Overall
+<img src="height_ww_normalized-vs-site-boxplot.png" alt="Figure 4. Normalized shell height by site" width="650">
 
-<img src="dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.png" alt="Dist to Shelter Ft vs Height Index Normalized Scatter Overall" width="650">
+Boxplots of normalized shell height by site. The plot shows site-level variation in shell height after accounting for shell length.
 
-### Figure 7. Dist to Shelter Ft vs Height Index Normalized Scatter Site
+### Figure 5. Normalized Height Index by Site
 
-<img src="dist_to_shelter_ft-vs-height_index_normalized-scatter-site.png" alt="Dist to Shelter Ft vs Height Index Normalized Scatter Site" width="650">
+<img src="height_index_normalized-vs-site-boxplot.png" alt="Figure 5. Normalized height index by site" width="650">
 
-### Figure 8. Dist to Shelter Ft vs Thermal Dissipation Index Normalized Scatter Overall
+Boxplots of normalized height index by site. This figure compares relative shell height across sites rather than raw body size.
 
-<img src="dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-overall.png" alt="Dist to Shelter Ft vs Thermal Dissipation Index Normalized Scatter Overall" width="650">
+### Figure 6. Normalized Estimated Surface Area by Site
 
-### Figure 9. Dist to Shelter Ft vs Thermal Dissipation Index Normalized Scatter Site
+<img src="est_surface_area_cm2_normalized-vs-site-boxplots.png" alt="Figure 6. Normalized estimated surface area by site" width="650">
 
-<img src="dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-site.png" alt="Dist to Shelter Ft vs Thermal Dissipation Index Normalized Scatter Site" width="650">
+Boxplots of estimated normalized shell surface area by site. The figure is used to compare surface-area-related morphology among locations after length normalization.
 
-### Figure 10. Est Surface Area Cm2 Normalized vs Site Boxplots
+### Figure 7. Normalized Thermal Dissipation Index by Site
 
-<img src="est_surface_area_cm2_normalized-vs-site-boxplots.png" alt="Est Surface Area Cm2 Normalized vs Site Boxplots" width="650">
+<img src="thermal_dissipation_index_normalized-vs-site-boxplot.png" alt="Figure 7. Normalized thermal dissipation index by site" width="650">
 
-### Figure 11. Height Index Normalized vs Site Boxplot
+Boxplots of normalized thermal dissipation index by site. Higher values indicate greater estimated surface area relative to cross-sectional area.
 
-<img src="height_index_normalized-vs-site-boxplot.png" alt="Height Index Normalized vs Site Boxplot" width="650">
+### Figure 8. Normalized Thermal Dissipation Index by Distance to Shelter, Grouped by Site
 
-### Figure 12. Height Ww Normalized vs Site Boxplot
+<img src="dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-site.png" alt="Figure 8. Normalized thermal dissipation index by distance to shelter, grouped by site" width="650">
 
-<img src="height_ww_normalized-vs-site-boxplot.png" alt="Height Ww Normalized vs Site Boxplot" width="650">
+Scatterplot of normalized thermal dissipation index by distance to shelter, grouped by site, with linear smooths. Positive slopes indicate increasing ability to dissipate heat as shelter proximity increases.
 
-### Figure 13. Height Ww vs Length Scatter
+### Figure 9. Normalized Thermal Dissipation Index by Distance to Shelter, Not Grouped
 
-<img src="height_ww-vs-length_scatter.png" alt="Height Ww vs Length Scatter" width="650">
+<img src="dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-overall.png" alt="Figure 9. Normalized thermal dissipation index by distance to shelter, not grouped" width="650">
 
-### Figure 14. Hindex Windex
+Scatterplot of normalized thermal dissipation index by distance to shelter, not grouped, with linear smooths. Positive slopes indicate increasing ability to dissipate heat as shelter proximity increases.
 
-<img src="hindex_windex.png" alt="Hindex Windex" width="650">
+### Figure 8 and Figure 9 Statistical Results
 
-### Figure 15. Indiv Id vs Thermal Dissipation Index Normalized Scatter
+Linear models were made representing the relationship between thermal dissipation index and shelter distance, one accounting for interactions between sites (representing Figure 8) and one not accounting for interactions between sites (representing Figure 9). The ANOVA run on these models was non-significant (p = 0.9512), indicating that site interaction was non-significant.
+While both linear models had significant p-values, both showed that shelter distance did not significantly influence thermal dissipation (p = 0.256863 and p = 0.31462 for the no interaction and interaction included models, respectively).
 
-<img src="indiv_id-vs-thermal_dissipation_index_normalized-scatter.png" alt="Indiv Id vs Thermal Dissipation Index Normalized Scatter" width="650">
+### Figure 10. Normalized Height Index by Distance to Shelter, Grouped by Site
 
-### Figure 16. Indiv Id vs Thermal Dissipation Index Normalized
+<img src="dist_to_shelter_ft-vs-height_index_normalized-scatter-site.png" alt="Figure 10. Normalized height index by distance to shelter, grouped by site" width="650">
 
-<img src="indiv_id-vs-thermal_dissipation_index_normalized.png" alt="Indiv Id vs Thermal Dissipation Index Normalized" width="650">
+Scatterplot of normalized height index by distance to shelter, grouped by site, with linear smooths. Positive slopes indicate increasing shell height as shelter proximity increases.
 
-### Figure 17. Individual Id vs Thermal Dissipation Index Normalized Scatter
+### Figure 11. Normalized Height Index by Distance to Shelter, Not Grouped
 
-<img src="individual_id-vs-thermal_dissipation_index_normalized-scatter.png" alt="Individual Id vs Thermal Dissipation Index Normalized Scatter" width="650">
+<img src="dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.png" alt="Figure 11. Normalized height index by distance to shelter, not grouped" width="650">
 
-### Figure 18. Length Cm vs Est Surface Area Cm2 Normalized
+Scatterplot of normalized height index by distance to shelter, not grouped, with linear smooths. Positive slopes indicate increasing shell height as shelter proximity increases.
 
-<img src="length_cm-vs-est_surface_area_cm2_normalized.png" alt="Length Cm vs Est Surface Area Cm2 Normalized" width="650">
+### Figure 10 and Figure 11 Statistical Results
 
-### Figure 19. Length Tenth Mm vs Width Tenth Mm Scatter
+Linear models were made representing the relationship between height index and shelter distance, one accounting for interactions between sites (representing Figure 10) and one not accounting for interactions between sites (representing Figure 11). The ANOVA run on these models was non-significant (p = 0.8926), indicating that site interaction was non-significant.
+While both linear models had significant p-values, both showed that shelter distance did not significantly influence height (p = 0.272310 and p = 0.25807 for the no interaction and interaction included models, respectively).
 
-<img src="length_tenth_mm-vs-width_tenth_mm-scatter.png" alt="Length Tenth Mm vs Width Tenth Mm Scatter" width="650">
+### Figure 12. Normalized Height Index by Percent Limu Shell Coverage, Grouped by Site
 
-### Figure 20. Limu on Shell vs Height Index Normalized Scatter Overall Withpoly
+<img src="limu_on_shell-vs-height_index_normalized-scatter-site.png" alt="Figure 12. Normalized height index by percent limu shell coverage, grouped by site" width="650">
 
-<img src="limu_on_shell-vs-height_index_normalized-scatter-overall-withpoly.png" alt="Limu on Shell vs Height Index Normalized Scatter Overall Withpoly" width="650">
+Scatterplot of normalized height index by percent limu shell coverage, grouped by site, with linear smooths. Positive slopes indicate increasing shell height with increasing limu coverage.
 
-### Figure 21. Limu on Shell vs Height Index Normalized Scatter Overall
+### Figure 13. Normalized Height Index by Percent Limu Shell Coverage, Not Grouped
 
-<img src="limu_on_shell-vs-height_index_normalized-scatter-overall.png" alt="Limu on Shell vs Height Index Normalized Scatter Overall" width="650">
+<img src="limu_on_shell-vs-height_index_normalized-scatter-overall.png" alt="Figure 13. Normalized height index by percent limu shell coverage, not grouped" width="650">
 
-### Figure 22. Limu on Shell vs Height Index Normalized Scatter Site
+Scatterplot of normalized height index by percent limu shell coverage, not grouped, with linear smooths. Positive slopes indicate increasing shell height with increasing limu coverage.
 
-<img src="limu_on_shell-vs-height_index_normalized-scatter-site.png" alt="Limu on Shell vs Height Index Normalized Scatter Site" width="650">
+### Figure 12 and 13 Statistical Results
 
-### Figure 23. Normalized Mean Surface Area Deviation Site
+Linear models were made representing the relationship between height index and limu coverage, one accounting for interactions between sites (representing Figure 10) and one not accounting for interactions between sites (representing Figure 11). The ANOVA run on these models was significant (p = 0.007598), indicating that site interaction is significant.
+Site-specific slope estimates showed a significant positive relationship between limu cover and normalized shell height at Maalea Lighthouse (β = 0.00185, SE = 0.000364, t = 5.09, p < 0.0001), whereas slopes at the other estimable sites were not significantly different from zero. Tukey-adjusted pairwise comparisons indicated that the slope at Maalea Lighthouse differed significantly from that at Honomanu (difference = 0.00210, p = 0.0005); no other pairwise differences were significant.
 
-<img src="normalized_mean_surface_area_deviation-site.png" alt="Normalized Mean Surface Area Deviation Site" width="650">
+### Figure 14. Surface Area Deviation by Refuge Availability
 
-### Figure 24. Pca 1 2 Non Morphological
+<img src="normalized_mean_surface_area_deviation-site.png" alt="Figure 14. Surface area deviation by refuge availability" width="650">
 
-<img src="pca_1-2_non_morphological.png" alt="Pca 1 2 Non Morphological" width="650">
+Site-level boxplots of deviation from mean normalized surface area, grouped by the script-defined refuge availability category. The figure suggests higher positive deviations in the “less refuge” group.
 
-### Figure 25. Pca 1 2 Normalized Shell Characters Centroids
+### Figure 15. Raw Shell PCA, PC1 Versus PC2
 
-<img src="pca_1-2_normalized_shell_characters_centroids.png" alt="Pca 1 2 Normalized Shell Characters Centroids" width="650">
+<img src="pca_1-2_shell_characters.png" alt="Figure 15. Raw shell PCA PC1 versus PC2" width="650">
 
-### Figure 26. Pca 1 2 Normalized Shell Characters
+PCA biplot of raw shell morphology variables showing PC1 and PC2, grouped by site with ellipses. PC1 captures most raw morphological variation and appears strongly size-related.
 
-<img src="pca_1-2_normalized_shell_characters.png" alt="Pca 1 2 Normalized Shell Characters" width="650">
+### Figure 16. Raw Shell PCA, PC1 Versus PC3
 
-### Figure 27. Pca 1 2 Shell Characters
+<img src="pca_1-3_shell_characters.png" alt="Figure 16. Raw shell PCA PC1 versus PC3" width="650">
 
-<img src="pca_1-2_shell_characters.png" alt="Pca 1 2 Shell Characters" width="650">
+PCA biplot of raw shell morphology variables showing PC1 and PC3. This view helps evaluate secondary axes of variation after the dominant size axis.
 
-### Figure 28. Pca 1 3 Non Morphological
+### Figure 17. Raw Shell PCA, PC2 Versus PC3
 
-<img src="pca_1-3_non_morphological.png" alt="Pca 1 3 Non Morphological" width="650">
+<img src="pca_2-3_shell_characters.png" alt="Figure 17. Raw shell PCA PC2 versus PC3" width="650">
 
-### Figure 29. Pca 1 3 Normalized Shell Characters
+PCA biplot of raw shell morphology variables showing PC2 and PC3. This figure emphasizes non-PC1 variation and site overlap.
 
-<img src="pca_1-3_normalized_shell_characters.png" alt="Pca 1 3 Normalized Shell Characters" width="650">
+### Figure 18. Normalized Shell PCA, PC1 Versus PC2
 
-### Figure 30. Pca 1 3 Shell Characters
+<img src="pca_1-2_normalized_shell_characters.png" alt="Figure 18. Normalized shell PCA PC1 versus PC2" width="650">
 
-<img src="pca_1-3_shell_characters.png" alt="Pca 1 3 Shell Characters" width="650">
+PCA biplot of normalized shell traits and indices showing PC1 and PC2. This view focuses on shape and thermal-index variation after allometric adjustment.
 
-### Figure 31. Pca 2 3 Non Morphological
+### Figure 19. Normalized Shell PCA, PC1 Versus PC3
 
-<img src="pca_2-3_non_morphological.png" alt="Pca 2 3 Non Morphological" width="650">
+<img src="pca_1-3_normalized_shell_characters.png" alt="Figure 19. Normalized shell PCA PC1 versus PC3" width="650">
 
-### Figure 32. Pca 2 3 Normalized Shell Characters
+PCA biplot of normalized shell traits showing PC1 and PC3. The plot provides an alternate view of site clustering and outliers in normalized morphology.
 
-<img src="pca_2-3_normalized_shell_characters.png" alt="Pca 2 3 Normalized Shell Characters" width="650">
+### Figure 20. Normalized Shell PCA, PC2 Versus PC3
 
-### Figure 33. Pca 2 3 Shell Characters
+<img src="pca_2-3_normalized_shell_characters.png" alt="Figure 20. Normalized shell PCA PC2 versus PC3" width="650">
 
-<img src="pca_2-3_shell_characters.png" alt="Pca 2 3 Shell Characters" width="650">
+PCA biplot of normalized shell traits showing PC2 and PC3. This plot highlights secondary shape axes with substantial site overlap.
 
-### Figure 34. Solar Refuge Category vs Height Index Normalized Box
+### Figure 21. Non-Morphological PCA, PC1 Versus PC2
 
-<img src="solar_refuge_category-vs-height_index_normalized-box.png" alt="Solar Refuge Category vs Height Index Normalized Box" width="650">
+<img src="pca_1-2_non_morphological.png" alt="Figure 21. Non-morphological PCA PC1 versus PC2" width="650">
 
-### Figure 35. Solar Refuge Category vs Thermal Dissipation Index Normalized Box
+PCA biplot of non-morphological microhabitat variables showing PC1 and PC2. The site ellipses overlap broadly, indicating that these variables do not separate sites as cleanly as raw shell morphology.
 
-<img src="solar_refuge_category-vs-thermal_dissipation_index_normalized-box.png" alt="Solar Refuge Category vs Thermal Dissipation Index Normalized Box" width="650">
+### Figure 22. Non-Morphological PCA, PC1 Versus PC3
 
-### Figure 36. Surface Angle vs Thermal Dissipation Index Normalized Overall
+<img src="pca_1-3_non_morphological.png" alt="Figure 22. Non-morphological PCA PC1 versus PC3" width="650">
 
-<img src="surface_angle-vs-thermal_dissipation_index_normalized-overall.png" alt="Surface Angle vs Thermal Dissipation Index Normalized Overall" width="650">
+PCA biplot of non-morphological microhabitat variables showing PC1 and PC3. This alternate component view shows variation associated with distance and compass-direction variables.
 
-### Figure 37. Surface Angle vs Thermal Dissipation Index Normalized Site
+### Figure 23. Non-Morphological PCA, PC2 Versus PC3
 
-<img src="surface_angle-vs-thermal_dissipation_index_normalized-site.png" alt="Surface Angle vs Thermal Dissipation Index Normalized Site" width="650">
+<img src="pca_2-3_non_morphological.png" alt="Figure 23. Non-morphological PCA PC2 versus PC3" width="650">
 
-### Figure 38. Thermal Dissipation Index Normalized Dist to Shelter Lin Mod
+PCA biplot of non-morphological microhabitat variables showing PC2 and PC3. The figure illustrates secondary microhabitat gradients and continued site overlap.
 
-<img src="thermal_dissipation_index_normalized-dist_to_shelter-lin_mod.png" alt="Thermal Dissipation Index Normalized Dist to Shelter Lin Mod" width="650">
+### Figure 24. Normalized Thermal Dissipation by Individual ID
 
-### Figure 39. Thermal Dissipation Index Normalized vs Site Boxplot
+<img src="indiv_id-vs-thermal_dissipation_index_normalized.png" alt="Figure 24. Normalized thermal dissipation by individual ID" width="650">
 
-<img src="thermal_dissipation_index_normalized-vs-site-boxplot.png" alt="Thermal Dissipation Index Normalized vs Site Boxplot" width="650">
+Faceted plot of normalized thermal dissipation index against individual ID by site. The figure is useful for identifying within-site patterns and potential outliers.
+
+### Figure 25. Normalized Thermal Dissipation Scatterplot
+
+<img src="indiv_id-vs-thermal_dissipation_index_normalized-scatter.png" alt="Figure 25. Normalized thermal dissipation scatterplot by individual ID" width="650">
+
+Scatterplot version of normalized thermal dissipation index against individual ID. This output supports visual comparison of the same response variable across individuals and sites.
+
+### Figure 26. Normalized Thermal Dissipation Versus Shelter Distance
+
+<img src="thermal_dissipation_index_normalized-dist_to_shelter-lin_mod.png" alt="Figure 26. Normalized thermal dissipation versus distance to shelter" width="650">
+
+Faceted linear-model plot of normalized thermal dissipation index against distance to shelter. The relationships appear site-specific and noisy, with wide uncertainty in sites with limited observations.
