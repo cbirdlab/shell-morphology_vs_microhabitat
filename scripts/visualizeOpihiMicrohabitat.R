@@ -63,6 +63,17 @@ ScatterPlot <-
         left_join(site_panels, by = "site")
     }
     
+    # Create a separate dataset for the overall regression line
+    # Removing the panel column allows ggplot to fit one
+    # regression using ALL sites and display it in every panel
+    
+    if(panel == TRUE){
+      overall_data <- data %>%
+        dplyr::select(-panel)
+    } else {
+      overall_data <- data
+    }
+    
     p <- data %>%
       ggplot() +
       aes(x = !!x_var,
@@ -71,17 +82,21 @@ ScatterPlot <-
       geom_point() +
       theme_classic()
     
+    # Individual regression lines for each site
     if(smooth == TRUE){
       p <- p +
         geom_smooth(method = lm, se = FALSE)
     }
     
+    # One overall regression line calculated across ALL sites
     if(overall_line == TRUE){
       p <- p +
         geom_smooth(
-          aes(x = !!x_var, y = !!y_var, group = 1),
+          aes(x = !!x_var,
+              y = !!y_var,
+              group = 1),
           inherit.aes = FALSE,
-          data = data,
+          data = overall_data,
           method = lm,
           se = FALSE,
           color = "black",
@@ -165,7 +180,7 @@ site_panels <- tibble::tribble(
 
 site_panels
 
-#### Plots Using IndivID or GPS for x ####
+#### Plots and Models for Basic Morphological Measures ####
 
 data_opihi_microhabitat %>%
   mutate(dist_to_shelter_cm = 
@@ -266,17 +281,34 @@ summary(model_limu_interaction)
 #raw length vs normalized surface area
 ScatterPlot(x_var = length_cm,
             y_var = est_surface_area_cm2_normalized,
-            color_var = NULL)
-ggsave("../output/length_cm-vs-est_surface_area_cm2_normalized.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/length_cm-vs-est_surface_area_cm2_normalized.png",
+       width = 12,
+       height = 8,
+       dpi = 300
+)
 
 #length vs width to catch outliers
 ScatterPlot(x_var = length_tenth_mm,
             y_var = width_tenth_mm,
-            panel = TRUE)
-ggsave("../output/length_tenth_mm-vs-width_tenth_mm-scatter.png",
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/length_cm-vs-width_cm-scatter.png",
   width = 12,
   height = 8,
   dpi = 300
+)
+
+#hindex vs windex
+ScatterPlot(x_var = width_index_normalized,
+            y_var = height_index_normalized,
+            panel = TRUE,
+            overall_line = TRUE) 
+ggsave("../output/normalized_hindex-vs-normalized_windex-scatter.png",
+       width = 12,
+       height = 8,
+       dpi = 300
 )
 
 #### Normalized vs Dist_to Plots ####
@@ -286,7 +318,7 @@ ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = thermal_dissipation_index_normalized,
             panel = TRUE,
             overall_line = TRUE)
-ggsave("../output/dist_to_shelter_cm-vs-thermal_dissipation_index_normalized-scatter-site.png",
+ggsave("../output/dist_to_shelter_cm-vs-thermal_dissipation_index_normalized-scatter.png",
   width = 12,
   height = 8,
   dpi = 300
@@ -315,14 +347,14 @@ summary(model_interaction)
 
 ##shelter v height index by site
 ScatterPlot(x_var = dist_to_shelter_cm,
-            y_var = height_index_normalized)
-ggsave("../output/dist_to_shelter_cm-vs-height_index_normalized-scatter-site.png")
-
-##shelter v height index overall
-ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = height_index_normalized,
-            color_var = NULL)
-ggsave("../output/dist_to_shelter_cm-vs-height_index_normalized-scatter-overall.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_shelter_cm-vs-height_index_normalized-scatter.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #same slope among sites
@@ -348,13 +380,13 @@ summary(model_interaction)
 ##litt pint v thermal dissipation index overall
 ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = thermal_dissipation_index_normalized,
-            color_var = NULL)
-ggsave("../output/dist_to_littpint_cm-vs-thermal_dissipation_index_normalized-overall.png")
-
-##litt pint v thermal dissipation index by site
-ScatterPlot(x_var = dist_to_littpint_cm,
-            y_var = thermal_dissipation_index_normalized)
-ggsave("../output/dist_to_littpint_cm-vs-thermal_dissipation_index_normalized-site.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_littpint_cm-vs-thermal_dissipation_index_normalized.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #same slope among sites
@@ -378,13 +410,13 @@ summary(model_interaction)
 ##litt pint v height index overall
 ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = height_index_normalized,
-            color_var = NULL)
-ggsave("../output/dist_to_littpint_cm-vs-height_index_normalized-overall.png")
-
-##litt pint v height index by site
-ScatterPlot(x_var = dist_to_littpint_cm,
-            y_var = height_index_normalized)
-ggsave("../output/dist_to_littpint_cm-vs-height_index_normalized-site.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_littpint_cm-vs-height_index_normalized.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #same slope among sites
@@ -408,13 +440,13 @@ summary(model_interaction)
 ##open h2o v thermal dissipation index overall
 ScatterPlot(x_var = dist_to_open_h2o_cm,
             y_var = thermal_dissipation_index_normalized,
-            color_var = NULL)
-ggsave("../output/dist_to_open_h2o_cm-vs-thermal_dissipation_index_normalized-overall.png")
-
-##open h2o v thermal dissipation index by site
-ScatterPlot(x_var = dist_to_open_h2o_cm,
-            y_var = thermal_dissipation_index_normalized)
-ggsave("../output/dist_to_open_h2o_cm-vs-thermal_dissipation_index_normalized-site.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_open_h2o_cm-vs-thermal_dissipation_index_normalized.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #same slope among sites
@@ -438,13 +470,13 @@ summary(model_interaction)
 ##surface angle v thermal dissipation index overall
 ScatterPlot(x_var = surface_angle,
             y_var = thermal_dissipation_index_normalized,
-            color_var = NULL)
-ggsave("../output/surface_angle-vs-thermal_dissipation_index_normalized-overall.png")
-
-##open h2o v thermal dissipation index by site
-ScatterPlot(x_var = surface_angle,
-            y_var = thermal_dissipation_index_normalized)
-ggsave("../output/surface_angle-vs-thermal_dissipation_index_normalized-site.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/surface_angle-vs-thermal_dissipation_index_normalized.png",
+  width = 12,
+  height = 8,
+  dpi = 300
+)
 
 #testing significance
 #lme hates NA and surf angle has NAs
@@ -477,28 +509,29 @@ summary(model_interaction)
 
 #### Shell Exterior Properties vs Normalized Shell Measures ####
 
-##limu v height index by site
-ScatterPlot(x_var = limu_on_shell,
-            y_var = height_index_normalized)
-ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-site.png")
-
-##limu v height index overall
+##limu v height index
 ScatterPlot(x_var = limu_on_shell,
             y_var = height_index_normalized,
-            color_var = NULL)
-ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-overall.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter.png",
+       width = 12,
+       height = 8,
+       dpi = 300
+)
 
 ##limu v height index overall but boss wanted a 2nd order poly smooth added
 ScatterPlot(x_var = limu_on_shell,
             y_var = height_index_normalized,
-            color_var = NULL) +
+            panel = TRUE,
+            overall_line = TRUE) +
   geom_smooth(
     method = "lm",
     formula = y ~ poly(x, 2),
     se = FALSE,
     linetype = "dashed"
   )
-ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-overall-withpoly.png")
+ggsave("../output/limu_on_shell-vs-height_index_normalized-scatter-withpoly.png")
 
 #testing significance
 #same slope among sites
@@ -536,8 +569,13 @@ pairs(limu_slopes, adjust = "tukey") #tests which sites're different from each o
 
 ScatterPlot(x_var = dist_to_shelter_cm,
             y_var = erosion,
-            color_var = NULL)
-ggsave("../output/dist_to_shelter_cm-vs-erosion-overall.png")
+            panel = TRUE,
+            overall_line = TRUE)
+ggsave("../output/dist_to_shelter_cm-vs-erosion.png",
+       width = 12,
+       height = 8,
+       dpi = 300
+)
 
 #model testing
 model_no_interaction <- nlme::lme(
@@ -625,12 +663,6 @@ solar_refuge_data %>%
     IQR = IQR(height_index_normalized)
   )
 
-#### Morphological Characters vs Length ####
-
-ScatterPlot(x_var = length_cm,
-            y_var = height_ww_cm) 
-ggsave("../output/height_ww-vs-length_scatter.png")
-
 #### Normalized Character Box Plots ####
 
 BoxPlot(y_var = height_ww_cm_normalized,
@@ -638,14 +670,19 @@ BoxPlot(y_var = height_ww_cm_normalized,
 ggsave("../output/height_ww_normalized-vs-site-boxplot.png",
        width = 4,
        height = 4)
+
 BoxPlot(y_var = height_index_normalized,
         fill_var = site) 
 ggsave("../output/height_index_normalized-vs-site-boxplot.png",
        width = 4,
        height = 4)
+
 BoxPlot(y_var = est_surface_area_cm2_normalized,
         fill_var = site)
-ggsave("../output/est_surface_area_cm2_normalized-vs-site-boxplots.png")
+ggsave("../output/est_surface_area_cm2_normalized-vs-site-boxplots.png",
+       width = 4,
+       height = 4)
+
 BoxPlot(y_var = thermal_dissipation_index_normalized,
         fill_var = site)
 ggsave("../output/thermal_dissipation_index_normalized-vs-site-boxplot.png",
@@ -669,72 +706,100 @@ ggplot(data = data_opihi_microhabitat) +
 # the size of the opihi will dominate this
 
 #Habitat Variables grouped by Refuge Category
-character_pca <-
-  data_opihi_microhabitat %>%
-  dplyr::select(site,
-                length_cm:thermal_dissipation_index,
-                -notes) %>%
-  na.omit() %>%
-  dplyr::select(length_cm:width_index,
-                height_ww_cm:thermal_dissipation_index) %>%
-  prcomp(center = TRUE,
-         scale. = TRUE)
 
+pca_data <- data_opihi_microhabitat %>%
+  dplyr::select(
+    site,
+    length_cm,
+    width_cm,
+    height_ww_cm,
+    height_index,
+    width_index,
+    est_surface_area_cm2,
+    cross_sectional_area_cm2,
+    thermal_dissipation_index
+  ) %>%
+  na.omit()
+
+# Check how many shells remain
+nrow(pca_data)
+
+# Check the standard deviation of each variable
+sapply(pca_data, sd)
+
+# Save site groupings for plotting
+pca_groups <- pca_data$site
+
+# Remove site and any constant variables
+pca_variables <- pca_data %>%
+  dplyr::select(-site) %>%
+  dplyr::select(
+    where(~ isTRUE(sd(.) > 0))
+  )
+
+# Run PCA
+character_pca <- prcomp(
+  pca_variables,
+  center = TRUE,
+  scale. = TRUE
+)
+
+# View results
 summary(character_pca)
 
-ggbiplot(character_pca,
-         # labels = data_opihi_shells %>%
-         #   pull(shell_id),
-         ellipse = TRUE,
-         groups = data_opihi_microhabitat %>%
-           dplyr::select(site,
-                         length_cm:thermal_dissipation_index,
-                         -notes) %>%
-           na.omit() %>%
-           pull(site),
-         choices = c(1,
-                     2)) +
-  coord_fixed(ratio = .5) + # use this to adjust x vs y axis
+# Extract site groupings from the PCA dataset
+pca_groups <- pca_data %>%
+  pull(site)
+
+# Check that the number of group labels matches the PCA
+length(pca_groups)
+nrow(character_pca$x)
+
+#pc1 vs pc2
+ggbiplot(
+  character_pca,
+  ellipse = TRUE,
+  groups = pca_groups,
+  choices = c(1, 2)
+) +
+  coord_fixed(ratio = .5) +
   theme_classic() +
-  labs(title = "PC1 x PC2",
-       subtitle = "Grouped by Site, With Ellipses")
+  labs(
+    title = "PC1 x PC2",
+    subtitle = "Grouped by Site, With Ellipses"
+  )
 
 ggsave("../output/pca_1-2_shell_characters.png")
 
-ggbiplot(character_pca,
-         # labels = data_opihi_shells %>%
-         #   pull(shell_id),
-         ellipse = TRUE,
-         groups = data_opihi_microhabitat %>%
-           dplyr::select(site,
-                         length_cm:est_surface_area_cm2) %>%
-           na.omit() %>%
-           pull(site),
-         choices = c(1,
-                     3)) +
-  coord_fixed(ratio = .67) + # use this to adjust x vs y axis
+#pc1 vs pc3
+ggbiplot(
+  character_pca,
+  ellipse = TRUE,
+  groups = pca_groups,
+  choices = c(1, 3)
+) +
+  coord_fixed(ratio = .5) +
   theme_classic() +
-  labs(title = "PC1 x PC3",
-       subtitle = "Grouped by Site, With Ellipses")
+  labs(
+    title = "PC1 x PC3",
+    subtitle = "Grouped by Site, With Ellipses"
+  )
 
 ggsave("../output/pca_1-3_shell_characters.png")
 
-ggbiplot(character_pca,
-         # labels = data_opihi_shells %>%
-         #   pull(shell_id),
-         ellipse = TRUE,
-         groups = data_opihi_microhabitat %>%
-           dplyr::select(site,
-                         thermal_dissipation_index:est_surface_area_cm2,
-                         -notes) %>%
-           na.omit() %>%
-           pull(site),
-         choices = c(2,
-                     3)) +
-  coord_fixed(ratio = .75) + # use this to adjust x vs y axis
+#pc2 vs pc3
+ggbiplot(
+  character_pca,
+  ellipse = TRUE,
+  groups = pca_groups,
+  choices = c(2, 3)
+) +
+  coord_fixed(ratio = .5) +
   theme_classic() +
-  labs(title = "PC2 x PC3",
-       subtitle = "Grouped by Site, With Ellipses")
+  labs(
+    title = "PC2 x PC3",
+    subtitle = "Grouped by Site, With Ellipses"
+  )
 
 ggsave("../output/pca_2-3_shell_characters.png")
 
@@ -1047,21 +1112,3 @@ ggsave("../output/normalized_mean_surface_area_deviation-site.png"
        #width = 4,
        #height = 4
        )
-
-
-
-ggplot(data = data_opihi_microhabitat) +
-  aes(x = width_index_normalized, y = height_index_normalized) +
-  geom_point(alpha = 1, color = "red") +  # Scatter points with transparency
-  theme_classic() +
-  labs(
-    x = "Width Index",
-    y = "Height Index"
-  ) +
-  theme(
-    axis.title = element_text(size = 20),  # Change axis label size
-    axis.text = element_text(size = 16)  # Change tick label size
-  ) +
-  coord_cartesian(xlim = c(0.5, 1), ylim = c(0.2, 0.7))
-
-ggsave("../output/hindex_windex.png")

@@ -462,8 +462,7 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
 data_opihi_microhabitat <- data_opihi_microhabitat %>%
   mutate(
     substrate_subtype = stringr::word(substrate, 2),
-    substrate = stringr::word(substrate, 1),
-    .after = substrate
+    substrate = stringr::word(substrate, 1)
   )
 
 #### normalized morphology indecies ####
@@ -522,6 +521,10 @@ for (ft_col in ft_cols) {
     data_opihi_microhabitat[[ft_col]] * 30.48
   
 }
+
+#remove shell 106 from the data (Maalea outlier)
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  filter(individual_id != 106)
 
 #### output modified data ####
 
