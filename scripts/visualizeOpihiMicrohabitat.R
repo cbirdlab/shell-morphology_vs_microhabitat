@@ -665,24 +665,210 @@ solar_refuge_data %>%
 
 #### Normalized Character Box Plots ####
 
+##height vs north/south shore
 BoxPlot(y_var = height_ww_cm_normalized,
-        fill_var = site) 
-ggsave("../output/height_ww_normalized-vs-site-boxplot.png",
+        fill_var = shore)
+ggsave("../output/height_ww_cm_normalized-vs-north_south-boxplot.png",
        width = 4,
        height = 4)
 
+#testing significance
+wilcox.test(
+  height_ww_cm_normalized ~ shore,
+  data = data_opihi_microhabitat
+) #p = 0.06363
+
+#mixed effect model
+#prep data for all 3 plots
+shore_data <- data_opihi_microhabitat %>%
+  dplyr::select(
+    site,
+    shore,
+    height_ww_cm_normalized,
+    est_surface_area_cm2_normalized,
+    thermal_dissipation_index_normalized
+  ) %>%
+  filter(
+    !is.na(site),
+    !is.na(shore),
+    !is.na(height_ww_cm_normalized),
+    !is.na(est_surface_area_cm2_normalized),
+    !is.na(thermal_dissipation_index_normalized)
+  ) %>%
+  mutate(
+    site = factor(site),
+    shore = factor(shore, levels = c("north", "south"))
+  )
+
+#check sample sizes and site distribution
+shore_data %>%
+  dplyr::count(shore, site)
+
+#fit mixed-effects model
+model_shore <- nlme::lme(
+  height_ww_cm_normalized ~ shore,
+  random = ~ 1 | site,
+  data = shore_data,
+  method = "REML"
+)
+
+summary(model_shore)
+
+#test shore effect
+anova(model_shore)
+
+#estimated means and pairwise comparison
+shore_means <- emmeans(model_shore, ~ shore)
+
+summary(shore_means)
+pairs(shore_means)
+confint(pairs(shore_means))
+
+#model diagnostics
+plot(model_shore)
+
+qqnorm(resid(model_shore, type = "normalized"))
+qqline(resid(model_shore, type = "normalized"))
+
+#site level random effects
+site_effects <- nlme::ranef(model_shore)[, 1]
+site_effects
+qqnorm(site_effects)
+qqline(site_effects)
+
+##surface area vs north/south shore
+BoxPlot(y_var = est_surface_area_cm2_normalized,
+        fill_var = shore)
+ggsave("../output/est_surface_area_cm2_normalized-vs-north_south-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  est_surface_area_cm2_normalized ~ shore,
+  data = data_opihi_microhabitat
+) #p = 0.02876
+
+#fit mixed-effects model
+model_shore <- nlme::lme(
+  est_surface_area_cm2_normalized ~ shore,
+  random = ~ 1 | site,
+  data = shore_data,
+  method = "REML"
+)
+
+summary(model_shore)
+
+#test shore effect
+anova(model_shore)
+
+#estimated means and pairwise comparison
+shore_means <- emmeans(model_shore, ~ shore)
+
+summary(shore_means)
+pairs(shore_means)
+confint(pairs(shore_means))
+
+#model diagnostics
+plot(model_shore)
+
+qqnorm(resid(model_shore, type = "normalized"))
+qqline(resid(model_shore, type = "normalized"))
+
+#site level random effects
+site_effects <- nlme::ranef(model_shore)[, 1]
+site_effects
+qqnorm(site_effects)
+qqline(site_effects)
+
+##thermal dissipation index vs n/s shore
+BoxPlot(y_var = thermal_dissipation_index_normalized,
+        fill_var = shore)
+ggsave("../output/thermal_dissipation_index_normalized-vs-north_south-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  thermal_dissipation_index_normalized ~ shore,
+  data = data_opihi_microhabitat
+) #p = 0.08507
+
+#fit mixed-effects model
+model_shore <- nlme::lme(
+  thermal_dissipation_index_normalized ~ shore,
+  random = ~ 1 | site,
+  data = shore_data,
+  method = "REML"
+)
+
+summary(model_shore)
+
+#test shore effect
+anova(model_shore)
+
+#estimated means and pairwise comparison
+shore_means <- emmeans(model_shore, ~ shore)
+
+summary(shore_means)
+pairs(shore_means)
+confint(pairs(shore_means))
+
+#model diagnostics
+plot(model_shore)
+
+qqnorm(resid(model_shore, type = "normalized"))
+qqline(resid(model_shore, type = "normalized"))
+
+#site level random effects
+site_effects <- nlme::ranef(model_shore)[, 1]
+site_effects
+qqnorm(site_effects)
+qqline(site_effects)
+
+##height vs transect spot
+BoxPlot(y_var = height_ww_cm_normalized,
+        fill_var = spot_on_transect)
+ggsave("../output/height_ww_cm_normalized-vs-spot_on_transect-boxplot.png",
+       width = 4,
+       height = 4)
+
+##surface area vs transect spot
+BoxPlot(y_var = est_surface_area_cm2_normalized,
+        fill_var = spot_on_transect)
+ggsave("../output/est_surface_area_cm2_normalized-vs-spot_on_transect-boxplot.png",
+       width = 4,
+       height = 4)
+
+##thermal dissipation index vs transect spot
+BoxPlot(y_var = thermal_dissipation_index_normalized,
+        fill_var = spot_on_transect)
+ggsave("../output/thermal_dissipation_index_normalized-vs-spot_on_transect-boxplot.png",
+       width = 4,
+       height = 4)
+
+#height vs site
+BoxPlot(y_var = height_ww_cm_normalized,
+        fill_var = site) 
+ggsave("../output/height_ww_cm_normalized-vs-site-boxplot.png",
+       width = 4,
+       height = 4)
+
+#height index vs site
 BoxPlot(y_var = height_index_normalized,
         fill_var = site) 
 ggsave("../output/height_index_normalized-vs-site-boxplot.png",
        width = 4,
        height = 4)
 
+#surface area vs site
 BoxPlot(y_var = est_surface_area_cm2_normalized,
         fill_var = site)
 ggsave("../output/est_surface_area_cm2_normalized-vs-site-boxplots.png",
        width = 4,
        height = 4)
 
+#thermal dissipation vs site
 BoxPlot(y_var = thermal_dissipation_index_normalized,
         fill_var = site)
 ggsave("../output/thermal_dissipation_index_normalized-vs-site-boxplot.png",
