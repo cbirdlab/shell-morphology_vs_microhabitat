@@ -336,14 +336,84 @@ model_no_interaction <- nlme::lme(
 model_interaction <- nlme::lme(
   fixed = thermal_dissipation_index_normalized ~ dist_to_shelter_cm,
   random = ~ dist_to_shelter_cm | site,
-  data = data_opihi_microhabitat
-)
+  data = data_opihi_microhabitat,
+  method = "REML",
+  control = nlme::lmeControl(
+    maxIter = 1000,
+    msMaxIter = 1000,
+    niterEM = 100,
+    msVerbose = TRUE
+  )
+) #limit reached without convergence, dammit
 
 anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
 summary(model_no_interaction)
 summary(model_interaction)
 #both models have overall sig p-vals, BUT the dist_to_shelter aspect has non-sig p-val.
 #implying that shelter dist doesnt affect thermal dissipation index.
+
+#contrast testing
+#prepare data
+shelter_data <- data_opihi_microhabitat %>%
+  dplyr::select(
+    site,
+    dist_to_shelter_cm,
+    thermal_dissipation_index_normalized,
+    height_index_normalized
+  ) %>%
+  dplyr::filter(
+    !is.na(site),
+    !is.na(dist_to_shelter_cm),
+    !is.na(thermal_dissipation_index_normalized),
+    !is.na(height_index_normalized)
+  ) %>%
+  dplyr::mutate(
+    site = factor(site)
+  )
+
+#fit separate slopes for each site
+model_site_slopes <- lm(
+  thermal_dissipation_index_normalized ~
+    dist_to_shelter_cm * site,
+  data = shelter_data
+)
+
+summary(model_site_slopes)
+
+#estimate slopes for each site
+site_slopes <- emmeans::emtrends(
+  model_site_slopes,
+  specs = ~ site,
+  var = "dist_to_shelter_cm"
+)
+
+summary(site_slopes)
+
+#contrast 2 sites
+site_A <- "EastMaui1-RA"
+site_B <- "EastMaui2-RAB"
+
+#create contrast weights
+contrast_weights <- setNames(
+  rep(0, length(levels(shelter_data$site))),
+  levels(shelter_data$site)
+)
+
+contrast_weights[site_A] <- 1
+contrast_weights[site_B] <- -1
+
+#test difference in slopes
+slope_contrast <- emmeans::contrast(
+  site_slopes,
+  method = list(
+    "Site A - Site B" = unname(contrast_weights)
+  )
+)
+
+summary(
+  slope_contrast,
+  infer = c(TRUE, TRUE)
+)
 
 ##shelter v height index by site
 ScatterPlot(x_var = dist_to_shelter_cm,
@@ -377,7 +447,53 @@ summary(model_interaction)
 #same case as v thermal dissipation, height index aint significantly affected by dist.
 #implying that shelter dist doesnt affect height index.
 
-##litt pint v thermal dissipation index overall
+#contrast testing
+#fit separate slopes for each site
+model_site_slopes <- lm(
+  height_index_normalized ~
+    dist_to_shelter_cm * site,
+  data = shelter_data
+)
+
+summary(model_site_slopes)
+
+#estimate slopes for each site
+site_slopes <- emmeans::emtrends(
+  model_site_slopes,
+  specs = ~ site,
+  var = "dist_to_shelter_cm"
+)
+
+summary(site_slopes)
+
+#contrast 2 sites
+site_A <- "EastMaui1-RA"
+site_B <- "HanaPalemoHanaBay"
+
+#create contrast weights
+contrast_weights <- setNames(
+  rep(0, length(levels(shelter_data$site))),
+  levels(shelter_data$site)
+)
+
+contrast_weights[site_A] <- 1
+contrast_weights[site_B] <- -1
+
+#test difference in slopes
+slope_contrast <- emmeans::contrast(
+  site_slopes,
+  method = list(
+    "Site A - Site B" = unname(contrast_weights)
+  )
+)
+
+summary(
+  slope_contrast,
+  infer = c(TRUE, TRUE)
+)
+
+
+##litt pint v thermal dissipation index 
 ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = thermal_dissipation_index_normalized,
             panel = TRUE,
@@ -407,7 +523,68 @@ anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't v
 summary(model_no_interaction)
 summary(model_interaction)
 
-##litt pint v height index overall
+#contrast testing
+#prepare data
+littpint_data <- data_opihi_microhabitat %>%
+  dplyr::select(
+    site,
+    dist_to_littpint_cm,
+    thermal_dissipation_index_normalized
+  ) %>%
+  dplyr::filter(
+    !is.na(site),
+    !is.na(dist_to_littpint_cm),
+    !is.na(thermal_dissipation_index_normalized)
+  ) %>%
+  dplyr::mutate(
+    site = factor(site)
+  )
+
+#fit separate slopes for each site
+model_site_slopes <- lm(
+  thermal_dissipation_index_normalized ~
+    dist_to_littpint_cm * site,
+  data = littpint_data
+)
+
+summary(model_site_slopes)
+
+#estimate slopes for each site
+site_slopes <- emmeans::emtrends(
+  model_site_slopes,
+  specs = ~ site,
+  var = "dist_to_littpint_cm"
+)
+
+summary(site_slopes)
+
+#contrast 2 sites
+site_A <- "HanaPalemoHanaBay"
+site_B <- "HonoluaAdjacentInnerSide"
+
+#create contrast weights
+contrast_weights <- setNames(
+  rep(0, length(levels(littpint_data$site))),
+  levels(littpint_data$site)
+)
+
+contrast_weights[site_A] <- 1
+contrast_weights[site_B] <- -1
+
+#test difference in slopes
+slope_contrast <- emmeans::contrast(
+  site_slopes,
+  method = list(
+    "Site A - Site B" = unname(contrast_weights)
+  )
+)
+
+summary(
+  slope_contrast,
+  infer = c(TRUE, TRUE)
+)
+
+##litt pint v height index
 ScatterPlot(x_var = dist_to_littpint_cm,
             y_var = height_index_normalized,
             panel = TRUE,
@@ -437,7 +614,7 @@ anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't v
 summary(model_no_interaction)
 summary(model_interaction)
 
-##open h2o v thermal dissipation index overall
+##open h2o v thermal dissipation index
 ScatterPlot(x_var = dist_to_open_h2o_cm,
             y_var = thermal_dissipation_index_normalized,
             panel = TRUE,
@@ -466,6 +643,67 @@ model_interaction <- nlme::lme(
 anova(model_no_interaction, model_interaction) #non-sig = relationship doesn't vary w/ site
 summary(model_no_interaction)
 summary(model_interaction)
+
+#contrast testing
+#prepare data
+open_h2o_data <- data_opihi_microhabitat %>%
+  dplyr::select(
+    site,
+    dist_to_open_h2o_cm,
+    thermal_dissipation_index_normalized
+  ) %>%
+  dplyr::filter(
+    !is.na(site),
+    !is.na(dist_to_open_h2o_cm),
+    !is.na(thermal_dissipation_index_normalized)
+  ) %>%
+  dplyr::mutate(
+    site = factor(site)
+  )
+
+#fit separate slopes for each site
+model_site_slopes <- lm(
+  thermal_dissipation_index_normalized ~
+    dist_to_open_h2o_cm * site,
+  data = open_h2o_data
+)
+
+summary(model_site_slopes)
+
+#estimate slopes for each site
+site_slopes <- emmeans::emtrends(
+  model_site_slopes,
+  specs = ~ site,
+  var = "dist_to_open_h2o_cm"
+)
+
+summary(site_slopes)
+
+#contrast 2 sites
+site_A <- "EastMaui1-RA"
+site_B <- "KahuluiBreakwaterBasaltInside"
+
+#create contrast weights
+contrast_weights <- setNames(
+  rep(0, length(levels(open_h2o_data$site))),
+  levels(open_h2o_data$site)
+)
+
+contrast_weights[site_A] <- 1
+contrast_weights[site_B] <- -1
+
+#test difference in slopes
+slope_contrast <- emmeans::contrast(
+  site_slopes,
+  method = list(
+    "Site A - Site B" = unname(contrast_weights)
+  )
+)
+
+summary(
+  slope_contrast,
+  infer = c(TRUE, TRUE)
+)
 
 ##surface angle v thermal dissipation index overall
 ScatterPlot(x_var = surface_angle,
