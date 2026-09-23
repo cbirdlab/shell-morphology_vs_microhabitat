@@ -12,7 +12,7 @@ The directory also contains `thermal_index_2017-2023_comparison.pdf`, which is n
 
 ### Figure 1. Shell Height Scales With Shell Length
 
-![Figure 1. Shell height versus shell length scatterplot](height_ww-vs-length_scatter.png)
+![Figure 1. Shell height versus shell length scatterplot](height_ww-vs-length_cm-scatter.png)
 
 Scatterplot of shell height measured widest-way against shell length, colored by site, with linear smooths. The figure shows a positive relationship between length and height and highlights size differences among sampled sites.
 
@@ -30,7 +30,7 @@ Scatterplot comparing normalized width index and normalized height index for ind
 
 ### Figure 4. Normalized Shell Height by Site
 
-![Figure 4. Normalized shell height by site](height_ww_normalized-vs-site-boxplot.png)
+![Figure 4. Normalized shell height by site](height_ww_cm_normalized-vs-site-boxplot.png)
 
 Boxplots of normalized shell height by site. The plot shows site-level variation in shell height after accounting for shell length.
 
@@ -54,13 +54,13 @@ Boxplots of normalized thermal dissipation index by site. Higher values indicate
 
 ### Figure 8. Normalized Thermal Dissipation Index by Distance to Shelter, Grouped by Site
 
-![Figure 8. Normalized thermal dissipation index by distance to shelter, grouped by site](dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-site.png)
+![Figure 8. Normalized thermal dissipation index by distance to shelter, grouped by site](dist_to_shelter_cm-vs-thermal_dissipation_index_normalized-scatter.png)
 
 Scatterplot of normalized thermal dissipation index by distance to shelter, grouped by site, with linear smooths. Positive slopes indicate increasing ability to dissipate heat as shelter proximity increases.
 
 ### Figure 9. Normalized Thermal Dissipation Index by Distance to Shelter, Not Grouped
 
-![Figure 9. Normalized thermal dissipation index by distance to shelter, not grouped](dist_to_shelter_ft-vs-thermal_dissipation_index_normalized-scatter-overall.png)
+![Figure 9. Normalized thermal dissipation index by distance to shelter, not grouped](dist_to_shelter_cm-vs-thermal_dissipation_index_normalized-scatter.png)
 
 Scatterplot of normalized thermal dissipation index by distance to shelter, not grouped, with linear smooths. Positive slopes indicate increasing ability to dissipate heat as shelter proximity increases.
 
@@ -71,13 +71,13 @@ While both linear models had significant p-values, both showed that shelter dist
 
 ### Figure 10. Normalized Height Index by Distance to Shelter, Grouped by Site
 
-![Figure 10. Normalized height index by distance to shelter, grouped by site](dist_to_shelter_ft-vs-height_index_normalized-scatter-site.png)
+![Figure 10. Normalized height index by distance to shelter, grouped by site](dist_to_shelter_cm-vs-height_index_normalized-scatter.png)
 
 Scatterplot of normalized height index by distance to shelter, grouped by site, with linear smooths. Positive slopes indicate increasing shell height as shelter proximity increases.
 
 ### Figure 11. Normalized Height Index by Distance to Shelter, Not Grouped
 
-![Figure 11. Normalized height index by distance to shelter, not grouped](dist_to_shelter_ft-vs-height_index_normalized-scatter-overall.png)
+![Figure 11. Normalized height index by distance to shelter, not grouped](dist_to_shelter_cm-vs-height_index_normalized-scatter.png)
 
 Scatterplot of normalized height index by distance to shelter, not grouped, with linear smooths. Positive slopes indicate increasing shell height as shelter proximity increases.
 
@@ -88,13 +88,13 @@ While both linear models had significant p-values, both showed that shelter dist
 
 ### Figure 12. Normalized Height Index by Percent Limu Shell Coverage, Grouped by Site
 
-![Figure 12. Normalized height index by percent limu shell coverage, grouped by site](limu_on_shell-vs-height_index_normalized-scatter-site.png)
+![Figure 12. Normalized height index by percent limu shell coverage, grouped by site](limu_on_shell-vs-height_index_normalized-scatter.png)
 
 Scatterplot of normalized height index by percent limu shell coverage, grouped by site, with linear smooths. Positive slopes indicate increasing shell height with increasing limu coverage.
 
 ### Figure 13. Normalized Height Index by Percent Limu Shell Coverage, Not Grouped
 
-![Figure 13. Normalized height index by percent limu shell coverage, not grouped](limu_on_shell-vs-height_index_normalized-scatter-overall.png)
+![Figure 13. Normalized height index by percent limu shell coverage, not grouped](limu_on_shell-vs-height_index_normalized-scatter-overall-withpoly.png)
 
 Scatterplot of normalized height index by percent limu shell coverage, not grouped, with linear smooths. Positive slopes indicate increasing shell height with increasing limu coverage.
 
