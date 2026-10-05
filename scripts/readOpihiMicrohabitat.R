@@ -1,10 +1,6 @@
 #### Setup stuff ####
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-#### User Defined Variables ####
-data_path_opihi = "../data/DataOpihiMorphologyMicrohabitat.csv"
-data_path_decode = "../data/sample_name_decode.tsv"
-
 #### PACKAGES ####
 packages_used <- 
   c("tidyverse",
@@ -121,6 +117,59 @@ normalizeCharacter <-
     #for trouleshooting
     # pull(!!sym(new_col_name))
   }
+
+#### User Defined Variables ####
+
+data_path_opihi = "../data/DataOpihiMorphologyMicrohabitat.csv"
+data_path_decode = "../data/sample_name_decode.tsv"
+
+#columns to include in the trimmed csv for analysis
+output_columns <- c(
+  "gps_waypoint",
+  "gps_id",
+  "individual_id",
+  "site",
+  "date",
+  "limpet_location_solar_refuge_category",
+  "shore",
+  "shore_type",
+  "substrate",
+  "substrate_subtype",
+  "spot_on_transect",
+  "spot_notes",
+  "length_cm",
+  "width_cm",
+  "height_ww_cm",
+  "width_cm_normalized",
+  "height_ww_cm_normalized",
+  "height_index",
+  "width_index",
+  "height_index_normalized",
+  "width_index_normalized",
+  "est_surface_area_cm2",
+  "est_surface_area_cm2_normalized",
+  "cross_sectional_area_cm2",
+  "cross_sectional_area_cm2_normalized",
+  "thermal_dissipation_index",
+  "thermal_dissipation_index_normalized",
+  "limu_on_shell",
+  "erosion",
+  "color_ribs",
+  "color_interrib",
+  "surface_angle",
+  "compass_surface",
+  "compass_ocean",
+  "compass_surface_relative_ocean",
+  "shelter_type",
+  "dist_to_shelter_cm",
+  "dist_to_open_h2o_cm",
+  "dist_to_underrock_cm",
+  "dist_to_littpint_cm",
+  "dist_to_crustose_cm",
+  "altitude_est_hypotenuse_cm",
+  "altitude_est_adjacent_cm",
+  "altitude_est_opposite_cm"
+)
 
 #### Read Data ####
 data_name_decode <-
@@ -522,13 +571,17 @@ for (ft_col in ft_cols) {
   
 }
 
-#remove shell 106 from the data (Maalea outlier)
-data_opihi_microhabitat <- data_opihi_microhabitat %>%
-  filter(individual_id != 106)
-
 #### output modified data ####
 
+#includes every original column plus every column created by this script
 write_csv(
   data_opihi_microhabitat,
-  "../data/data_opihi_microhabitat.csv"
+  "../data/data_opihi_microhabitat_all_columns.csv"
 )
+
+#includes only the columns listed in output_columns
+data_opihi_microhabitat %>%
+  select(all_of(output_columns)) %>%
+  write_csv(
+    "../data/data_opihi_microhabitat.csv"
+  )
