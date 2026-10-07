@@ -585,3 +585,6 @@ data_opihi_microhabitat %>%
   write_csv(
     "../data/data_opihi_microhabitat.csv"
   )
+
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  select(all_of(output_columns))

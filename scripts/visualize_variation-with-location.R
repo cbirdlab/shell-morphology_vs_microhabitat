@@ -180,7 +180,7 @@ site_panels <- tibble::tribble(
 
 site_panels
 
-#### Normalized Character Box Plots ####
+#### Normalized Character Box Plots N/S Shore ####
 
 ##height vs north/south shore
 BoxPlot(y_var = height_ww_cm_normalized,
@@ -309,7 +309,7 @@ ggsave("../output/thermal_dissipation_index_normalized-vs-north_south-boxplot.pn
 wilcox.test(
   thermal_dissipation_index_normalized ~ shore,
   data = data_opihi_microhabitat
-) #p = 0.08507
+) #p = 0.05258
 
 #fit mixed-effects model
 model_shore <- nlme::lme(
@@ -343,6 +343,21 @@ site_effects
 qqnorm(site_effects)
 qqline(site_effects)
 
+##cross sectional area vs n/s
+BoxPlot(y_var = cross_sectional_area_cm2_normalized,
+        fill_var = shore)
+ggsave("../output/cross_sectional_area_normalized-vs-north_south-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  cross_sectional_area_cm2_normalized ~ shore,
+  data = data_opihi_microhabitat
+) #p = 0.1685
+
+#### Box Plot vs Transect Spot ####
+
 ##height vs transect spot
 BoxPlot(y_var = height_ww_cm_normalized,
         fill_var = spot_on_transect)
@@ -363,6 +378,8 @@ BoxPlot(y_var = thermal_dissipation_index_normalized,
 ggsave("../output/thermal_dissipation_index_normalized-vs-spot_on_transect-boxplot.png",
        width = 4,
        height = 4)
+
+#### Box Plot vs Site ####
 
 #height vs site
 BoxPlot(y_var = height_ww_cm_normalized,
