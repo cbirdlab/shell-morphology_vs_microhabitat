@@ -8,6 +8,12 @@ These committed figures were generated from an earlier 123-observation, 10-site 
 
 The directory also contains `thermal_index_2017-2023_comparison.pdf`, which is not rendered below because this README catalogs PNG figures only.
 
+## Hypothesis-Specific Results
+
+- [Hypothesis 1: Does thermal refuge proximity affect shell shape?](refuge-proximity_shell-shape.md)
+- [Hypothesis 2: Does phenotypic variation vary among sampling locations?](variation-with-location.md)
+- [Hypothesis 3: Is habitable area correlated with shell shape?](habitable-area_shell-shape.md)
+
 ## Figure Catalog
 
 ### Figure 1. Shell Height Scales With Shell Length
