@@ -94,8 +94,3 @@ Scatterplot of normalized height index by percent limu shell coverage with linea
 
 Scatterplot of normalized thermal dissipation index to surface angle with linear smooths. TABLE THIS OUT.
 
-### Figure 34. Normalized Thermal Dissipation Versus Shelter Distance
-
-<img src="thermal_dissipation_index_normalized-dist_to_shelter-lin_mod.png" alt="Figure 34. Normalized thermal dissipation versus distance to shelter" width="650">
-
-Faceted linear-model plot of normalized thermal dissipation index against distance to shelter. The relationships appear site-specific and noisy, with wide uncertainty in sites with limited observations.
