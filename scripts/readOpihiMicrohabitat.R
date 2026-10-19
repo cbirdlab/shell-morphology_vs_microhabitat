@@ -136,6 +136,7 @@ output_columns <- c(
   "substrate",
   "substrate_subtype",
   "spot_on_transect",
+  "boulder_or_not",
   "spot_notes",
   "length_cm",
   "width_cm",
@@ -512,6 +513,16 @@ data_opihi_microhabitat <- data_opihi_microhabitat %>%
   mutate(
     substrate_subtype = stringr::word(substrate, 2),
     substrate = stringr::word(substrate, 1)
+  )
+
+# for boulder vs nonboulder comparisons
+data_opihi_microhabitat <- data_opihi_microhabitat %>%
+  mutate(
+    boulder_or_not = case_when(
+      spot_on_transect == "boulder" ~ "boulder",
+      !is.na(spot_on_transect) ~ "nonboulder",
+      TRUE ~ NA_character_
+    )
   )
 
 #### normalized morphology indecies ####

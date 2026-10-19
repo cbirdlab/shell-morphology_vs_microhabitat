@@ -381,28 +381,28 @@ ggsave("../output/thermal_dissipation_index_normalized-vs-spot_on_transect-boxpl
 
 #### Box Plot vs Site ####
 
-#height vs site
+##height vs site
 BoxPlot(y_var = height_ww_cm_normalized,
         fill_var = site) 
 ggsave("../output/height_ww_cm_normalized-vs-site-boxplot.png",
        width = 4,
        height = 4)
 
-#height index vs site
+##height index vs site
 BoxPlot(y_var = height_index_normalized,
         fill_var = site) 
 ggsave("../output/height_index_normalized-vs-site-boxplot.png",
        width = 4,
        height = 4)
 
-#surface area vs site
+##surface area vs site
 BoxPlot(y_var = est_surface_area_cm2_normalized,
         fill_var = site)
 ggsave("../output/est_surface_area_cm2_normalized-vs-site-boxplots.png",
        width = 4,
        height = 4)
 
-#thermal dissipation vs site
+##thermal dissipation vs site
 BoxPlot(y_var = thermal_dissipation_index_normalized,
         fill_var = site)
 ggsave("../output/thermal_dissipation_index_normalized-vs-site-boxplot.png",
@@ -418,3 +418,167 @@ ggplot(data = data_opihi_microhabitat) +
                                    hjust = 1,
                                    vjust = 1)) +
   facet_wrap(vars(site))
+
+#### Box Plot Boulder vs No Boulder ####
+
+##thermal dissipation vs boulder/nonboulder
+BoxPlot(y_var = thermal_dissipation_index_normalized,
+  fill_var = boulder_or_not
+) +
+  facet_grid(
+    ~ boulder_or_not,
+    scales = "free_x",
+    space = "free_x"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+ggsave("../output/thermal_dissipation_index_normalized-vs-boulder_nonboulder-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  thermal_dissipation_index_normalized ~ boulder_or_not,
+  data = data_opihi_microhabitat
+) #p = 0.001026 does NOT account for site differences
+
+model_substrate <- lme(
+  thermal_dissipation_index_normalized ~ boulder_or_not,
+  random = ~1 | site,
+  data = data_opihi_microhabitat,
+  na.action = na.omit
+)
+
+summary(model_substrate) #p = 0.1462
+
+#site lvl welch t-test, averages thermdisp for each site
+site_summary <- data_opihi_microhabitat %>%
+  filter(
+    !is.na(boulder_or_not),
+    !is.na(thermal_dissipation_index_normalized)
+  ) %>%
+  group_by(site, boulder_or_not) %>%
+  summarise(
+    mean_tdi = mean(thermal_dissipation_index_normalized),
+    median_tdi = median(thermal_dissipation_index_normalized),
+    n = n(),
+    .groups = "drop"
+  )
+
+site_summary
+
+t.test(
+  mean_tdi ~ boulder_or_not,
+  data = site_summary
+) #p = 0.1715
+
+##surface area vs boulder/nonboulder
+BoxPlot(y_var = est_surface_area_cm2_normalized,
+        fill_var = boulder_or_not
+) +
+  facet_grid(
+    ~ boulder_or_not,
+    scales = "free_x",
+    space = "free_x"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+ggsave("../output/est_surface_area_cm2_normalized-vs-boulder_nonboulder-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  est_surface_area_cm2_normalized ~ boulder_or_not,
+  data = data_opihi_microhabitat
+) #p = 0.0001652 does NOT account for site differences
+
+model_substrate <- lme(
+  est_surface_area_cm2_normalized ~ boulder_or_not,
+  random = ~1 | site,
+  data = data_opihi_microhabitat,
+  na.action = na.omit
+)
+
+summary(model_substrate) #p = 0.0947
+
+#site lvl welch t-test, averages sa for each site
+site_summary <- data_opihi_microhabitat %>%
+  filter(
+    !is.na(boulder_or_not),
+    !is.na(est_surface_area_cm2_normalized)
+  ) %>%
+  group_by(site, boulder_or_not) %>%
+  summarise(
+    mean_sa = mean(est_surface_area_cm2_normalized),
+    median_sa = median(est_surface_area_cm2_normalized),
+    n = n(),
+    .groups = "drop"
+  )
+
+site_summary
+
+t.test(
+  mean_sa ~ boulder_or_not,
+  data = site_summary
+) #p = 0.1342
+
+##height vs boulder/nonboulder
+BoxPlot(y_var = height_ww_cm_normalized,
+        fill_var = boulder_or_not
+) +
+  facet_grid(
+    ~ boulder_or_not,
+    scales = "free_x",
+    space = "free_x"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+ggsave("../output/height_ww_cm_normalized-vs-boulder_nonboulder-boxplot.png",
+       width = 4,
+       height = 4)
+
+#testing significance
+wilcox.test(
+  height_ww_cm_normalized ~ boulder_or_not,
+  data = data_opihi_microhabitat
+) #p = 0.0004882 does NOT account for site differences
+
+model_substrate <- lme(
+  height_ww_cm_normalized ~ boulder_or_not,
+  random = ~1 | site,
+  data = data_opihi_microhabitat,
+  na.action = na.omit
+)
+
+summary(model_substrate) #p = 0.1233
+
+#site lvl welch t-test, averages height for each site
+site_summary <- data_opihi_microhabitat %>%
+  filter(
+    !is.na(boulder_or_not),
+    !is.na(height_ww_cm_normalized)
+  ) %>%
+  group_by(site, boulder_or_not) %>%
+  summarise(
+    mean_h = mean(height_ww_cm_normalized),
+    median_h = median(height_ww_cm_normalized),
+    n = n(),
+    .groups = "drop"
+  )
+
+site_summary
+
+t.test(
+  mean_h ~ boulder_or_not,
+  data = site_summary
+) #p = 0.1484
