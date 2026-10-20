@@ -422,22 +422,26 @@ ggplot(data = data_opihi_microhabitat) +
 #### Box Plot Boulder vs No Boulder ####
 
 ##thermal dissipation vs boulder/nonboulder
-BoxPlot(y_var = thermal_dissipation_index_normalized,
+BoxPlot(
+  y_var = thermal_dissipation_index_normalized,
   fill_var = boulder_or_not
 ) +
-  facet_grid(
-    ~ boulder_or_not,
-    scales = "free_x",
-    space = "free_x"
+  facet_wrap(
+    ~ shore,
+    ncol = 1,
+    scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "none"
+    legend.position = "bottom"
   )
+
 ggsave("../output/thermal_dissipation_index_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 4,
-       height = 4)
+       width = 12,
+       height = 14,
+       units = "in",
+       dpi = 300)
 
 #testing significance
 wilcox.test(
@@ -476,22 +480,26 @@ t.test(
 ) #p = 0.1715
 
 ##surface area vs boulder/nonboulder
-BoxPlot(y_var = est_surface_area_cm2_normalized,
-        fill_var = boulder_or_not
+BoxPlot(
+  y_var = est_surface_area_cm2_normalized,
+  fill_var = boulder_or_not
 ) +
-  facet_grid(
-    ~ boulder_or_not,
-    scales = "free_x",
-    space = "free_x"
+  facet_wrap(
+    ~ shore,
+    ncol = 1,
+    scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "none"
+    legend.position = "bottom"
   )
+
 ggsave("../output/est_surface_area_cm2_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 4,
-       height = 4)
+       width = 12,
+       height = 14,
+       units = "in",
+       dpi = 300)
 
 #testing significance
 wilcox.test(
@@ -530,22 +538,26 @@ t.test(
 ) #p = 0.1342
 
 ##height vs boulder/nonboulder
-BoxPlot(y_var = height_ww_cm_normalized,
-        fill_var = boulder_or_not
+BoxPlot(
+  y_var = height_ww_cm_normalized,
+  fill_var = boulder_or_not
 ) +
-  facet_grid(
-    ~ boulder_or_not,
-    scales = "free_x",
-    space = "free_x"
+  facet_wrap(
+    ~ shore,
+    ncol = 1,
+    scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "none"
+    legend.position = "bottom"
   )
+
 ggsave("../output/height_ww_cm_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 4,
-       height = 4)
+       width = 12,
+       height = 14,
+       units = "in",
+       dpi = 300)
 
 #testing significance
 wilcox.test(
