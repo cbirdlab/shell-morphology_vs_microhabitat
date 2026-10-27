@@ -34,16 +34,22 @@ Boxplots of normalized thermal dissipation index by site. Higher values indicate
 
 <img src="thermal_dissipation_index_normalized-vs-boulder_nonboulder-boxplot.png" alt="Figure 5. Normalized thermal dissipation index by boulder/nonboulder shores" width="650">
 
+<img src="thermal_dissipation_index-vs-boulder_nonboulder-lme.png" alt="Figure 5.1 Linear mixed effect model results" width="650">
+
 Boxplots of normalized thermal dissipation index by boulder/nonboulder shores, faceted by north and south shores. Higher values indicate greater estimated surface area relative to cross-sectional area.
 
 ### Figure 6. Normalized Estimated Surface Area by Boulder/Nonboulder Shores
 
 <img src="est_surface_area_cm2_normalized-vs-boulder_nonboulder-boxplot.png" alt="Figure 6. Normalized estimated surface area by boulder/nonboulder shores" width="650">
 
+<img src="est_surface_area-vs-boulder_nonboulder-lme.png" alt="Figure 6.1 Linear mixed effect model results" width="650">
+
 Boxplots of estimated normalized shell surface area by boulder/nonboulder shores, faceted by north and south shores.
 
 ### Figure 7. Normalized Height by Boulder/Nonboulder Shores
 
 <img src="height_ww_cm_normalized-vs-boulder_nonboulder-boxplot.png" alt="Figure 7. Normalized height by boulder/nonboulder shores" width="650">
+
+<img src="height_ww_cm-vs-boulder_nonboulder-lme.png" alt="Figure 7.1 Linear mixed effect model results" width="650">
 
 Boxplots of normalized height by boulder/nonboulder shores, faceted by north and south shores.
