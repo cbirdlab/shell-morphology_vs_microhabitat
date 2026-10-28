@@ -422,24 +422,42 @@ ggplot(data = data_opihi_microhabitat) +
 #### Box Plot Boulder vs No Boulder ####
 
 ##thermal dissipation vs boulder/nonboulder
-BoxPlot(
+# BoxPlot(
+#   y_var = thermal_dissipation_index_normalized,
+#   fill_var = boulder_or_not
+# ) +
+#   facet_wrap(
+#     ~ shore,
+#     ncol = 1,
+#     scales = "free_x"
+#   ) +
+#   theme_classic() +
+#   theme(
+#     axis.text.x = element_text(angle = 45, hjust = 1),
+#     legend.position = "bottom"
+#   )
+
+p <- BoxPlot(
   y_var = thermal_dissipation_index_normalized,
   fill_var = boulder_or_not
 ) +
   facet_wrap(
-    ~ shore,
-    ncol = 1,
+    vars(shore, boulder_or_not),
+    ncol = 2,
     scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
+    legend.position = "none"
   )
 
+print(p)
+
 ggsave("../output/thermal_dissipation_index_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 12,
-       height = 14,
+       plot = p,
+       width = 14,
+       height = 12,
        units = "in",
        dpi = 300)
 
@@ -485,19 +503,19 @@ BoxPlot(
   fill_var = boulder_or_not
 ) +
   facet_wrap(
-    ~ shore,
-    ncol = 1,
+    vars(shore, boulder_or_not),
+    ncol = 2,
     scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
+    legend.position = "none"
   )
 
 ggsave("../output/est_surface_area_cm2_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 12,
-       height = 14,
+       width = 14,
+       height = 12,
        units = "in",
        dpi = 300)
 
@@ -543,19 +561,19 @@ BoxPlot(
   fill_var = boulder_or_not
 ) +
   facet_wrap(
-    ~ shore,
-    ncol = 1,
+    vars(shore, boulder_or_not),
+    ncol = 2,
     scales = "free_x"
   ) +
   theme_classic() +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
+    legend.position = "none"
   )
 
 ggsave("../output/height_ww_cm_normalized-vs-boulder_nonboulder-boxplot.png",
-       width = 12,
-       height = 14,
+       width = 14,
+       height = 12,
        units = "in",
        dpi = 300)
 
